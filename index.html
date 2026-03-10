@@ -26,22 +26,24 @@ html,body{ width:100%; height:100%; }
 /* Home */
 #home{ display:none; height:100vh; }
 .card{ position:absolute; top:0; left:0; right:0; bottom:60px; background:#FFBF42; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
-.address-card{ position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#fff2a8; border-radius:10px; padding:10px 18px; display:inline-flex; align-items:center; cursor:pointer; white-space:nowrap; }
+.address-card{ position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#fff2a8; border-radius:10px; padding:10px 18px; display:inline-flex; align-items:center; cursor:pointer; white-space:nowrap; transition:transform .2s, box-shadow .2s; }
+.address-card:hover{ transform:translateX(-50%) translateY(-2px); box-shadow:0 4px 8px rgba(0,0,0,.1); }
 .address-card .icon{ margin-left:6px; }
 .logo{ font-size:4em; margin-bottom:15px; }
 .title{ font-size:1.6em; font-weight:bold; margin-bottom:10px; }
 .subtitle{ font-size:1em; }
 
 nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; background:#fff; border-top:1px solid #ddd; position:fixed; bottom:0; left:0; right:0; z-index:1000; }
-.nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; }
+.nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; transition:color .2s; }
 .nav-item span{ font-size:.7em; }
-.nav-item.active{ color:#019E81; }
+.nav-item.active, .nav-item:hover{ color:#019E81; }
 
 /* Map */
 #mapScreen{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:10; }
 #map{ width:100%; height:100%; }
-#currentLocationBtn{ position:absolute; top:80px; right:15px; z-index:700; background:#fff; border-radius:50%; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.5em; }
-#bottomCard{ position:absolute; bottom:0; left:0; width:100%; height:40%; background:#fff; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,0.2); padding:20px; transform:translateY(100%); transition:transform .4s ease; display:flex; flex-direction:column; justify-content:space-between; gap:10px; z-index:500; overflow:hidden; }
+#currentLocationBtn{ position:absolute; top:80px; right:15px; z-index:700; background:#fff; border-radius:50%; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.5em; transition:background-color .2s, transform .2s; }
+#currentLocationBtn:hover{ background-color:#f0f0f0; transform:scale(1.1); }
+#bottomCard{ position:absolute; bottom:0; left:0; width:100%; height:33%; background:#fff; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,0.2); padding:20px; transform:translateY(100%); transition:transform .4s ease; display:flex; flex-direction:column; justify-content:space-between; gap:10px; z-index:500; overflow:hidden; }
 #bottomCard::before{ content:""; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,1); border-top-left-radius:20px; border-top-right-radius:20px; z-index:-1; }
 #bottomCard.show{ transform:translateY(0); }
 #bottomCard h2{ margin-bottom:10px; }
@@ -51,7 +53,26 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #addAddressBtn:hover{ background:#7ec6ff; }
 
 /* Back */
-#backBtn{ position:absolute; top:20px; left:20px; z-index:999; background:#fff; padding:10px 15px; border-radius:8px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.3); transition:opacity 0.3s; }
+#newHomeBackBtn, #backBtn {
+  position:absolute;
+  top:20px;
+  left:20px;
+  z-index:999;
+  background:#fff;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+  transition:opacity 0.3s, background-color 0.2s;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+#newHomeBackBtn:hover, #backBtn:hover { background-color: #f0f0f0; }
+#newHomeBackBtn { z-index: 1002; }
 .leaflet-control-attribution { position: relative; z-index: 1; }
 
 /* Search card */
@@ -71,8 +92,36 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 /* New Home Screen for Add Location */
 #newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none;}
 #newHomeScreen.active{ pointer-events:auto; bottom:0; }
-#newHomeScreen .header{ height:50%; background:#FFBF42; display:flex; justify-content:center; align-items:center; font-size:2em; font-weight:bold; color:#fff; }
-#newHomeScreen .content{ flex:1; background:#fff; padding:20px; overflow-y:auto; margin-bottom:60px; }
+#newHomeScreen .header{ height:45%; background:#FFBF42; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
+#newHomeScreen .selected-address-card{ display:none; align-items:center; justify-content:center; margin:0 auto 12px auto; padding:10px 12px; border-radius:12px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; cursor:pointer; max-width:calc(100% - 24px); transition: background-color .2s, box-shadow .2s; }
+#newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
+#newHomeScreen .selected-address-card .home-icon{ font-size:1.5rem; }
+#newHomeScreen .top-grid{ width:100%; max-width:1000px; padding:15px 16px 10px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+#newHomeScreen .grid-item{ display:flex; flex-direction:column; align-items:center; gap:0px; margin-bottom:14px; cursor:pointer; transition:transform .2s; }
+#newHomeScreen .grid-item:hover{ transform:translateY(-5px); }
+#newHomeScreen .circle{ width:95px; height:95px; border:2px solid #019E81; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; color:#019E81; font-weight:700; font-size:3em; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'EmojiSymbols', sans-serif; }
+#newHomeScreen .grid-label{ width:80%; min-width:70px; text-align:center; border:2px solid #019E81; border-radius:8px; background:#fff; color:#019E81; font-size:0.85em; padding:4px 6px; margin-top:-2px; }
+#newHomeScreen .grid-item{ touch-action: manipulation; }
+#newHomeScreen .content{ flex:1; background:#fff; padding: 20px 20px 80px; overflow-y:auto; }
+#newHomeScreen .for-you-text {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+#newHomeScreen.active .content{ height:55%; }
+#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding-bottom:16px; scroll-snap-type:x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
+#newHomeScreen .shop-scroll::-webkit-scrollbar{ display: none; }
+#newHomeScreen .shop-slide{ display:flex; gap:12px; scroll-snap-align:start; }
+#newHomeScreen .shop-item{ width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s; }
+#newHomeScreen .shop-item:hover{ transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.1); }
+#newHomeScreen .shop-info{ margin-top:12px; font-size:0.91rem; }
+#newHomeScreen .shop-info-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+#newHomeScreen .shop-info .headline{ font-weight:800; color:#333; margin-bottom:4px; }
+#newHomeScreen .shop-info .sub{ color:#555; }
+#newHomeScreen .bike-block{ display:flex; align-items:center; color:#019E81; font-weight:600; }
+#newHomeScreen .bike-block span{ font-size:5.2rem; line-height:1; }
+
 
 /* Navbar inside newHomeScreen */
 #newHomeScreen nav{
@@ -90,7 +139,31 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 }
 #newHomeScreen nav .nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; }
 #newHomeScreen nav .nav-item span{ font-size:.7em; }
-#newHomeScreen nav .nav-item.active{ color:#019E81; }
+#newHomeScreen nav .nav-item.active, #newHomeScreen nav .nav-item:hover{ color:#019E81; }
+
+/* Category Details Screen */
+#categoryScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#fff;
+  z-index:2000;
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 0.3s ease;
+}
+#categoryScreen.active{ opacity:1; pointer-events:auto; }
+#categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; gap:15px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+#categoryScreen .back-btn{ font-size:1.5em; cursor:pointer; padding:5px; border-radius:50%; transition:background-color .2s; }
+#categoryScreen .back-btn:hover{ background-color:#f0f0f0; }
+#categoryScreen .cat-title{ font-size:1.2em; font-weight:bold; }
+#categoryScreen .cat-content{ flex:1; padding:20px; overflow-y:auto; }
+#categoryScreen .placeholder-box{ height:120px; background:#f5f5f5; border-radius:12px; margin-bottom:15px; display:flex; align-items:center; justify-content:center; color:#aaa; transition: background-color .2s, box-shadow .2s; }
+#categoryScreen .placeholder-box:hover{ background-color:#eee; box-shadow:0 2px 4px rgba(0,0,0,.05); }
 </style>
 </head>
 <body>
@@ -121,7 +194,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 </div>
 
 <div id="mapScreen">
-  <div id="backBtn">← Back</div>
+  <div id="backBtn" title="Go back">⬅️</div>
   <div id="map"></div>
   <div id="currentLocationBtn" title="Go to my location">📍</div>
 
@@ -148,9 +221,44 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 </div>
 
 <div id="newHomeScreen">
-  <div class="header">Add New Address</div>
+  <div class="header">
+    <div id="newHomeBackBtn" title="Go back">⬅️</div>
+    <div class="selected-address-card" id="selectedAddressCard">
+      <span class="home-icon">🏠</span>
+      <span id="selectedAddressText">Selected address not set</span>
+    </div>
+    <div class="top-grid">
+      <div class="grid-item"><div class="circle">🍕</div><div class="grid-label">Food</div></div>
+      <div class="grid-item"><div class="circle">🛒</div><div class="grid-label">Groceries</div></div>
+      <div class="grid-item"><div class="circle">🛍️</div><div class="grid-label">Shops</div></div>
+      <div class="grid-item"><div class="circle">💊</div><div class="grid-label">Pharmacies</div></div>
+      <div class="grid-item"><div class="circle">📦</div><div class="grid-label">Packages</div></div>
+      <div class="grid-item"><div class="circle">🥤</div><div class="grid-label">Drinks</div></div>
+    </div>
+  </div>
   <div class="content">
-    <p>Here you can add the new delivery address details.</p>
+    <div class="for-you-text">These Are For You</div>
+    <div class="shop-scroll" id="shopScroll">
+      <div class="shop-slide">
+        <div class="shop-item">🛍️</div>
+        <div class="shop-item">🛒</div>
+        <div class="shop-item">🏬</div>
+        <div class="shop-item">🏤</div>
+        <div class="shop-item">📦</div>
+        <div class="shop-item">🍽️</div>
+        <div class="shop-item">🥤</div>
+        <div class="shop-item">🍰</div>
+      </div>
+    </div>
+    <div class="shop-info">
+      <div class="shop-info-row">
+        <div>
+          <div class="headline">FreeDelivery on Your First order</div>
+          <div class="sub">Treat yourself, we got it!</div>
+        </div>
+        <div class="bike-block"><span>🚴‍♂️</span></div>
+      </div>
+    </div>
   </div>
   <nav>
     <div class="nav-item active">🏠<span>Home</span></div>
@@ -164,12 +272,27 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   </nav>
 </div>
 
+<div id="categoryScreen">
+  <div class="cat-header">
+    <div class="back-btn" id="catBackBtn" title="Go back">⬅️</div>
+    <div class="cat-title" id="catTitle">Category</div>
+  </div>
+  <div class="cat-content">
+    <h3>Top picks for <span id="catNameDisplay"></span></h3>
+    <div style="margin-top:15px;">
+      <div class="placeholder-box">Featured Item 1</div>
+      <div class="placeholder-box">Featured Item 2</div>
+      <div class="placeholder-box">Featured Item 3</div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 let map, marker;
 
 /* Splash */
-window.addEventListener('load',()=>{
+document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     document.getElementById('splash').style.opacity=0;
     setTimeout(()=>{
@@ -205,8 +328,32 @@ function reverseGeocode(latlng){
     .then(data=>{
       if(data && data.display_name){
         document.getElementById('selectedAddress').textContent = data.display_name;
+        updateSelectedAddressCard();
       }
     });
+}
+
+function updateSelectedAddressCard(){
+  const addrText = document.getElementById('selectedAddress').textContent;
+  if(addrText && addrText !== 'Select a location on the map'){
+    document.getElementById('selectedAddressText').textContent = addrText;
+    document.getElementById('selectedAddressCard').style.display = 'inline-flex';
+  }
+}
+
+function goBackToMap() {
+  document.getElementById('newHomeScreen').classList.remove('active');
+  document.getElementById('mapScreen').style.display = 'block';
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('bottomCard').classList.add('show');
+  document.getElementById('searchCard').classList.remove('show');
+  document.getElementById('searchCard').classList.remove('expanded');
+  document.getElementById('backBtn').style.opacity = '1';
+  document.getElementById('currentLocationBtn').style.opacity = '1';
+  document.querySelector('.leaflet-control-zoom').style.opacity = '1';
+  if (map) {
+    setTimeout(() => map.invalidateSize(), 300);
+  }
 }
 
 /* Show search card */
@@ -264,11 +411,33 @@ document.getElementById('backBtn').addEventListener('click',()=>{
   document.querySelector('.leaflet-control-zoom').style.opacity='1';
 });
 
-/* Add New Address Screen Slide */
+/* Show address on newHomeScreen when returning from map */
 document.getElementById('addAddressBtn').addEventListener('click',()=>{
   const newScreen = document.getElementById('newHomeScreen');
   newScreen.classList.add('active');
+  updateSelectedAddressCard();
 });
+
+/* Click on header to go to map if no address selected */
+document.querySelector('#newHomeScreen .header').addEventListener('click',()=>{
+  const addrCard = document.getElementById('selectedAddressCard');
+  if(addrCard.style.display === 'none'){
+    document.getElementById('newHomeScreen').classList.remove('active');
+    document.getElementById('mapScreen').style.display='block';
+    document.getElementById('home').style.display='none';
+    document.getElementById('bottomCard').classList.add('show');
+    document.getElementById('searchCard').classList.remove('show');
+    document.getElementById('searchCard').classList.remove('expanded');
+    document.getElementById('backBtn').style.opacity='1';
+    document.getElementById('currentLocationBtn').style.opacity='1';
+    document.querySelector('.leaflet-control-zoom').style.opacity='1';
+    if(map){ map.invalidateSize(); }
+  }
+});
+
+/* Selected address card click to map */
+document.getElementById('selectedAddressCard').addEventListener('click', goBackToMap);
+document.getElementById('newHomeBackBtn').addEventListener('click', goBackToMap);
 
 /* Autocomplete */
 const suggList = document.getElementById('autocompleteSuggestions');
@@ -290,6 +459,8 @@ searchInput.addEventListener('input',()=>{
           marker.setLatLng([lat,lng]);
           map.setView([lat,lng],15);
           document.getElementById('selectedAddress').textContent = place.display_name;
+          document.getElementById('selectedAddressText').textContent = place.display_name;
+          updateSelectedAddressCard();
           const searchCard = document.getElementById('searchCard');
           searchCard.classList.remove('expanded');
           searchCard.classList.remove('show');
@@ -301,6 +472,76 @@ searchInput.addEventListener('input',()=>{
         suggList.appendChild(li);
       });
     });
+});
+
+// Draggable grid items inside newHomeScreen
+const draggables = document.querySelectorAll('#newHomeScreen .grid-item');
+const newHomeScreen = document.getElementById('newHomeScreen');
+
+newHomeScreen.addEventListener('dragover', (event) => {
+  event.preventDefault();
+});
+
+newHomeScreen.addEventListener('drop', (event) => {
+  event.preventDefault();
+  const tileId = event.dataTransfer.getData('text/plain');
+  const tile = document.getElementById(tileId);
+  if (tile) {
+    tile.classList.remove('dragging');
+    tile.style.transform = '';
+  }
+});
+
+draggables.forEach((tile, index)=>{
+  tile.setAttribute('draggable','true');
+  tile.setAttribute('id', `grid-item-${index}`);
+  const initial = {x:0,y:0};
+
+  tile.addEventListener('dragstart', (event)=>{
+    tile.classList.add('dragging');
+    initial.x = tile.offsetLeft;
+    initial.y = tile.offsetTop;
+    event.dataTransfer.setData('text/plain', tile.id);
+    event.dataTransfer.effectAllowed = 'move';
+  });
+
+  tile.addEventListener('dragend', ()=>{
+    tile.classList.remove('dragging');
+    tile.style.transform = `translate(0, 0)`;
+  });
+});
+
+/* Category Screen Logic */
+const categoryScreen = document.getElementById('categoryScreen');
+const catTitle = document.getElementById('catTitle');
+const catNameDisplay = document.getElementById('catNameDisplay');
+const catBackBtn = document.getElementById('catBackBtn');
+
+function showDetailScreen(title) {
+  // Update content
+  catTitle.textContent = title;
+  catNameDisplay.textContent = title;
+
+  // Add 'active' class to show the screen
+  categoryScreen.classList.add('active');
+}
+
+document.querySelectorAll('.grid-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const label = item.querySelector('.grid-label').textContent;
+    showDetailScreen(label);
+  });
+});
+
+document.querySelectorAll('.shop-item').forEach(item => {
+  item.addEventListener('click', (e) => {
+    const emoji = item.textContent;
+    showDetailScreen(`Shop: ${emoji}`);
+  });
+});
+
+catBackBtn.addEventListener('click', () => {
+  categoryScreen.classList.remove('active');
 });
 </script>
 </body>
