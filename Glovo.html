@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Map Selection</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+html,body{ width:100%; height:100%; }
+
+/* Splash */
+#splash{ display:flex; justify-content:center; align-items:center; height:100vh; background:#ffbf42; color:#019E81; font-size:3em; font-weight:900; transition:opacity .5s; }
+#splash .letter{ display:inline-block; animation:bounce 0.6s ease infinite; }
+#splash .letter:nth-child(1){ animation-delay:0s; }
+#splash .letter:nth-child(2){ animation-delay:0.1s; }
+#splash .letter:nth-child(3){ animation-delay:0.2s; }
+#splash .letter:nth-child(4){ animation-delay:0.3s; }
+#splash .letter:nth-child(5){ animation-delay:0.4s; }
+#splash .bike{ margin-left:10px; animation:bikeBounce 0.8s ease infinite; }
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+@keyframes bikeBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+
+/* Home */
+#home{ display:none; height:100vh; }
+.card{ position:absolute; top:0; left:0; right:0; bottom:60px; background:#FFBF42; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.address-card{ position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#fff2a8; border-radius:10px; padding:10px 18px; display:inline-flex; align-items:center; cursor:pointer; white-space:nowrap; }
+.address-card .icon{ margin-left:6px; }
+.logo{ font-size:4em; margin-bottom:15px; }
+.title{ font-size:1.6em; font-weight:bold; margin-bottom:10px; }
+.subtitle{ font-size:1em; }
+
+nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; background:#fff; border-top:1px solid #ddd; position:fixed; bottom:0; left:0; right:0; z-index:1000; }
+.nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; }
+.nav-item span{ font-size:.7em; }
+.nav-item.active{ color:#019E81; }
+
+/* Map */
+#mapScreen{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:10; }
+#map{ width:100%; height:100%; }
+#currentLocationBtn{ position:absolute; top:80px; right:15px; z-index:700; background:#fff; border-radius:50%; padding:10px; box-shadow:0 2px 6px rgba(0,0,0,.3); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.5em; }
+#bottomCard{ position:absolute; bottom:0; left:0; width:100%; height:40%; background:#fff; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,0.2); padding:20px; transform:translateY(100%); transition:transform .4s ease; display:flex; flex-direction:column; justify-content:space-between; gap:10px; z-index:500; overflow:hidden; }
+#bottomCard::before{ content:""; position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,1); border-top-left-radius:20px; border-top-right-radius:20px; z-index:-1; }
+#bottomCard.show{ transform:translateY(0); }
+#bottomCard h2{ margin-bottom:10px; }
+#bottomCard .subtitle{ display:flex; align-items:center; }
+#bottomCard .icon{ margin-right:8px; }
+#addAddressBtn{ background:#a8d8ff; padding:12px; border:none; border-radius:10px; text-align:center; font-size:1.1em; font-weight:bold; cursor:pointer; margin-top:auto; }
+#addAddressBtn:hover{ background:#7ec6ff; }
+
+/* Back */
+#backBtn{ position:absolute; top:20px; left:20px; z-index:999; background:#fff; padding:10px 15px; border-radius:8px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.3); transition:opacity 0.3s; }
+.leaflet-control-attribution { position: relative; z-index: 1; }
+
+/* Search card */
+#searchCard{ position:absolute; bottom:-100%; left:0; width:100%; background:#f0f0f0; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,.2); padding:12px 20px; display:flex; flex-direction:column; justify-content:flex-start; gap:10px; transition:all 0.4s ease; z-index:600; max-height:50%; overflow:hidden; pointer-events:auto;}
+#searchCard.show{ bottom:0; }
+#searchCard.expanded{ top:0; bottom:0; height:100%; max-height:none; border-radius:0; }
+#searchCard .search-title{ text-align:center; font-weight:normal; font-size:1em; color:#333; line-height:1.3em; transition: opacity 0.3s; }
+#searchCard.expanded .search-title{ opacity:0; height:0; margin:0; padding:0; }
+#searchCard .search-bar{ display:flex; align-items:center; background:#e8e8e8; padding:10px 14px; border-radius:12px; gap:8px; font-size:1.1em; }
+#searchCard input{ flex:1; border:none; outline:none; font-size:1.1em; background:transparent; padding:2px 0; }
+#searchCard .search-icon{ font-size:1.3em; }
+#searchCard .close-btn{ cursor:pointer; font-size:1.3em; }
+.autocomplete-list{ list-style:none; margin-top:5px; padding:0; background:#fff; max-height:200px; overflow-y:auto; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.autocomplete-list li{ padding:10px; cursor:pointer; border-bottom:1px solid #eee;}
+.autocomplete-list li:hover{ background:#f2f2f2; }
+
+/* New Home Screen for Add Location */
+#newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none;}
+#newHomeScreen.active{ pointer-events:auto; bottom:0; }
+#newHomeScreen .header{ height:50%; background:#FFBF42; display:flex; justify-content:center; align-items:center; font-size:2em; font-weight:bold; color:#fff; }
+#newHomeScreen .content{ flex:1; background:#fff; padding:20px; overflow-y:auto; margin-bottom:60px; }
+
+/* Navbar inside newHomeScreen */
+#newHomeScreen nav{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  overflow-x:auto;
+  white-space:nowrap;
+  padding:10px 0;
+  background:#fff;
+  border-top:1px solid #ddd;
+  z-index:1001;
+}
+#newHomeScreen nav .nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; }
+#newHomeScreen nav .nav-item span{ font-size:.7em; }
+#newHomeScreen nav .nav-item.active{ color:#019E81; }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <span class="letter">G</span><span class="letter">l</span><span class="letter">o</span><span class="letter">v</span><span class="letter">o</span>
+  <span class="bike">🚴‍♂️</span>
+</div>
+
+<div id="home">
+  <div class="card">
+    <div class="address-card" id="openMapBtn">Enter delivery Address <span class="icon">📍</span></div>
+    <div class="logo">🏠</div>
+    <div class="title">Out of delivery area</div>
+    <div class="subtitle">We can't deliver to this location yet.</div>
+  </div>
+
+  <nav>
+    <div class="nav-item active">🏠<span>Home</span></div>
+    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🛒<span>Cart</span></div>
+    <div class="nav-item">👤<span>Profile</span></div>
+    <div class="nav-item">👥<span>User</span></div>
+    <div class="nav-item">🚴‍♂️<span>Rider</span></div>
+    <div class="nav-item">🏪<span>Shop</span></div>
+    <div class="nav-item">🛎️<span>Admin</span></div>
+  </nav>
+</div>
+
+<div id="mapScreen">
+  <div id="backBtn">← Back</div>
+  <div id="map"></div>
+  <div id="currentLocationBtn" title="Go to my location">📍</div>
+
+  <div id="bottomCard">
+    <div>
+      <h2>Where Shall We Deliver to?</h2>
+      <div class="subtitle">
+        <span class="icon">🏠</span>
+        <span id="selectedAddress">Select a location on the map</span>
+      </div>
+    </div>
+    <button id="addAddressBtn">Add New Address</button>
+  </div>
+
+  <div id="searchCard">
+    <div class="search-title">Trouble using the Location? <br> try using search instead</div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search city, Streets, Districts" id="searchInput"/>
+      <span id="closeSearch" class="close-btn">✖</span>
+    </div>
+    <ul id="autocompleteSuggestions" class="autocomplete-list"></ul>
+  </div>
+</div>
+
+<div id="newHomeScreen">
+  <div class="header">Add New Address</div>
+  <div class="content">
+    <p>Here you can add the new delivery address details.</p>
+  </div>
+  <nav>
+    <div class="nav-item active">🏠<span>Home</span></div>
+    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🛒<span>Cart</span></div>
+    <div class="nav-item">👤<span>Profile</span></div>
+    <div class="nav-item">👥<span>User</span></div>
+    <div class="nav-item">🚴‍♂️<span>Rider</span></div>
+    <div class="nav-item">🏪<span>Shop</span></div>
+    <div class="nav-item">🛎️<span>Admin</span></div>
+  </nav>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+let map, marker;
+
+/* Splash */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('splash').style.opacity=0;
+    setTimeout(()=>{
+      document.getElementById('splash').style.display='none';
+      document.getElementById('home').style.display='block';
+    },500);
+  },3000);
+});
+
+/* Open Map */
+document.getElementById('openMapBtn').addEventListener('click',()=>{
+  document.getElementById('home').style.display='none';
+  document.getElementById('mapScreen').style.display='block';
+  setTimeout(()=> document.getElementById('bottomCard').classList.add('show'),200);
+
+  if(!map){
+    map=L.map('map').setView([24.4539,54.3773],13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
+    marker=L.marker([24.4539,54.3773],{draggable:true}).addTo(map);
+    marker.on('dragend', ()=>{
+      reverseGeocode(marker.getLatLng());
+      showSearchCard();
+    });
+    map.on('click', showSearchCard);
+  }
+  setTimeout(()=>map.invalidateSize(),300);
+});
+
+/* Reverse geocoding */
+function reverseGeocode(latlng){
+  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latlng.lat}&lon=${latlng.lng}&format=json`)
+    .then(res=>res.json())
+    .then(data=>{
+      if(data && data.display_name){
+        document.getElementById('selectedAddress').textContent = data.display_name;
+      }
+    });
+}
+
+/* Show search card */
+function showSearchCard(){
+  const searchCard = document.getElementById('searchCard');
+  const bottomCard = document.getElementById('bottomCard');
+  searchCard.classList.add('show');
+  bottomCard.classList.remove('show');
+}
+
+/* Expand search card when input focused */
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('focus',()=>{
+  const searchCard = document.getElementById('searchCard');
+  searchCard.classList.add('expanded');
+  document.getElementById('backBtn').style.opacity='0';
+  document.getElementById('currentLocationBtn').style.opacity='0';
+  document.querySelector('.leaflet-control-zoom').style.opacity='0';
+});
+
+/* Collapse search card */
+document.getElementById('closeSearch').addEventListener('click',()=>{
+  const searchCard = document.getElementById('searchCard');
+  const bottomCard = document.getElementById('bottomCard');
+  searchCard.classList.remove('expanded');
+  searchCard.classList.remove('show');
+  setTimeout(()=> bottomCard.classList.add('show'), 400);
+  document.getElementById('backBtn').style.opacity='1';
+  document.getElementById('currentLocationBtn').style.opacity='1';
+  document.querySelector('.leaflet-control-zoom').style.opacity='1';
+});
+
+/* Current Location */
+document.getElementById('currentLocationBtn').addEventListener('click',()=>{
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      const lat=pos.coords.latitude, lng=pos.coords.longitude;
+      marker.setLatLng([lat,lng]);
+      reverseGeocode({lat,lng});
+      map.setView([lat,lng],15);
+    },()=>alert("Unable to access your location."));
+  } else { alert("Geolocation not supported."); }
+});
+
+/* Back button */
+document.getElementById('backBtn').addEventListener('click',()=>{
+  document.getElementById('mapScreen').style.display='none';
+  document.getElementById('home').style.display='block';
+  document.getElementById('bottomCard').classList.remove('show');
+  const searchCard = document.getElementById('searchCard');
+  searchCard.classList.remove('show');
+  searchCard.classList.remove('expanded');
+  document.getElementById('backBtn').style.opacity='1';
+  document.getElementById('currentLocationBtn').style.opacity='1';
+  document.querySelector('.leaflet-control-zoom').style.opacity='1';
+});
+
+/* Add New Address Screen Slide */
+document.getElementById('addAddressBtn').addEventListener('click',()=>{
+  const newScreen = document.getElementById('newHomeScreen');
+  newScreen.classList.add('active');
+});
+
+/* Autocomplete */
+const suggList = document.getElementById('autocompleteSuggestions');
+searchInput.addEventListener('input',()=>{
+  const value = searchInput.value.trim();
+  if(!value){ suggList.innerHTML=''; return; }
+
+  fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1&limit=5`)
+    .then(res=>res.json())
+    .then(data=>{
+      suggList.innerHTML='';
+      data.forEach(place=>{
+        const li=document.createElement('li');
+        li.textContent=place.display_name;
+        li.addEventListener('click',()=>{
+          searchInput.value=place.display_name;
+          suggList.innerHTML='';
+          const lat=parseFloat(place.lat), lng=parseFloat(place.lon);
+          marker.setLatLng([lat,lng]);
+          map.setView([lat,lng],15);
+          document.getElementById('selectedAddress').textContent = place.display_name;
+          const searchCard = document.getElementById('searchCard');
+          searchCard.classList.remove('expanded');
+          searchCard.classList.remove('show');
+          document.getElementById('bottomCard').classList.add('show');
+          document.getElementById('backBtn').style.opacity='1';
+          document.getElementById('currentLocationBtn').style.opacity='1';
+          document.querySelector('.leaflet-control-zoom').style.opacity='1';
+        });
+        suggList.appendChild(li);
+      });
+    });
+});
+</script>
+</body>
+</html>
