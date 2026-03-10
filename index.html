@@ -55,21 +55,21 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 /* Back */
 #newHomeBackBtn, #backBtn {
   position:absolute;
-  top:20px;
-  left:20px;
+  top:8px;
+  left:8px;
   z-index:999;
   background:#fff;
-  padding:10px;
-  border-radius:8px;
+  padding:6px;
+  border-radius:6px;
   cursor:pointer;
   box-shadow:0 2px 6px rgba(0,0,0,.3);
   transition:opacity 0.3s, background-color 0.2s;
-  font-size: 1.2em;
+  font-size: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
 }
 #newHomeBackBtn:hover, #backBtn:hover { background-color: #f0f0f0; }
 #newHomeBackBtn { z-index: 1002; }
@@ -90,8 +90,8 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 .autocomplete-list li:hover{ background:#f2f2f2; }
 
 /* New Home Screen for Add Location */
-#newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none;}
-#newHomeScreen.active{ pointer-events:auto; bottom:0; }
+#newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:calc(100% - 60px); z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
+#newHomeScreen.active{ pointer-events:auto; bottom:60px; }
 #newHomeScreen .header{ height:45%; background:#FFBF42; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
 #newHomeScreen .selected-address-card{ display:none; align-items:center; justify-content:center; margin:0 auto 12px auto; padding:10px 12px; border-radius:12px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; cursor:pointer; max-width:calc(100% - 24px); transition: background-color .2s, box-shadow .2s; }
 #newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
@@ -146,15 +146,22 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   position:fixed;
   top:0;
   left:0;
+  right:0;
+  bottom:60px;
   width:100%;
-  height:100%;
+  height:calc(100% - 60px);
   background:#fff;
   z-index:2000;
-  display:flex;
+  display:none;
   flex-direction:column;
   opacity:0;
   pointer-events:none;
   transition: opacity 0.3s ease;
+}
+#categoryScreen.active{
+  display:flex;
+  opacity:1;
+  pointer-events:auto;
 }
 #categoryScreen.active{ opacity:1; pointer-events:auto; }
 #categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; gap:15px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
@@ -291,6 +298,21 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 <script>
 let map, marker;
 
+function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
+function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
+function updateAddAddressBtn(){
+  const btn = document.getElementById('addAddressBtn');
+  if(!btn) return;
+  const newHome = document.getElementById('newHomeScreen');
+  const cat = document.getElementById('categoryScreen');
+  if((newHome && newHome.classList.contains('active')) ||
+     (cat && cat.classList.contains('active'))){
+    btn.style.display='none';
+  } else {
+    btn.style.display='block';
+  }
+}
+
 /* Splash */
 document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
@@ -348,6 +370,8 @@ function goBackToMap() {
   document.getElementById('bottomCard').classList.add('show');
   document.getElementById('searchCard').classList.remove('show');
   document.getElementById('searchCard').classList.remove('expanded');
+  showMap();
+  updateAddAddressBtn();
   document.getElementById('backBtn').style.opacity = '1';
   document.getElementById('currentLocationBtn').style.opacity = '1';
   document.querySelector('.leaflet-control-zoom').style.opacity = '1';
@@ -362,6 +386,8 @@ function showSearchCard(){
   const bottomCard = document.getElementById('bottomCard');
   searchCard.classList.add('show');
   bottomCard.classList.remove('show');
+  hideMap();
+  updateAddAddressBtn();
 }
 
 /* Expand search card when input focused */
@@ -380,7 +406,10 @@ document.getElementById('closeSearch').addEventListener('click',()=>{
   const bottomCard = document.getElementById('bottomCard');
   searchCard.classList.remove('expanded');
   searchCard.classList.remove('show');
-  setTimeout(()=> bottomCard.classList.add('show'), 400);
+  setTimeout(()=>{
+    bottomCard.classList.add('show');
+    updateAddAddressBtn();
+  }, 400);
   document.getElementById('backBtn').style.opacity='1';
   document.getElementById('currentLocationBtn').style.opacity='1';
   document.querySelector('.leaflet-control-zoom').style.opacity='1';
@@ -416,6 +445,8 @@ document.getElementById('addAddressBtn').addEventListener('click',()=>{
   const newScreen = document.getElementById('newHomeScreen');
   newScreen.classList.add('active');
   updateSelectedAddressCard();
+  hideMap();
+  updateAddAddressBtn();
 });
 
 /* Click on header to go to map if no address selected */
@@ -522,6 +553,10 @@ function showDetailScreen(title) {
   catTitle.textContent = title;
   catNameDisplay.textContent = title;
 
+  // Hide map and add button
+  hideMap();
+  updateAddAddressBtn();
+
   // Add 'active' class to show the screen
   categoryScreen.classList.add('active');
 }
@@ -542,6 +577,8 @@ document.querySelectorAll('.shop-item').forEach(item => {
 
 catBackBtn.addEventListener('click', () => {
   categoryScreen.classList.remove('active');
+  showMap();
+  updateAddAddressBtn();
 });
 </script>
 </body>
