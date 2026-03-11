@@ -92,10 +92,10 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 /* New Home Screen for Add Location */
 #newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
 #newHomeScreen.active{ pointer-events:auto; bottom:0; }
-#newHomeScreen .header{ height:55%; background:#FFBF42; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; padding-top: 40px; }
-#newHomeScreen .selected-address-card{ display:none; align-items:center; justify-content:center; margin:0 auto 12px auto; padding:10px 12px; border-radius:12px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; cursor:pointer; max-width:calc(100% - 24px); transition: background-color .2s, box-shadow .2s; }
+#newHomeScreen .header{ height:55%; background:#FFBF42; display:flex; justify-content:flex-start; align-items:center; flex-direction:column; color:#fff; padding-top: 60px; }
+#newHomeScreen .selected-address-card{ position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap: 6px; padding:8px 12px; border-radius:10px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; font-size:0.85em; cursor:pointer; max-width:calc(100% - 90px); transition: background-color .2s, box-shadow .2s; }
 #newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
-#newHomeScreen .selected-address-card .home-icon{ font-size:1.5rem; }
+#newHomeScreen .selected-address-card .home-icon{ font-size:1.2rem; }
 #newHomeScreen .top-grid{ width:100%; max-width:1000px; padding:15px 16px 10px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
 #newHomeScreen .grid-item{ display:flex; flex-direction:column; align-items:center; gap:0px; margin-bottom:14px; cursor:pointer; transition:transform .2s; }
 #newHomeScreen .grid-item:hover{ transform:translateY(-5px); }
@@ -346,7 +346,7 @@ document.getElementById('openMapBtn').addEventListener('click',()=>{
 
 /* Reverse geocoding */
 function reverseGeocode(latlng){
-  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latlng.lat}&lon=${latlng.lng}&format=json`)
+  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latlng.lat}&lon=${latlng.lng}&format=json&accept-language=en`)
     .then(res=>res.json())
     .then(data=>{
       if(data && data.display_name){
@@ -360,7 +360,8 @@ function updateSelectedAddressCard(){
   const addrText = document.getElementById('selectedAddress').textContent;
   if(addrText && addrText !== 'Select a location on the map'){
     document.getElementById('selectedAddressText').textContent = addrText;
-    document.getElementById('selectedAddressCard').style.display = 'inline-flex';
+  } else {
+    document.getElementById('selectedAddressText').textContent = 'Set delivery address';
   }
 }
 
@@ -381,6 +382,14 @@ function navigateBack() {
 
     // From New Home screen, go back to Map screen
     if (newHomeScreen.classList.contains('active')) {
+        // Wait for the screen transition to fully complete before redrawing the map.
+        // This is more reliable than a fixed setTimeout.
+        newHomeScreen.addEventListener('transitionend', function onTransitionEnd() {
+            if (map) {
+                map.invalidateSize();
+            }
+        }, { once: true }); // The listener will automatically remove itself after firing once.
+
         newHomeScreen.classList.remove('active');
         mapScreen.style.display = 'block';
         homeScreen.style.display = 'none';
@@ -391,9 +400,6 @@ function navigateBack() {
         document.getElementById('backBtn').style.opacity = '1';
         document.getElementById('currentLocationBtn').style.opacity = '1';
         document.querySelector('.leaflet-control-zoom').style.opacity = '1';
-        if (map) {
-            setTimeout(() => map.invalidateSize(), 300);
-        }
         return;
     }
 
@@ -434,6 +440,8 @@ document.getElementById('closeSearch').addEventListener('click',()=>{
   const bottomCard = document.getElementById('bottomCard');
   searchCard.classList.remove('expanded');
   searchCard.classList.remove('show');
+  showMap();
+  if (map) setTimeout(() => map.invalidateSize(), 10);
   setTimeout(()=>{
     bottomCard.classList.add('show');
     updateAddAddressBtn();
@@ -468,12 +476,7 @@ document.getElementById('addAddressBtn').addEventListener('click',()=>{
 });
 
 /* Click on header to go to map if no address selected */
-document.querySelector('#newHomeScreen .header').addEventListener('click',()=>{
-  const addrCard = document.getElementById('selectedAddressCard');
-  if (addrCard.style.display === 'none') {
-    navigateBack();
-  }
-});
+/* This is now handled by the click on selectedAddressCard itself. */
 
 /* Back navigation from newHomeScreen */
 document.getElementById('selectedAddressCard').addEventListener('click', navigateBack);
@@ -485,7 +488,7 @@ searchInput.addEventListener('input',()=>{
   const value = searchInput.value.trim();
   if(!value){ suggList.innerHTML=''; return; }
 
-  fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1&limit=5`)
+  fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(value)}&format=json&addressdetails=1&limit=5&accept-language=en`)
     .then(res=>res.json())
     .then(data=>{
       suggList.innerHTML='';
@@ -504,6 +507,8 @@ searchInput.addEventListener('input',()=>{
           const searchCard = document.getElementById('searchCard');
           searchCard.classList.remove('expanded');
           searchCard.classList.remove('show');
+          showMap();
+          if (map) setTimeout(() => map.invalidateSize(), 10);
           document.getElementById('bottomCard').classList.add('show');
           document.getElementById('backBtn').style.opacity='1';
           document.getElementById('currentLocationBtn').style.opacity='1';
