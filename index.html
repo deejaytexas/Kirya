@@ -90,9 +90,9 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 .autocomplete-list li:hover{ background:#f2f2f2; }
 
 /* New Home Screen for Add Location */
-#newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:calc(100% - 60px); z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
-#newHomeScreen.active{ pointer-events:auto; bottom:60px; }
-#newHomeScreen .header{ height:45%; background:#FFBF42; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; }
+#newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
+#newHomeScreen.active{ pointer-events:auto; bottom:0; }
+#newHomeScreen .header{ height:55%; background:#FFBF42; display:flex; justify-content:center; align-items:center; flex-direction:column; color:#fff; padding-top: 40px; }
 #newHomeScreen .selected-address-card{ display:none; align-items:center; justify-content:center; margin:0 auto 12px auto; padding:10px 12px; border-radius:12px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; cursor:pointer; max-width:calc(100% - 24px); transition: background-color .2s, box-shadow .2s; }
 #newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
 #newHomeScreen .selected-address-card .home-icon{ font-size:1.5rem; }
@@ -102,25 +102,28 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #newHomeScreen .circle{ width:95px; height:95px; border:2px solid #019E81; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; color:#019E81; font-weight:700; font-size:3em; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'EmojiSymbols', sans-serif; }
 #newHomeScreen .grid-label{ width:80%; min-width:70px; text-align:center; border:2px solid #019E81; border-radius:8px; background:#fff; color:#019E81; font-size:0.85em; padding:4px 6px; margin-top:-2px; }
 #newHomeScreen .grid-item{ touch-action: manipulation; }
-#newHomeScreen .content{ flex:1; background:#fff; padding: 20px 20px 80px; overflow-y:auto; }
+#newHomeScreen .content{ flex:1; background:#fff; padding: 20px 0 80px; overflow-y:auto; }
 #newHomeScreen .for-you-text {
   font-size: 1.2em;
   font-weight: bold;
   color: #333;
   margin-bottom: 15px;
+  padding: 0 20px;
 }
-#newHomeScreen.active .content{ height:55%; }
-#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding-bottom:16px; scroll-snap-type:x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
-#newHomeScreen .shop-scroll::-webkit-scrollbar{ display: none; }
-#newHomeScreen .shop-slide{ display:flex; gap:12px; scroll-snap-align:start; }
-#newHomeScreen .shop-item{ width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s; }
+#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding: 0 calc(50% - 39px) 16px; touch-action: pan-x; scroll-snap-type:x mandatory; }
+#newHomeScreen .shop-item{ width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s; scroll-snap-align: center; }
 #newHomeScreen .shop-item:hover{ transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.1); }
-#newHomeScreen .shop-info{ margin-top:12px; font-size:0.91rem; }
+#newHomeScreen .shop-item.is-active {
+  transform: scale(1.1);
+  border-color: #FFBF42;
+  box-shadow: 0 6px 12px rgba(0,0,0,.15);
+}
+#newHomeScreen .shop-info{ margin-top:12px; font-size:0.91rem; padding: 0 20px; }
 #newHomeScreen .shop-info-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
 #newHomeScreen .shop-info .headline{ font-weight:800; color:#333; margin-bottom:4px; }
 #newHomeScreen .shop-info .sub{ color:#555; }
 #newHomeScreen .bike-block{ display:flex; align-items:center; color:#019E81; font-weight:600; }
-#newHomeScreen .bike-block span{ font-size:5.2rem; line-height:1; }
+#newHomeScreen .bike-block span{ font-size:3.5rem; line-height:1; }
 
 
 /* Navbar inside newHomeScreen */
@@ -132,12 +135,12 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   display:flex;
   overflow-x:auto;
   white-space:nowrap;
-  padding:10px 0;
+  padding:4px 0;
   background:#fff;
   border-top:1px solid #ddd;
   z-index:1001;
 }
-#newHomeScreen nav .nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.2em; display:flex; flex-direction:column; align-items:center; }
+#newHomeScreen nav .nav-item{ flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.1em; display:flex; flex-direction:column; align-items:center; }
 #newHomeScreen nav .nav-item span{ font-size:.7em; }
 #newHomeScreen nav .nav-item.active, #newHomeScreen nav .nav-item:hover{ color:#019E81; }
 
@@ -147,9 +150,9 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   top:0;
   left:0;
   right:0;
-  bottom:60px;
+  bottom:0;
   width:100%;
-  height:calc(100% - 60px);
+  height:100%;
   background:#fff;
   z-index:2000;
   display:none;
@@ -246,16 +249,14 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   <div class="content">
     <div class="for-you-text">These Are For You</div>
     <div class="shop-scroll" id="shopScroll">
-      <div class="shop-slide">
-        <div class="shop-item">🛍️</div>
-        <div class="shop-item">🛒</div>
-        <div class="shop-item">🏬</div>
-        <div class="shop-item">🏤</div>
-        <div class="shop-item">📦</div>
-        <div class="shop-item">🍽️</div>
-        <div class="shop-item">🥤</div>
-        <div class="shop-item">🍰</div>
-      </div>
+      <div class="shop-item">🛍️</div>
+      <div class="shop-item">🛒</div>
+      <div class="shop-item">🏬</div>
+      <div class="shop-item">🏤</div>
+      <div class="shop-item">📦</div>
+      <div class="shop-item">🍽️</div>
+      <div class="shop-item">🥤</div>
+      <div class="shop-item">🍰</div>
     </div>
     <div class="shop-info">
       <div class="shop-info-row">
@@ -363,21 +364,48 @@ function updateSelectedAddressCard(){
   }
 }
 
-function goBackToMap() {
-  document.getElementById('newHomeScreen').classList.remove('active');
-  document.getElementById('mapScreen').style.display = 'block';
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('bottomCard').classList.add('show');
-  document.getElementById('searchCard').classList.remove('show');
-  document.getElementById('searchCard').classList.remove('expanded');
-  showMap();
-  updateAddAddressBtn();
-  document.getElementById('backBtn').style.opacity = '1';
-  document.getElementById('currentLocationBtn').style.opacity = '1';
-  document.querySelector('.leaflet-control-zoom').style.opacity = '1';
-  if (map) {
-    setTimeout(() => map.invalidateSize(), 300);
-  }
+// Consolidated back navigation logic
+function navigateBack() {
+    const homeScreen = document.getElementById('home');
+    const mapScreen = document.getElementById('mapScreen');
+    const newHomeScreen = document.getElementById('newHomeScreen');
+    const categoryScreen = document.getElementById('categoryScreen');
+    const searchCard = document.getElementById('searchCard');
+
+    // From Category screen, go back to New Home screen
+    if (categoryScreen.classList.contains('active')) {
+        categoryScreen.classList.remove('active');
+        updateAddAddressBtn();
+        return;
+    }
+
+    // From New Home screen, go back to Map screen
+    if (newHomeScreen.classList.contains('active')) {
+        newHomeScreen.classList.remove('active');
+        mapScreen.style.display = 'block';
+        homeScreen.style.display = 'none';
+        document.getElementById('bottomCard').classList.add('show');
+        searchCard.classList.remove('show');
+        searchCard.classList.remove('expanded');
+        updateAddAddressBtn();
+        document.getElementById('backBtn').style.opacity = '1';
+        document.getElementById('currentLocationBtn').style.opacity = '1';
+        document.querySelector('.leaflet-control-zoom').style.opacity = '1';
+        if (map) {
+            setTimeout(() => map.invalidateSize(), 300);
+        }
+        return;
+    }
+
+    // From Map screen, go back to Home screen
+    if (mapScreen.style.display === 'block') {
+        mapScreen.style.display = 'none';
+        homeScreen.style.display = 'block';
+        document.getElementById('bottomCard').classList.remove('show');
+        searchCard.classList.remove('show');
+        searchCard.classList.remove('expanded');
+        return;
+    }
 }
 
 /* Show search card */
@@ -428,17 +456,7 @@ document.getElementById('currentLocationBtn').addEventListener('click',()=>{
 });
 
 /* Back button */
-document.getElementById('backBtn').addEventListener('click',()=>{
-  document.getElementById('mapScreen').style.display='none';
-  document.getElementById('home').style.display='block';
-  document.getElementById('bottomCard').classList.remove('show');
-  const searchCard = document.getElementById('searchCard');
-  searchCard.classList.remove('show');
-  searchCard.classList.remove('expanded');
-  document.getElementById('backBtn').style.opacity='1';
-  document.getElementById('currentLocationBtn').style.opacity='1';
-  document.querySelector('.leaflet-control-zoom').style.opacity='1';
-});
+document.getElementById('backBtn').addEventListener('click', navigateBack);
 
 /* Show address on newHomeScreen when returning from map */
 document.getElementById('addAddressBtn').addEventListener('click',()=>{
@@ -452,23 +470,14 @@ document.getElementById('addAddressBtn').addEventListener('click',()=>{
 /* Click on header to go to map if no address selected */
 document.querySelector('#newHomeScreen .header').addEventListener('click',()=>{
   const addrCard = document.getElementById('selectedAddressCard');
-  if(addrCard.style.display === 'none'){
-    document.getElementById('newHomeScreen').classList.remove('active');
-    document.getElementById('mapScreen').style.display='block';
-    document.getElementById('home').style.display='none';
-    document.getElementById('bottomCard').classList.add('show');
-    document.getElementById('searchCard').classList.remove('show');
-    document.getElementById('searchCard').classList.remove('expanded');
-    document.getElementById('backBtn').style.opacity='1';
-    document.getElementById('currentLocationBtn').style.opacity='1';
-    document.querySelector('.leaflet-control-zoom').style.opacity='1';
-    if(map){ map.invalidateSize(); }
+  if (addrCard.style.display === 'none') {
+    navigateBack();
   }
 });
 
-/* Selected address card click to map */
-document.getElementById('selectedAddressCard').addEventListener('click', goBackToMap);
-document.getElementById('newHomeBackBtn').addEventListener('click', goBackToMap);
+/* Back navigation from newHomeScreen */
+document.getElementById('selectedAddressCard').addEventListener('click', navigateBack);
+document.getElementById('newHomeBackBtn').addEventListener('click', navigateBack);
 
 /* Autocomplete */
 const suggList = document.getElementById('autocompleteSuggestions');
@@ -575,11 +584,55 @@ document.querySelectorAll('.shop-item').forEach(item => {
   });
 });
 
-catBackBtn.addEventListener('click', () => {
-  categoryScreen.classList.remove('active');
-  showMap();
-  updateAddAddressBtn();
-});
+/* Visual feedback for centered shop item */
+const shopScrollContainer = document.getElementById('shopScroll');
+if (shopScrollContainer) {
+    const shopItems = shopScrollContainer.querySelectorAll('.shop-item');
+    let scrollTimeout;
+
+    const findCenteredItem = () => {
+        const containerRect = shopScrollContainer.getBoundingClientRect();
+        if (containerRect.width === 0) return; // Do nothing if not visible
+
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        let closestItem = null;
+        let minDistance = Infinity;
+
+        shopItems.forEach(item => {
+            const itemRect = item.getBoundingClientRect();
+            const itemCenter = itemRect.left + itemRect.width / 2;
+            const distance = Math.abs(containerCenter - itemCenter);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestItem = item;
+            }
+        });
+
+        if (closestItem) {
+            shopItems.forEach(item => item.classList.remove('is-active'));
+            closestItem.classList.add('is-active');
+        }
+    };
+
+    shopScrollContainer.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(findCenteredItem, 100);
+    });
+
+    // Use MutationObserver to detect when the screen becomes visible and set initial active item
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class' && mutation.target.classList.contains('active')) {
+                setTimeout(findCenteredItem, 50); // Delay to ensure layout is ready
+            }
+        });
+    });
+    observer.observe(document.getElementById('newHomeScreen'), { attributes: true });
+}
+
+catBackBtn.addEventListener('click', navigateBack);
 </script>
 </body>
 </html>
