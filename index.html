@@ -76,16 +76,20 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 .leaflet-control-attribution { position: relative; z-index: 1; }
 
 /* Search card */
-#searchCard{ position:absolute; bottom:-100%; left:0; width:100%; background:#f0f0f0; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,.2); padding:12px 20px; display:flex; flex-direction:column; justify-content:flex-start; gap:10px; transition:all 0.4s ease; z-index:600; max-height:50%; overflow:hidden; pointer-events:auto;}
+#searchCard{ position:absolute; bottom:-100%; left:0; width:100%; background:#f0f0f0; border-top-left-radius:20px; border-top-right-radius:20px; box-shadow:0 -4px 12px rgba(0,0,0,.2); padding:12px 20px; display:flex; flex-direction:column; justify-content:flex-start; gap:10px; transition:all 0.4s ease; z-index:600; max-height:50%; pointer-events:auto;}
 #searchCard.show{ bottom:0; }
-#searchCard.expanded{ top:0; bottom:0; height:100%; max-height:none; border-radius:0; }
+#searchCard.expanded{ top:0; bottom:0; height:100%; max-height:none; border-radius:0; overflow-y: auto; }
 #searchCard .search-title{ text-align:center; font-weight:normal; font-size:1em; color:#333; line-height:1.3em; transition: opacity 0.3s; }
 #searchCard.expanded .search-title{ opacity:0; height:0; margin:0; padding:0; }
 #searchCard .search-bar{ display:flex; align-items:center; background:#e8e8e8; padding:10px 14px; border-radius:12px; gap:8px; font-size:1.1em; }
 #searchCard input{ flex:1; border:none; outline:none; font-size:1.1em; background:transparent; padding:2px 0; }
 #searchCard .search-icon{ font-size:1.3em; }
 #searchCard .close-btn{ cursor:pointer; font-size:1.3em; }
-.autocomplete-list{ list-style:none; margin-top:5px; padding:0; background:#fff; max-height:200px; overflow-y:auto; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.autocomplete-list{
+  list-style:none; margin-top:5px; padding:0;
+  overflow-y:auto;
+  flex: 1; /* Allow the list to grow and fill available space */
+}
 .autocomplete-list li{ padding:10px; cursor:pointer; border-bottom:1px solid #eee;}
 .autocomplete-list li:hover{ background:#f2f2f2; }
 
@@ -223,7 +227,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
     <div class="search-title">Trouble using the Location? <br> try using search instead</div>
     <div class="search-bar">
       <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search city, Streets, Districts" id="searchInput"/>
+      <input type="text" placeholder="Search city, Streets, Districts" id="searchInput" autocomplete="off"/>
       <span id="closeSearch" class="close-btn">✖</span>
     </div>
     <ul id="autocompleteSuggestions" class="autocomplete-list"></ul>
@@ -339,7 +343,11 @@ document.getElementById('openMapBtn').addEventListener('click',()=>{
       reverseGeocode(marker.getLatLng());
       showSearchCard();
     });
-    map.on('click', showSearchCard);
+    map.on('click', (e) => {
+      marker.setLatLng(e.latlng);
+      reverseGeocode(e.latlng);
+      showSearchCard();
+    });
   }
   setTimeout(()=>map.invalidateSize(),300);
 });
@@ -384,14 +392,16 @@ function navigateBack() {
     if (newHomeScreen.classList.contains('active')) {
         // Wait for the screen transition to fully complete before redrawing the map.
         // This is more reliable than a fixed setTimeout.
-        newHomeScreen.addEventListener('transitionend', function onTransitionEnd() {
-            if (map) {
+        newHomeScreen.addEventListener('transitionend', function onTransitionEnd(e) {
+            // Ensure we only act when the main 'bottom' transition is complete
+            if (e.target === newHomeScreen && e.propertyName === 'bottom' && map) {
                 map.invalidateSize();
             }
         }, { once: true }); // The listener will automatically remove itself after firing once.
 
         newHomeScreen.classList.remove('active');
         mapScreen.style.display = 'block';
+        showMap();
         homeScreen.style.display = 'none';
         document.getElementById('bottomCard').classList.add('show');
         searchCard.classList.remove('show');
@@ -420,8 +430,33 @@ function showSearchCard(){
   const bottomCard = document.getElementById('bottomCard');
   searchCard.classList.add('show');
   bottomCard.classList.remove('show');
-  hideMap();
   updateAddAddressBtn();
+}
+
+function closeSearchUI() {
+    const searchCard = document.getElementById('searchCard');
+    const bottomCard = document.getElementById('bottomCard');
+
+    if (!searchCard.classList.contains('show')) return;
+
+    const handleTransitionEnd = (e) => {
+        // Ensure we only act when the main 'bottom' transition is complete
+        if (e.target === searchCard && e.propertyName === 'bottom') {
+            if (map) map.invalidateSize();
+            bottomCard.classList.add('show');
+            updateAddAddressBtn();
+            searchCard.removeEventListener('transitionend', handleTransitionEnd);
+        }
+    };
+    searchCard.addEventListener('transitionend', handleTransitionEnd);
+
+    showMap(); // Show map immediately behind the closing card
+    searchCard.classList.remove('expanded');
+    searchCard.classList.remove('show');
+
+    document.getElementById('backBtn').style.opacity = '1';
+    document.getElementById('currentLocationBtn').style.opacity = '1';
+    document.querySelector('.leaflet-control-zoom').style.opacity = '1';
 }
 
 /* Expand search card when input focused */
@@ -435,21 +470,7 @@ searchInput.addEventListener('focus',()=>{
 });
 
 /* Collapse search card */
-document.getElementById('closeSearch').addEventListener('click',()=>{
-  const searchCard = document.getElementById('searchCard');
-  const bottomCard = document.getElementById('bottomCard');
-  searchCard.classList.remove('expanded');
-  searchCard.classList.remove('show');
-  showMap();
-  if (map) setTimeout(() => map.invalidateSize(), 10);
-  setTimeout(()=>{
-    bottomCard.classList.add('show');
-    updateAddAddressBtn();
-  }, 400);
-  document.getElementById('backBtn').style.opacity='1';
-  document.getElementById('currentLocationBtn').style.opacity='1';
-  document.querySelector('.leaflet-control-zoom').style.opacity='1';
-});
+document.getElementById('closeSearch').addEventListener('click', closeSearchUI);
 
 /* Current Location */
 document.getElementById('currentLocationBtn').addEventListener('click',()=>{
@@ -479,7 +500,6 @@ document.getElementById('addAddressBtn').addEventListener('click',()=>{
 /* This is now handled by the click on selectedAddressCard itself. */
 
 /* Back navigation from newHomeScreen */
-document.getElementById('selectedAddressCard').addEventListener('click', navigateBack);
 document.getElementById('newHomeBackBtn').addEventListener('click', navigateBack);
 
 /* Autocomplete */
@@ -504,15 +524,7 @@ searchInput.addEventListener('input',()=>{
           document.getElementById('selectedAddress').textContent = place.display_name;
           document.getElementById('selectedAddressText').textContent = place.display_name;
           updateSelectedAddressCard();
-          const searchCard = document.getElementById('searchCard');
-          searchCard.classList.remove('expanded');
-          searchCard.classList.remove('show');
-          showMap();
-          if (map) setTimeout(() => map.invalidateSize(), 10);
-          document.getElementById('bottomCard').classList.add('show');
-          document.getElementById('backBtn').style.opacity='1';
-          document.getElementById('currentLocationBtn').style.opacity='1';
-          document.querySelector('.leaflet-control-zoom').style.opacity='1';
+          closeSearchUI();
         });
         suggList.appendChild(li);
       });
