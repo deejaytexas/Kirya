@@ -9,6 +9,8 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+/* Hide all scrollbars */
+*{ -ms-overflow-style: none; scrollbar-width: none; } *::-webkit-scrollbar { display: none; }
 html,body{ width:100%; height:100%; }
 
 /* Splash */
@@ -97,7 +99,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
 #newHomeScreen.active{ pointer-events:auto; bottom:0; }
 #newHomeScreen .header{ height:55%; background:#FFBF42; display:flex; justify-content:flex-start; align-items:center; flex-direction:column; color:#fff; padding-top: 60px; }
-#newHomeScreen .selected-address-card{ position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap: 6px; padding:8px 12px; border-radius:10px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; font-size:0.85em; cursor:pointer; max-width:calc(100% - 90px); transition: background-color .2s, box-shadow .2s; }
+#newHomeScreen .selected-address-card{ position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap: 6px; padding:8px 12px; border-radius:10px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; font-size:0.85em; cursor:pointer; max-width:calc(100% - 90px); transition: background-color .2s, box-shadow .2s; white-space:nowrap; }
 #newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
 #newHomeScreen .selected-address-card .home-icon{ font-size:1.2rem; }
 #newHomeScreen .top-grid{ width:100%; max-width:1000px; padding:15px 16px 10px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
@@ -114,7 +116,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   margin-bottom: 15px;
   padding: 0 20px;
 }
-#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding: 0 calc(50% - 39px) 16px; touch-action: pan-x; scroll-snap-type:x mandatory; }
+#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding: 0 20px 16px; touch-action: pan-x; scroll-snap-type:x mandatory; }
 #newHomeScreen .shop-item{ width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s; scroll-snap-align: center; }
 #newHomeScreen .shop-item:hover{ transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.1); }
 #newHomeScreen .shop-item.is-active {
@@ -171,19 +173,92 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   pointer-events:auto;
 }
 #categoryScreen.active{ opacity:1; pointer-events:auto; }
-#categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; gap:15px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+#categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content: space-between; position: relative; height: 60px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
 #categoryScreen .back-btn{ font-size:1.5em; cursor:pointer; padding:5px; border-radius:50%; transition:background-color .2s; }
 #categoryScreen .back-btn:hover{ background-color:#f0f0f0; }
-#categoryScreen .cat-title{ font-size:1.2em; font-weight:bold; }
+#categoryScreen .cat-address-card{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #FFF8D0; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; color: #4A4A20; display: flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 60%; overflow: hidden; text-overflow: ellipsis; border:1px solid #F0E080; }
+#categoryScreen .cat-title{ font-size:1.8em; font-weight:800; margin-bottom: 15px; color:#333; }
+#categoryScreen .cat-search-wrapper{ margin-bottom: 20px; }
+#categoryScreen .cat-search-bar{ background: #f5f5f5; border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; border: 1px solid #eee; }
+#categoryScreen .cat-search-bar input{ border: none; background: transparent; outline: none; width: 100%; font-size: 1em; }
 #categoryScreen .cat-content{ flex:1; padding:20px; overflow-y:auto; }
+#categoryScreen .filter-scroll{ display:flex; overflow-x:auto; gap:12px; padding: 5px 5px 15px 5px; margin-bottom:10px; scrollbar-width:none; }
+#categoryScreen .filter-scroll::-webkit-scrollbar{ display:none; }
+#categoryScreen .filter-item{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:64px; cursor:pointer; }
+#categoryScreen .filter-box{ width:64px; height:64px; background:#f5f5f5; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.8em; border:1px solid transparent; transition:all .2s; }
+#categoryScreen .filter-item:hover .filter-box{ background:#fff; border-color:#019E81; box-shadow:0 4px 12px rgba(0,0,0,.1); transform:translateY(-2px); }
+#categoryScreen .filter-name{ font-size:0.75em; text-align:center; color:#666; font-weight:600; line-height:1.2; }
+#categoryScreen .text-filter-scroll{ display:flex; overflow-x:auto; gap:10px; padding: 0 5px 15px; margin-bottom:5px; }
+#categoryScreen .text-filter-btn{ background:#f5f5f5; border:1px solid #eee; border-radius:20px; padding:8px 16px; font-size:0.9em; font-weight:600; color:#333; display:flex; align-items:center; gap:6px; white-space:nowrap; cursor:pointer; transition:background-color .2s; }
 #categoryScreen .placeholder-box{ height:120px; background:#f5f5f5; border-radius:12px; margin-bottom:15px; display:flex; align-items:center; justify-content:center; color:#aaa; transition: background-color .2s, box-shadow .2s; }
 #categoryScreen .placeholder-box:hover{ background-color:#eee; box-shadow:0 2px 4px rgba(0,0,0,.05); }
+#categoryScreen .brands-section{ margin-bottom: 20px; }
+#categoryScreen .brands-section h3{ font-size: 1.2em; font-weight: 800; color: #333; margin-bottom: 15px; }
+#categoryScreen .brands-scroll{ display:flex; overflow-x:auto; gap:15px; }
+#categoryScreen .brand-container{ flex: 0 0 auto; width: 120px; display: flex; flex-direction: column; gap: 8px; }
+#categoryScreen .brand-item{ width: 100%; border: 1px solid #eee; border-radius: 12px; overflow: hidden; cursor: pointer; transition: box-shadow .2s; background: #fff; }
+#categoryScreen .brand-item:hover{ box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+#categoryScreen .brand-image{ height: 80px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 4em; }
+#categoryScreen .brand-details{ padding: 10px; }
+#categoryScreen .brand-name{ font-weight: bold; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; }
+#categoryScreen .brand-delivery-info{ 
+  background: #FFBF42; color: #4A4A20; font-size: 0.75em; font-weight: 600; 
+  padding: 4px 8px; border-radius: 6px; display: inline-flex; 
+  align-items: center; gap: 4px; align-self: center; 
+}
+#categoryScreen .brand-delivery-info .bike-icon{ font-size: 1.2em; display: inline-block; transform: scaleX(-1); }
+#categoryScreen .pref-section{ margin-top:20px; }
+#categoryScreen .pref-title{ font-size:1.2em; font-weight:800; color:#333; margin-bottom:15px; }
+#categoryScreen .pref-scroll{ display:flex; overflow-x:auto; gap:15px; padding-left:12px; padding-bottom:10px; }
+#categoryScreen .pref-card{ flex:0 0 auto; width:367px; display:flex; flex-direction:column; gap:8px; cursor:pointer; }
+#categoryScreen .pref-image{ width:100%; height:167px; border-radius:20px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:3em; color:#ccc; }
+#categoryScreen .pref-info{ display:flex; align-items:center; gap:15px; color:#555; font-size:0.9em; font-weight:600; }
+#categoryScreen .pref-stat{ display:flex; align-items:center; gap:5px; }
+#categoryScreen .restaurant-list-section { margin-top: 30px; }
+#categoryScreen .restaurant-list-section h3 { font-size: 1.2em; font-weight: 800; color: #333; margin-bottom: 15px; }
+#categoryScreen .restaurant-list { display: flex; flex-direction: column; gap: 20px; }
+#categoryScreen .res-card { display: flex; flex-direction: column; gap: 8px; cursor: pointer; }
+#categoryScreen .res-image { position: relative; width: 100%; height: 167px; border-radius: 20px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 3em; color: #ccc; overflow: hidden; }
+#categoryScreen .heart-btn { position: absolute; top: 8px; right: 8px; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(5px); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 1em; cursor: pointer; border: none; transition: all .2s; line-height: 0; padding: 0; }
+#categoryScreen .heart-btn:hover { transform: scale(1.1); }
+#categoryScreen .res-name { font-weight: 800; font-size: 1.1em; color: #333; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top:-2px; }
+
+#restaurantScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 3000; display: none; flex-direction: column; overflow-y: auto; }
+#restaurantScreen.active { display: flex; }
+#restaurantScreen .res-cover { height: 250px; background: #f0f0f0; position: relative; display: flex; align-items: center; justify-content: center; font-size: 5em; color: #ccc; }
+#restaurantScreen .res-header-content { padding: 20px; border-bottom: 1px solid #eee; }
+#restaurantScreen .res-screen-name { font-size: 1.8em; font-weight: 800; color: #333; margin-bottom: 8px; }
+#restaurantScreen .res-meta-row { display: flex; align-items: center; gap: 15px; color: #555; font-size: 0.95em; flex-wrap: wrap; }
+#restaurantScreen .res-meta-item { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+#restaurantScreen .bike-icon-right { display: inline-block; transform: scaleX(-1); font-size: 1.3em; }
+#restaurantScreen .delivery-fee-cross { text-decoration: line-through; color: #999; }
+#restaurantScreen .delivery-free { color: #019E81; font-weight: bold; margin-left: 5px; }
+
+#restaurantScreen .res-cover-header { position: absolute; top: 15px; left: 15px; right: 15px; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+#restaurantScreen .res-cover-actions-right { display: flex; gap: 8px; }
+
+#restaurantScreen .res-action-btn { width: 24px; height: 24px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); font-size: 0.9em; transition: transform .2s; }
+#restaurantScreen .res-action-btn:hover { transform: scale(1.1); }
+
+#optionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
+#optionsOverlay.show { opacity: 1; pointer-events: auto; }
+#resOptionsSheet { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); padding: 20px; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 3001; display: flex; flex-direction: column; gap: 15px; }
+#resOptionsSheet.show { transform: translateY(0); }
+#resOptionsSheet .res-option-item { display: flex; align-items: center; gap: 15px; font-size: 1.1em; padding: 10px 5px; cursor: pointer; border-radius: 8px; }
+#resOptionsSheet .res-option-item:hover { background: #f5f5f5; }
+#resOptionsSheet .res-option-item span { font-size: 1.4em; }
+
+#categoryScreen .cat-header-search { display: none; flex: 1; margin-left: 15px; background: #f5f5f5; border-radius: 12px; padding: 0 15px; height: 40px; align-items: center; gap: 10px; border: 1px solid #eee; }
+#categoryScreen .cat-header-search input { border: none; background: transparent; outline: none; width: 100%; font-size: 1em; }
+#categoryScreen .cat-header.stuck .cat-address-card { opacity: 0; pointer-events: none; }
+#categoryScreen .cat-header.stuck .cat-header-search { display: flex; animation: fadeIn 0.2s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
 <div id="splash">
-  <span class="letter">G</span><span class="letter">l</span><span class="letter">o</span><span class="letter">v</span><span class="letter">o</span>
+  <span class="letter">K</span><span class="letter">I</span><span class="letter">R</span><span class="letter">Y</span><span class="letter">A</span>
   <span class="bike">🚴‍♂️</span>
 </div>
 
@@ -287,15 +362,144 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 <div id="categoryScreen">
   <div class="cat-header">
     <div class="back-btn" id="catBackBtn" title="Go back">⬅️</div>
-    <div class="cat-title" id="catTitle">Category</div>
+    <div class="cat-address-card">
+      <span class="home-icon">🏠</span>
+      <span id="catAddressText">...</span>
+    </div>
+    <div class="cat-header-search">
+      <span>🔍</span>
+      <input type="text" placeholder="Search in category..." id="headerSearchInput">
+    </div>
   </div>
   <div class="cat-content">
-    <h3>Top picks for <span id="catNameDisplay"></span></h3>
-    <div style="margin-top:15px;">
-      <div class="placeholder-box">Featured Item 1</div>
-      <div class="placeholder-box">Featured Item 2</div>
-      <div class="placeholder-box">Featured Item 3</div>
+    <div class="cat-title" id="catTitle">Category</div>
+    <div class="cat-search-wrapper">
+      <div class="cat-search-bar">
+        <span>🔍</span>
+        <input type="text" placeholder="Search in category..." id="mainCatSearchInput">
+      </div>
     </div>
+    <div class="filter-scroll">
+      <div class="filter-item"><div class="filter-box">🏷️</div><div class="filter-name">Promotions</div></div>
+      <div class="filter-item"><div class="filter-box">🍟</div><div class="filter-name">Fast Food</div></div>
+      <div class="filter-item"><div class="filter-box">🍗</div><div class="filter-name">Chicken</div></div>
+      <div class="filter-item"><div class="filter-box">🍔</div><div class="filter-name">Burgers</div></div>
+      <div class="filter-item"><div class="filter-box">🥩</div><div class="filter-name">Halal</div></div>
+      <div class="filter-item"><div class="filter-box">🍿</div><div class="filter-name">Snacks</div></div>
+      <div class="filter-item"><div class="filter-box">🔥</div><div class="filter-name">Grill</div></div>
+      <div class="filter-item"><div class="filter-box">🍕</div><div class="filter-name">Pizza</div></div>
+      <div class="filter-item"><div class="filter-box">🥘</div><div class="filter-name">Local Food</div></div>
+      <div class="filter-item"><div class="filter-box">🍰</div><div class="filter-name">Desserts</div></div>
+      <div class="filter-item"><div class="filter-box">☕</div><div class="filter-name">Tea & Coffee</div></div>
+      <div class="filter-item"><div class="filter-box">🌐</div><div class="filter-name">International</div></div>
+      <div class="filter-item"><div class="filter-box">🍛</div><div class="filter-name">Indians</div></div>
+      <div class="filter-item"><div class="filter-box">🍲</div><div class="filter-name">Traditional</div></div>
+      <div class="filter-item"><div class="filter-box">🦞</div><div class="filter-name">Seafood</div></div>
+      <div class="filter-item"><div class="filter-box">🍱</div><div class="filter-name">Asian</div></div>
+      <div class="filter-item"><div class="filter-box">🇮🇹</div><div class="filter-name">Italian</div></div>
+      <div class="filter-item"><div class="filter-box">🥡</div><div class="filter-name">Chinese</div></div>
+      <div class="filter-item"><div class="filter-box">🍷</div><div class="filter-name">Alcohol</div></div>
+      <div class="filter-item"><div class="filter-box">🍝</div><div class="filter-name">Pasta</div></div>
+      <div class="filter-item"><div class="filter-box">🥐</div><div class="filter-name">Bakery</div></div>
+      <div class="filter-item"><div class="filter-box">🥙</div><div class="filter-name">Kebab</div></div>
+      <div class="filter-item"><div class="filter-box">🌮</div><div class="filter-name">Mexican</div></div>
+    </div>
+    <div class="text-filter-scroll">
+      <div class="text-filter-btn">Food Types</div>
+      <div class="text-filter-btn"><span>🚶</span>Takeaway</div>
+      <div class="text-filter-btn">Sort by <span>▼</span></div>
+      <div class="text-filter-btn"><span>👑</span>Top Rated</div>
+    </div>
+    <div class="brands-section">
+      <h3>Popular Brands</h3>
+      <div class="brands-scroll">
+        <div class="brand-container">
+          <div class="brand-item">
+            <div class="brand-image"><span>🍔</span></div>
+            <div class="brand-details">
+              <div class="brand-name">McDonald's</div>
+            </div>
+          </div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+        </div>
+        <div class="brand-container">
+          <div class="brand-item">
+            <div class="brand-image"><span>🍗</span></div>
+            <div class="brand-details">
+              <div class="brand-name">KFC</div>
+            </div>
+          </div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+        </div>
+        <div class="brand-container">
+          <div class="brand-item">
+            <div class="brand-image"><span>🍕</span></div>
+            <div class="brand-details">
+              <div class="brand-name">Pizza Hut</div>
+            </div>
+          </div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+        </div>
+        <div class="brand-container">
+          <div class="brand-item">
+            <div class="brand-image"><span>☕</span></div>
+            <div class="brand-details">
+              <div class="brand-name">Starbucks</div>
+            </div>
+          </div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+        </div>
+        <div class="brand-container">
+          <div class="brand-item">
+            <div class="brand-image"><span>🥪</span></div>
+            <div class="brand-details">
+              <div class="brand-name">Subway</div>
+            </div>
+          </div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="pref-title">Based on Your Preferences</div>
+    <div class="pref-scroll" id="prefScroll">
+      <!-- Populated by JS -->
+    </div>
+    <div class="restaurant-list-section">
+      <h3>All Restaurants</h3>
+      <div id="restaurantList"></div>
+    </div>
+  </div>
+</div>
+
+<div id="restaurantScreen">
+  <div class="res-cover">
+    <div class="res-cover-header">
+      <div class="res-action-btn" id="resBackBtn">←</div>
+      <div class="res-cover-actions-right">
+          <div class="res-action-btn">🔍</div>
+          <div class="res-action-btn">♡</div>
+          <div class="res-action-btn" id="resOptionsBtn">⋮</div>
+      </div>
+    </div>
+    <div class="res-cover-img">🍽️</div>
+  </div>
+  <div class="res-header-content">
+    <div class="res-screen-name" id="resScreenName">Restaurant Name</div>
+    <div class="res-meta-row">
+      <div class="res-meta-item"><span>👍</span><span id="resLikes">300</span></div>
+      <div class="res-meta-item"><span>🕒</span><span id="resTime">20-30 Mins</span></div>
+      <div class="res-meta-item">
+        <span class="bike-icon-right">🚴‍♂️</span>
+        <span class="delivery-fee-cross">200</span>
+        <span class="delivery-free">Free</span>
+      </div>
+    </div>
+  </div>
+  <div id="optionsOverlay"></div>
+  <div id="resOptionsSheet">
+    <div class="res-option-item"><span>ℹ️</span> Store Information</div>
+    <div class="res-option-item"><span>💰</span> Fees Information</div>
+    <div class="res-option-item"><span>🔗</span> Share Store</div>
   </div>
 </div>
 
@@ -379,7 +583,14 @@ function navigateBack() {
     const mapScreen = document.getElementById('mapScreen');
     const newHomeScreen = document.getElementById('newHomeScreen');
     const categoryScreen = document.getElementById('categoryScreen');
+    const restaurantScreen = document.getElementById('restaurantScreen');
     const searchCard = document.getElementById('searchCard');
+
+    // From Restaurant screen, go back to Category screen
+    if (restaurantScreen.classList.contains('active')) {
+        restaurantScreen.classList.remove('active');
+        return;
+    }
 
     // From Category screen, go back to New Home screen
     if (categoryScreen.classList.contains('active')) {
@@ -571,13 +782,15 @@ draggables.forEach((tile, index)=>{
 /* Category Screen Logic */
 const categoryScreen = document.getElementById('categoryScreen');
 const catTitle = document.getElementById('catTitle');
-const catNameDisplay = document.getElementById('catNameDisplay');
 const catBackBtn = document.getElementById('catBackBtn');
 
 function showDetailScreen(title) {
   // Update content
   catTitle.textContent = title;
-  catNameDisplay.textContent = title;
+
+  // Update address in category screen
+  const addrText = document.getElementById('selectedAddressText').textContent;
+  document.getElementById('catAddressText').textContent = addrText;
 
   // Hide map and add button
   hideMap();
@@ -650,6 +863,140 @@ if (shopScrollContainer) {
 }
 
 catBackBtn.addEventListener('click', navigateBack);
+
+/* Restaurant Screen Logic */
+const restaurantScreen = document.getElementById('restaurantScreen');
+const resBackBtn = document.getElementById('resBackBtn');
+
+function openRestaurant(name) {
+  document.getElementById('resScreenName').textContent = name;
+  // You can also populate likes/time dynamically here if passed
+  restaurantScreen.classList.add('active');
+}
+
+resBackBtn.addEventListener('click', () => {
+  restaurantScreen.classList.remove('active');
+});
+
+/* Populate Preferences */
+const prefScroll = document.getElementById('prefScroll');
+if(prefScroll){
+  for(let i=0; i<20; i++){
+    const card = document.createElement('div');
+    card.className = 'pref-card';
+    card.innerHTML = `
+      <div class="pref-image">🍽️</div>
+      <div class="res-name">Restaurant ${i+1}</div>
+      <div class="pref-info">
+        <span class="pref-stat"><span>👍</span>(300)</span>
+        <span class="pref-stat"><span style="display:inline-block; transform:scaleX(-1);">🚴‍♂️</span>200</span>
+        <span class="pref-stat">20-30 Mins</span>
+      </div>
+    `;
+    prefScroll.appendChild(card);
+  }
+  // Add click listener for pref items
+  prefScroll.addEventListener('click', (e) => {
+    const card = e.target.closest('.pref-card');
+    if(card){
+      const name = card.querySelector('.res-name').textContent;
+      openRestaurant(name);
+    }
+  });
+}
+
+/* Populate Vertical Restaurant List */
+const restaurantList = document.getElementById('restaurantList');
+if(restaurantList){
+  restaurantList.classList.add('restaurant-list'); // Add class for styling
+  for(let i=0; i<10; i++){
+    const card = document.createElement('div');
+    card.className = 'res-card';
+    card.innerHTML = `
+      <div class="res-image">
+        🍽️
+        <button class="heart-btn">♡</button>
+      </div>
+      <div class="res-name">Tasty Restaurant ${i+1}</div>
+      <div class="pref-info">
+        <span class="pref-stat"><span>👍</span>(${Math.floor(Math.random() * 500) + 50})</span>
+        <span class="pref-stat"><span style="display:inline-block; transform:scaleX(-1);">🚴‍♂️</span>${Math.floor(Math.random() * 300) + 100}</span>
+        <span class="pref-stat">${Math.floor(Math.random() * 20) + 15}-${Math.floor(Math.random() * 20) + 35} Mins</span>
+      </div>
+    `;
+    restaurantList.appendChild(card);
+  }
+
+  restaurantList.addEventListener('click', function(e) {
+    const heartBtn = e.target.closest('.heart-btn');
+    if (heartBtn) {
+      e.preventDefault(); e.stopPropagation();
+      heartBtn.textContent = heartBtn.textContent === '♡' ? '♥' : '♡';
+    }
+    else {
+      const card = e.target.closest('.res-card');
+      if(card){
+        const name = card.querySelector('.res-name').textContent;
+        openRestaurant(name);
+      }
+    }
+  });
+}
+
+/* Sticky Search Bar Logic */
+const catContent = document.querySelector('.cat-content');
+const catHeader = document.querySelector('.cat-header');
+const searchWrapper = document.querySelector('.cat-search-wrapper');
+const headerSearchInput = document.getElementById('headerSearchInput');
+const mainCatSearchInput = document.getElementById('mainCatSearchInput');
+
+if(catContent && catHeader && searchWrapper){
+  catContent.addEventListener('scroll', () => {
+    const wrapperTop = searchWrapper.getBoundingClientRect().top;
+    const headerBottom = catHeader.getBoundingClientRect().bottom;
+    // If search wrapper scrolls up behind header, stick the header search
+    if (wrapperTop < headerBottom - 20) { 
+      catHeader.classList.add('stuck');
+    } else {
+      catHeader.classList.remove('stuck');
+    }
+  });
+}
+// Sync inputs
+if(headerSearchInput && mainCatSearchInput){
+  headerSearchInput.addEventListener('input', (e) => mainCatSearchInput.value = e.target.value);
+  mainCatSearchInput.addEventListener('input', (e) => headerSearchInput.value = e.target.value);
+}
+
+/* Restaurant Options Sheet Logic */
+const resOptionsBtn = document.getElementById('resOptionsBtn');
+const resOptionsSheet = document.getElementById('resOptionsSheet');
+const optionsOverlay = document.getElementById('optionsOverlay');
+
+function showOptionsSheet() {
+    if (resOptionsSheet && optionsOverlay) {
+        resOptionsSheet.classList.add('show');
+        optionsOverlay.classList.add('show');
+    }
+}
+
+function hideOptionsSheet() {
+    if (resOptionsSheet && optionsOverlay) {
+        resOptionsSheet.classList.remove('show');
+        optionsOverlay.classList.remove('show');
+    }
+}
+
+if (resOptionsBtn) {
+    resOptionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showOptionsSheet();
+    });
+}
+
+if (optionsOverlay) {
+    optionsOverlay.addEventListener('click', hideOptionsSheet);
+}
 </script>
 </body>
 </html>
