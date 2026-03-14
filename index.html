@@ -237,8 +237,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #restaurantScreen .res-cover-header { position: absolute; top: 15px; left: 15px; right: 15px; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
 #restaurantScreen .res-cover-actions-right { display: flex; gap: 8px; }
 
-#restaurantScreen .res-action-btn { width: 24px; height: 24px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); font-size: 0.9em; transition: transform .2s; }
-#restaurantScreen .res-action-btn:hover { transform: scale(1.1); }
+#restaurantScreen .res-action-btn { width: 36px; height: 36px; padding: 6px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); font-size: 1em; transition: transform .2s; }
 
 #optionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
 #optionsOverlay.show { opacity: 1; pointer-events: auto; }
@@ -474,22 +473,15 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 <div id="restaurantScreen">
   <div class="res-cover">
     <div class="res-cover-header">
-      <div class="res-action-btn" id="resBackBtn">←</div>
-      <div class="res-cover-actions-right">
-          <div class="res-action-btn">🔍</div>
-          <div class="res-action-btn">♡</div>
-          <div class="res-action-btn" id="resOptionsBtn">⋮</div>
-      </div>
+      <div class="res-action-btn" id="resBackBtn">⬅️</div>
     </div>
-    <div class="res-cover-img">🍽️</div>
   </div>
   <div class="res-header-content">
     <div class="res-screen-name" id="resScreenName">Restaurant Name</div>
     <div class="res-meta-row">
-      <div class="res-meta-item"><span>👍</span><span id="resLikes">300</span></div>
-      <div class="res-meta-item"><span>🕒</span><span id="resTime">20-30 Mins</span></div>
+      <div class="res-meta-item"><span id="resLikes">300</span></div>
+      <div class="res-meta-item"><span id="resTime">20-30 Mins</span></div>
       <div class="res-meta-item">
-        <span class="bike-icon-right">🚴‍♂️</span>
         <span class="delivery-fee-cross">200</span>
         <span class="delivery-free">Free</span>
       </div>
@@ -874,9 +866,11 @@ function openRestaurant(name) {
   restaurantScreen.classList.add('active');
 }
 
-resBackBtn.addEventListener('click', () => {
-  restaurantScreen.classList.remove('active');
-});
+if (resBackBtn) {
+  resBackBtn.addEventListener('click', () => {
+    restaurantScreen.classList.remove('active');
+  });
+}
 
 /* Populate Preferences */
 const prefScroll = document.getElementById('prefScroll');
