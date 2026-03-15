@@ -225,19 +225,51 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 
 #restaurantScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 3000; display: none; flex-direction: column; overflow-y: auto; }
 #restaurantScreen.active { display: flex; }
-#restaurantScreen .res-cover { height: 250px; background: #f0f0f0; position: relative; display: flex; align-items: center; justify-content: center; font-size: 5em; color: #ccc; }
-#restaurantScreen .res-header-content { padding: 20px; border-bottom: 1px solid #eee; }
+#restaurantScreen .res-cover { width: 100%; height: 205px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: relative; flex-shrink: 0; }
+#restaurantScreen .res-cover-bg { width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 5em; color: #ccc; opacity: 0.9; background-size: cover; background-position: center; }
+#restaurantScreen .res-header-content { padding: 20px 20px 0; margin-top: 55px; }
 #restaurantScreen .res-screen-name { font-size: 1.8em; font-weight: 800; color: #333; margin-bottom: 8px; }
 #restaurantScreen .res-meta-row { display: flex; align-items: center; gap: 15px; color: #555; font-size: 0.95em; flex-wrap: wrap; }
-#restaurantScreen .res-meta-item { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+#restaurantScreen .res-meta-item { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-weight: 600; }
 #restaurantScreen .bike-icon-right { display: inline-block; transform: scaleX(-1); font-size: 1.3em; }
 #restaurantScreen .delivery-fee-cross { text-decoration: line-through; color: #999; }
 #restaurantScreen .delivery-free { color: #019E81; font-weight: bold; margin-left: 5px; }
 
-#restaurantScreen .res-cover-header { position: absolute; top: 15px; left: 15px; right: 15px; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+#restaurantScreen .res-cover-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
 #restaurantScreen .res-cover-actions-right { display: flex; gap: 8px; }
 
-#restaurantScreen .res-action-btn { width: 36px; height: 36px; padding: 6px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); font-size: 1em; transition: transform .2s; }
+#restaurantScreen .res-action-btn { width: 36px; height: 36px; padding: 6px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); font-size: 1em; transition: transform .2s; color: black; }
+#restaurantScreen .res-profile-pic { position: absolute; bottom: -40px; left: 15px; width: 80px; height: 80px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 3em; z-index: 20; }
+#restaurantScreen .res-badges-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+#restaurantScreen .res-badge-discount { background: #FFF8D0; color: #4A4A20; font-size: 0.75em; font-weight: 700; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; gap: 4px; }
+#restaurantScreen .res-badge-top { background: #333; color: #fff; font-size: 0.75em; font-weight: 700; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; gap: 4px; border: 1px solid #FFD700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+#restaurantScreen .res-price-disclaimer { font-size: 0.75em; color: #999; margin-top: 12px; font-weight: normal; line-height: 1.4; }
+#restaurantScreen .res-menu-nav { display: flex; overflow-x: auto; overflow-y: hidden; gap: 20px; padding: 30px 20px; background: #e0e0e0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+#restaurantScreen .res-menu-item { flex: 0 0 auto; padding-bottom: 12px; color: #666; cursor: pointer; white-space: nowrap; font-size: 0.95em; position: relative; border-bottom: 3px solid transparent; transition: all 0.2s; }
+#restaurantScreen .res-menu-item.active { color: #333; font-weight: 800; border-bottom: 3px solid transparent; }
+#restaurantScreen .res-menu-content { padding: 0 20px 100px; background: #fff; }
+#restaurantScreen .res-category-title { font-weight: 800; font-size: 1.2em; color: #333; margin: 25px 0 15px; scroll-margin-top: 95px; }
+#restaurantScreen .res-item-card { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #f5f5f5; padding-bottom: 20px; }
+#restaurantScreen .res-item-info { flex: 1; padding-right: 15px; display: flex; flex-direction: column; justify-content: center; }
+#restaurantScreen .res-item-title { font-weight: 700; font-size: 1em; color: #333; margin-bottom: 6px; }
+#restaurantScreen .res-item-desc { font-size: 0.85em; color: #777; margin-bottom: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+#restaurantScreen .res-item-price-row { display: flex; align-items: center; gap: 6px; font-size: 0.95em; }
+#restaurantScreen .res-item-old-price { text-decoration: line-through; color: #bbb; font-size: 0.9em; }
+#restaurantScreen .res-item-current-price { font-weight: 700; color: #333; }
+#restaurantScreen .res-item-img-box { width: 110px; height: 110px; border-radius: 12px; background: #f5f5f5; position: relative; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 3em; color: #ddd; }
+#restaurantScreen .res-item-add-btn { position: absolute; bottom: 8px; right: 8px; width: 26px; height: 26px; background: #fff; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease-in-out; overflow: hidden; }
+#restaurantScreen .res-item-add-btn:active { transform: scale(0.95); }
+#restaurantScreen .res-item-add-btn .initial-plus { color: black; font-weight: 600; font-size: 14px; }
+#restaurantScreen .res-item-add-btn.active { width: 75px; border-radius: 13px; }
+#restaurantScreen .res-item-add-btn.active .initial-plus { display: none; }
+#restaurantScreen .quantity-selector { display: none; width: 100%; justify-content: space-between; align-items: center; padding: 0 5px; }
+#restaurantScreen .res-item-add-btn.active .quantity-selector { display: flex; }
+#restaurantScreen .quantity-btn { font-size: 16px; font-weight: 600; color: #019E81; cursor: pointer; user-select: none; }
+#restaurantScreen .quantity-value { font-size: 12px; font-weight: 600; color: black; }
 
 #optionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
 #optionsOverlay.show { opacity: 1; pointer-events: auto; }
@@ -252,6 +284,96 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #categoryScreen .cat-header.stuck .cat-address-card { opacity: 0; pointer-events: none; }
 #categoryScreen .cat-header.stuck .cat-header-search { display: flex; animation: fadeIn 0.2s; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Dish Detail Screen */
+#dishDetailScreen {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 4000;
+  display: flex;
+  flex-direction: column;
+  transition: bottom 0.4s ease-in-out;
+}
+#dishDetailScreen.active {
+  bottom: 0;
+}
+#dishDetailScreen .dish-header {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+#dishDetailScreen .dish-close-btn {
+  font-size: 1.5em;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+}
+#dishDetailScreen .dish-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+#dishDetailScreen .dish-image-large {
+  width: 100%;
+  height: 250px;
+  background: #f5f5f5;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8em;
+  color: #ddd;
+  margin-bottom: 20px;
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform 0.5s ease-out 0.1s, opacity 0.4s ease-out;
+}
+#dishDetailScreen .dish-title-large { font-size: 1.8em; font-weight: 800; margin-bottom: 10px; text-align: left; }
+#dishDetailScreen .dish-desc-full { font-size: 1em; color: #666; line-height: 1.5; margin-bottom: 20px; text-align: left; }
+#dishDetailScreen .dish-price-large { font-size: 1.5em; font-weight: 700; margin-bottom: 20px; text-align: left; }
+#dishDetailScreen .dish-footer { padding: 20px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; gap: 20px; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#dishDetailScreen .quantity-selector-large { display: flex; align-items: center; gap: 15px; border: 1px solid #ddd; border-radius: 10px; padding: 10px; }
+#dishDetailScreen .quantity-btn-large { font-size: 1.5em; font-weight: bold; color: #019E81; cursor: pointer; user-select: none; }
+#dishDetailScreen .quantity-value-large { font-size: 1.2em; font-weight: bold; }
+#dishDetailScreen .add-to-cart-large-btn { flex: 1; background: #019E81; color: #fff; border: none; border-radius: 10px; padding: 15px; font-size: 1.1em; font-weight: bold; cursor: pointer; }
+#dishDetailScreen .dish-addons { margin-bottom: 20px; }
+#dishDetailScreen .dish-addons h3 { font-size: 1.2em; font-weight: 700; margin-bottom: 10px; }
+.addon-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
+.addon-item:last-child { border-bottom: none; }
+.addon-info { display: flex; flex-direction: column; gap: 2px; }
+.addon-name { font-weight: 600; color: #333; }
+.addon-price { font-size: 0.9em; color: #555; }
+.addon-checkbox { display: none; }
+.custom-checkbox { width: 24px; height: 24px; border: 2px solid #ccc; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.custom-checkbox::after { content: '✔'; font-size: 16px; color: #fff; opacity: 0; transform: scale(0.5); transition: all 0.2s; }
+.addon-checkbox:checked + .custom-checkbox { background: #019E81; border-color: #019E81; }
+.addon-checkbox:checked + .custom-checkbox::after { opacity: 1; transform: scale(1); }
+
+/* View Cart Button */
+#viewCartBtn { position: fixed; bottom: 80px; right: 20px; width: 60px; height: 60px; background: #019E81; color: #fff; border-radius: 50%; display: none; justify-content: center; align-items: center; font-weight: bold; font-size: 1.5em; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 3500; cursor: pointer; transition: transform 0.2s ease-in-out; }
+#viewCartBtn.active { display: flex; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#viewCartBtn #cartItemCount { background: #fff; color: #019E81; border-radius: 6px; padding: 2px 6px; font-size: 0.9em; }
+
+#dishDetailScreen.active .dish-image-large {
+  transform: scale(1);
+  opacity: 1;
+}
+
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 </style>
 </head>
 <body>
@@ -469,35 +591,380 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
     </div>
   </div>
 </div>
-
 <div id="restaurantScreen">
-  <div class="res-cover">
-    <div class="res-cover-header">
-      <div class="res-action-btn" id="resBackBtn">⬅️</div>
+  <div class="res-cover-header">
+    <div class="res-action-btn" id="resBackBtn">⬅️</div>
+    <div class="res-cover-actions-right">
+      <div class="res-action-btn" id="resShareBtn">🔗</div>
+      <div class="res-action-btn" id="resCloseBtn">✖</div>
     </div>
+  </div>
+  <div class="res-cover">
+    <div class="res-cover-bg">🍽️</div>
+    <div class="res-profile-pic">🏪</div>
   </div>
   <div class="res-header-content">
     <div class="res-screen-name" id="resScreenName">Restaurant Name</div>
+    <div class="res-badges-row">
+      <div class="res-badge-discount"><span>🏷️</span> -20% some items</div>
+      <div class="res-badge-top"><span>👑</span> Top Rated</div>
+    </div>
     <div class="res-meta-row">
-      <div class="res-meta-item"><span id="resLikes">300</span></div>
-      <div class="res-meta-item"><span id="resTime">20-30 Mins</span></div>
       <div class="res-meta-item">
-        <span class="delivery-fee-cross">200</span>
-        <span class="delivery-free">Free</span>
+        <span>👍</span>
+        <span id="resLikes">300</span>
+      </div>
+      <div class="res-meta-item">
+        <span>🕒</span>
+        <span id="resTime">20-30 Mins</span>
+      </div>
+      <div class="res-meta-item">
+        <span class="bike-icon-right">🚴‍♂️</span>
+        <div>
+          <span class="delivery-fee-cross">200</span>
+          <span class="delivery-free">Free</span>
+        </div>
       </div>
     </div>
+    <div class="res-price-disclaimer">Crossed-out prices show the lowest price in the last 3 days before reduction</div>
   </div>
+  
+  <div class="res-menu-nav" id="resMenuNav">
+    <div class="res-menu-item active">Promotions</div>
+    <div class="res-menu-item">Top sellers</div>
+    <div class="res-menu-item">Breakfast</div>
+    <div class="res-menu-item">Star signatures (NEW!!)</div>
+    <div class="res-menu-item">STA PIZZA MENUE (NEW!!!)</div>
+    <div class="res-menu-item">STA chicken meals and combo</div>
+    <div class="res-menu-item">chicken Buckets Crispy pieces - For Sharing & Feasting</div>
+    <div class="res-menu-item">Juicy Burgers & Tasty Wraps</div>
+    <div class="res-menu-item">Grilled chicken shawarma STA Xpress Indomi Noodle Bowls</div>
+    <div class="res-menu-item">Soft drinks</div>
+  </div>
+  
+  <div class="res-menu-content" id="resMenuContent">
+    <div class="res-category-title">Promotions</div>
+    
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Family Feast Combo</div>
+        <div class="res-item-desc">2 Large Pizzas, 2 sides of Garlic Bread, and a large bottle of Soft Drink. Perfect for sharing!</div>
+        <div class="res-item-price-row">
+          <span class="res-item-old-price">120.00</span>
+          <span class="res-item-current-price">85.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🍕
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Double Crispy Burger Meal</div>
+        <div class="res-item-desc">Two crispy chicken patties, cheddar cheese, lettuce, and our secret sauce. Includes fries.</div>
+        <div class="res-item-price-row">
+          <span class="res-item-old-price">45.00</span>
+          <span class="res-item-current-price">35.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🍔
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Mega Snack Box</div>
+        <div class="res-item-desc">5 chicken wings, 5 nuggets, onion rings and spicy dip. A crunchy delight.</div>
+        <div class="res-item-price-row">
+          <span class="res-item-old-price">55.00</span>
+          <span class="res-item-current-price">40.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🍗
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-category-title">Top sellers</div>
+
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Classic Cheeseburger</div>
+        <div class="res-item-desc">A juicy beef patty with melted cheese, pickles, onions, ketchup, and mustard on a toasted bun.</div>
+        <div class="res-item-price-row">
+          <span class="res-item-current-price">38.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🍔
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Margherita Pizza</div>
+        <div class="res-item-desc">Classic Italian pizza with fresh mozzarella, San Marzano tomatoes, fresh basil, and a drizzle of olive oil.</div>
+        <div class="res-item-price-row">
+          <span class="res-item-current-price">55.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🍕
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-category-title">Breakfast</div>
+
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Pancakes with Syrup</div>
+        <div class="res-item-desc">Fluffy buttermilk pancakes served with a side of maple syrup and butter. A morning classic.</div>
+        <div class="res-item-price-row">
+          <span class="res-item-current-price">25.00</span>
+        </div>
+      </div>
+      <div class="res-item-img-box">
+        🥞
+        <div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-category-title">Star signatures (NEW!!)</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Star Special Burger</div>
+        <div class="res-item-desc">Our signature burger with double cheese, truffle mayo, and caramelized onions.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">58.00</span></div>
+      </div>
+      <div class="res-item-img-box">⭐<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">STA PIZZA MENUE (NEW!!!)</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">BBQ Chicken Pizza</div>
+        <div class="res-item-desc">Grilled chicken, red onions, cilantro, and tangy BBQ sauce.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">62.00</span></div>
+      </div>
+      <div class="res-item-img-box">🍕<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">STA chicken meals and combo</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">3pc Chicken Meal</div>
+        <div class="res-item-desc">3 pieces of fried chicken, coleslaw, bun and a drink.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">45.00</span></div>
+      </div>
+      <div class="res-item-img-box">🍗<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">chicken Buckets Crispy pieces - For Sharing & Feasting</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">12pc Family Bucket</div>
+        <div class="res-item-desc">12 pieces of our signature crispy chicken. Great for sharing.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">95.00</span></div>
+      </div>
+      <div class="res-item-img-box">🥡<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">Juicy Burgers & Tasty Wraps</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Zinger Wrap</div>
+        <div class="res-item-desc">Crispy chicken strip wrapped in a tortilla with lettuce and mayo.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">22.00</span></div>
+      </div>
+      <div class="res-item-img-box">🌯<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">Grilled chicken shawarma STA Xpress Indomi Noodle Bowls</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Chicken Shawarma Plate</div>
+        <div class="res-item-desc">Sliced roasted chicken served with garlic sauce, pickles, and fries.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">35.00</span></div>
+      </div>
+      <div class="res-item-img-box">🥙<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Spicy Indomi Bowl</div>
+        <div class="res-item-desc">Indomi noodles stir-fried with vegetables and a spicy kick.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">18.00</span></div>
+      </div>
+      <div class="res-item-img-box">🍜<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+
+    <div class="res-category-title">Soft drinks</div>
+    <div class="res-item-card">
+      <div class="res-item-info">
+        <div class="res-item-title">Cola</div>
+        <div class="res-item-desc">Refreshing carbonated soft drink.</div>
+        <div class="res-item-price-row"><span class="res-item-current-price">5.00</span></div>
+      </div>
+      <div class="res-item-img-box">🥤<div class="res-item-add-btn">
+          <span class="initial-plus">+</span>
+          <div class="quantity-selector">
+            <span class="quantity-btn minus">-</span>
+            <span class="quantity-value">1</span>
+            <span class="quantity-btn plus">+</span>
+          </div>
+        </div></div>
+    </div>
+  </div>
+
   <div id="optionsOverlay"></div>
   <div id="resOptionsSheet">
     <div class="res-option-item"><span>ℹ️</span> Store Information</div>
     <div class="res-option-item"><span>💰</span> Fees Information</div>
     <div class="res-option-item"><span>🔗</span> Share Store</div>
   </div>
+
+  <nav>
+    <div class="nav-item">🏠<span>Home</span></div>
+    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🛒<span>Cart</span></div>
+    <div class="nav-item">👤<span>Profile</span></div>
+    <div class="nav-item">👥<span>User</span></div>
+    <div class="nav-item">🚴‍♂️<span>Rider</span></div>
+    <div class="nav-item active">🏪<span>Shop</span></div>
+    <div class="nav-item">🛎️<span>Admin</span></div>
+  </nav>
+</div>
+
+<div id="dishDetailScreen">
+  <div class="dish-header">
+    <div id="dishCloseBtn" class="dish-close-btn">✖</div>
+  </div>
+  <div class="dish-content">
+    <div class="dish-image-large" id="dishDetailImage"></div>
+    <h2 class="dish-title-large" id="dishDetailTitle"></h2>
+    <p class="dish-desc-full" id="dishDetailDesc"></p>
+    <div class="dish-addons" id="dishDetailAddons">
+      <h3>Add-ons</h3>
+      <label class="addon-item"><div class="addon-info"><span class="addon-name">Extra Cheese</span><span class="addon-price" data-price="5.00">+ 5.00</span></div><input type="checkbox" class="addon-checkbox"><span class="custom-checkbox"></span></label>
+      <label class="addon-item"><div class="addon-info"><span class="addon-name">Spicy Sauce</span><span class="addon-price" data-price="2.50">+ 2.50</span></div><input type="checkbox" class="addon-checkbox"><span class="custom-checkbox"></span></label>
+    </div>
+    <div class="dish-price-large" id="dishDetailPrice"></div>
+  </div>
+  <div class="dish-footer">
+    <div class="quantity-selector-large">
+      <span class="quantity-btn-large minus">-</span>
+      <span class="quantity-value-large">1</span>
+      <span class="quantity-btn-large plus">+</span>
+    </div>
+    <button class="add-to-cart-large-btn">Add to cart</button>
+  </div>
+</div>
+
+<div id="viewCartBtn">
+  <div style="position: relative;">🛒<span id="cartItemCount" style="position: absolute; top: -10px; right: -10px; background: #ff4757; color: white; border-radius: 50%; padding: 4px 8px; font-size: 0.5em; min-width: 20px; text-align: center;">0</span></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 let map, marker;
+let cart = [];
 
 function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
 function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
@@ -859,16 +1326,31 @@ catBackBtn.addEventListener('click', navigateBack);
 /* Restaurant Screen Logic */
 const restaurantScreen = document.getElementById('restaurantScreen');
 const resBackBtn = document.getElementById('resBackBtn');
+const resCloseBtn = document.getElementById('resCloseBtn');
+const resShareBtn = document.getElementById('resShareBtn');
 
 function openRestaurant(name) {
   document.getElementById('resScreenName').textContent = name;
   // You can also populate likes/time dynamically here if passed
   restaurantScreen.classList.add('active');
+  updateCartView();
 }
 
 if (resBackBtn) {
   resBackBtn.addEventListener('click', () => {
     restaurantScreen.classList.remove('active');
+  });
+}
+
+if (resCloseBtn) {
+  resCloseBtn.addEventListener('click', () => {
+    restaurantScreen.classList.remove('active');
+  });
+}
+
+if (resShareBtn) {
+  resShareBtn.addEventListener('click', () => {
+    alert('Share functionality coming soon!');
   });
 }
 
@@ -985,6 +1467,211 @@ if (resOptionsBtn) {
     resOptionsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         showOptionsSheet();
+    });
+}
+
+/* Restaurant Menu Nav Logic */
+const resMenuNav = document.getElementById('resMenuNav');
+if (resMenuNav) {
+    resMenuNav.addEventListener('click', (e) => {
+        if (e.target.classList.contains('res-menu-item')) {
+            resMenuNav.querySelectorAll('.res-menu-item').forEach(item => item.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // Auto-scroll the navigation bar to center the clicked item
+            e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            
+            const targetName = e.target.textContent.trim();
+            const titles = document.querySelectorAll('.res-category-title');
+            for (const title of titles) {
+                if (title.textContent.trim() === targetName) {
+                    title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    break;
+                }
+            }
+        }
+    });
+}
+
+/* Restaurant Menu Item Add/Quantity Logic & Dish Detail */
+const resMenuContent = document.getElementById('resMenuContent');
+const dishDetailScreen = document.getElementById('dishDetailScreen');
+const dishCloseBtn = document.getElementById('dishCloseBtn');
+
+const viewCartBtn = document.getElementById('viewCartBtn');
+function updateCartView() {
+    if (!viewCartBtn) return;
+
+    const restaurantScreen = document.getElementById('restaurantScreen');
+    if (cart.length === 0 || !restaurantScreen.classList.contains('active')) {
+        viewCartBtn.classList.remove('active');
+        // Using display none via class logic, ensuring it hides
+        viewCartBtn.style.display = 'none'; 
+    }
+
+    let totalItems = 0;
+    let totalPrice = 0;
+    cart.forEach(item => {
+        totalItems += item.quantity;
+        let itemPrice = item.basePrice;
+        if (item.addons) {
+            item.addons.forEach(addon => {
+                itemPrice += addon.price;
+            });
+        }
+        totalPrice += itemPrice * item.quantity;
+    });
+
+    if (totalItems > 0 && restaurantScreen.classList.contains('active')) {
+        document.getElementById('cartItemCount').textContent = totalItems;
+        viewCartBtn.style.display = 'flex';
+        setTimeout(() => viewCartBtn.classList.add('active'), 10);
+    } else {
+        viewCartBtn.classList.remove('active');
+        viewCartBtn.style.display = 'none';
+    }
+}
+
+function updateDishDetailTotal() {
+    if (!dishDetailScreen || !dishDetailScreen.classList.contains('active')) return;
+
+    const priceEl = document.getElementById('dishDetailPrice');
+    const quantityEl = dishDetailScreen.querySelector('.quantity-value-large');
+    const addToCartBtn = dishDetailScreen.querySelector('.add-to-cart-large-btn');
+
+    const basePrice = parseFloat(priceEl.textContent);
+    const quantity = parseInt(quantityEl.textContent, 10);
+
+    let addonsPrice = 0;
+    const selectedAddons = dishDetailScreen.querySelectorAll('.addon-checkbox:checked');
+    selectedAddons.forEach(checkbox => {
+        const priceText = checkbox.closest('.addon-item').querySelector('.addon-price').dataset.price;
+        addonsPrice += parseFloat(priceText);
+    });
+
+    if (!isNaN(basePrice) && !isNaN(quantity)) {
+        const total = (basePrice + addonsPrice) * quantity;
+        addToCartBtn.textContent = `Add to cart - ${total.toFixed(2)}`;
+    }
+}
+
+function openDishDetail(itemCard) {
+    if (!dishDetailScreen) return;
+
+    // Extract data from the clicked card
+    const title = itemCard.querySelector('.res-item-title').textContent;
+    const desc = itemCard.querySelector('.res-item-desc').textContent;
+    const price = itemCard.querySelector('.res-item-current-price').textContent;
+    // Clone the node to safely get the emoji without the button
+    const imgBoxClone = itemCard.querySelector('.res-item-img-box').cloneNode(true);
+    imgBoxClone.querySelector('.res-item-add-btn').remove();
+    const image = imgBoxClone.innerHTML.trim();
+
+    // Populate the detail screen
+    document.getElementById('dishDetailTitle').textContent = title;
+    document.getElementById('dishDetailDesc').textContent = desc;
+    document.getElementById('dishDetailPrice').textContent = price;
+    document.getElementById('dishDetailImage').innerHTML = image;
+
+    // Reset quantity
+    dishDetailScreen.querySelector('.quantity-value-large').textContent = '1';
+
+    // Uncheck all addons
+    dishDetailScreen.querySelectorAll('.addon-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Show the screen
+    dishDetailScreen.classList.add('active');
+
+    // Update total after screen is active and populated
+    updateDishDetailTotal();
+}
+
+function closeDishDetail() {
+    if (dishDetailScreen) {
+        dishDetailScreen.classList.remove('active');
+    }
+}
+
+if (dishCloseBtn) {
+    dishCloseBtn.addEventListener('click', closeDishDetail);
+}
+
+const addonsContainer = document.getElementById('dishDetailAddons');
+if (addonsContainer) {
+    addonsContainer.addEventListener('change', updateDishDetailTotal);
+}
+
+
+// Add event listener to the footer for quantity changes
+const dishFooter = dishDetailScreen.querySelector('.dish-footer');
+if (dishFooter) {
+    dishFooter.addEventListener('click', (e) => {
+        const quantityEl = dishFooter.querySelector('.quantity-value-large');
+        if (!quantityEl) return;
+        let quantity = parseInt(quantityEl.textContent, 10);
+
+        if (e.target.classList.contains('plus')) {
+            quantityEl.textContent = quantity + 1;
+            updateDishDetailTotal();
+        } else if (e.target.classList.contains('minus')) {
+            if (quantity > 1) {
+                quantityEl.textContent = quantity - 1;
+                updateDishDetailTotal();
+            }
+        } else if (e.target.classList.contains('add-to-cart-large-btn')) {
+            const title = document.getElementById('dishDetailTitle').textContent;
+            const basePrice = parseFloat(document.getElementById('dishDetailPrice').textContent);
+            const currentQuantity = parseInt(quantityEl.textContent, 10);
+            
+            const selectedAddons = [];
+            dishDetailScreen.querySelectorAll('.addon-checkbox:checked').forEach(checkbox => {
+                const item = checkbox.closest('.addon-item');
+                selectedAddons.push({
+                    name: item.querySelector('.addon-name').textContent,
+                    price: parseFloat(item.querySelector('.addon-price').dataset.price)
+                });
+            });
+
+            cart.push({
+                title,
+                basePrice,
+                quantity: currentQuantity,
+                addons: selectedAddons
+            });
+            updateCartView();
+            closeDishDetail();
+        }
+    });
+}
+
+if (resMenuContent) {
+    resMenuContent.addEventListener('click', (e) => {
+        const addBtn = e.target.closest('.res-item-add-btn');
+        const itemCard = e.target.closest('.res-item-card');
+
+        if (addBtn) { // Click was on the add button or its children
+            e.stopPropagation();
+
+            const isInitialAdd = e.target.classList.contains('initial-plus');
+            const isPlus = e.target.classList.contains('plus');
+            const isMinus = e.target.classList.contains('minus');
+
+            if (isInitialAdd) {
+                addBtn.classList.add('active');
+            } else if (isPlus) {
+                const valueSpan = addBtn.querySelector('.quantity-value');
+                valueSpan.textContent = parseInt(valueSpan.textContent, 10) + 1;
+            } else if (isMinus) {
+                const valueSpan = addBtn.querySelector('.quantity-value');
+                let currentValue = parseInt(valueSpan.textContent, 10);
+                if (currentValue > 1) { valueSpan.textContent = currentValue - 1; } 
+                else { addBtn.classList.remove('active'); }
+            }
+        } else if (itemCard) { // Click was on the card, but not the add button
+            openDishDetail(itemCard);
+        }
     });
 }
 
