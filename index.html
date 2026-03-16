@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;-webkit-tap-highlight-color:transparent;}
 /* Hide all scrollbars */
 *{ -ms-overflow-style: none; scrollbar-width: none; } *::-webkit-scrollbar { display: none; }
 html,body{ width:100%; height:100%; }
@@ -2260,6 +2260,79 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
             L.marker(center, {icon: pinIcon}).addTo(miniMap);
         }, 300);
 
+        // Delivery Options Section
+        const deliveryOptSection = document.createElement('div');
+        deliveryOptSection.className = 'checkout-section';
+        deliveryOptSection.style.marginTop = '20px';
+
+        const deliveryOptHeader = document.createElement('div');
+        deliveryOptHeader.className = 'checkout-section-header';
+        deliveryOptHeader.style.marginBottom = '0';
+        deliveryOptHeader.style.cursor = 'pointer';
+        deliveryOptHeader.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.5em;">⏰</span>
+                <h4>Delivery Options</h4>
+            </div>
+            <div class="cart-accordion-icon">v</div>
+        `;
+
+        const deliveryOptBody = document.createElement('div');
+        deliveryOptBody.className = 'cart-accordion-body';
+        deliveryOptBody.innerHTML = `
+            <div style="padding-top: 15px; border-top: 1px solid #eee; margin-top: 10px;">
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:15px; cursor:pointer;">
+                    <input type="radio" name="deliveryType" value="standard" checked style="accent-color: #019E81; width: 18px; height: 18px;">
+                    <div>
+                        <div style="font-weight:bold; color:#333; font-size: 1em;">Standard Delivery</div>
+                        <div style="font-size:0.85em; color:#666;">20 - 30 mins</div>
+                    </div>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                    <input type="radio" name="deliveryType" value="schedule" style="accent-color: #019E81; width: 18px; height: 18px;">
+                    <div>
+                        <div style="font-weight:bold; color:#333; font-size: 1em;">Schedule Order</div>
+                        <div style="font-size:0.85em; color:#666;">Choose a specific time</div>
+                    </div>
+                </label>
+                <div id="scheduleTimeContainer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding-left: 30px;">
+                    <input type="datetime-local" id="scheduleTimeInput" style="margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; width: 100%; font-family: inherit;">
+                </div>
+            </div>
+        `;
+        
+        let isDeliveryOptOpen = false;
+        deliveryOptHeader.addEventListener('click', () => {
+            isDeliveryOptOpen = !isDeliveryOptOpen;
+            const icon = deliveryOptHeader.querySelector('.cart-accordion-icon');
+            if (isDeliveryOptOpen) {
+                deliveryOptBody.classList.add('open');
+                deliveryOptBody.style.maxHeight = deliveryOptBody.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                deliveryOptBody.classList.remove('open');
+                deliveryOptBody.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        const radioBtns = deliveryOptBody.querySelectorAll('input[name="deliveryType"]');
+        const timeContainer = deliveryOptBody.querySelector('#scheduleTimeContainer');
+        radioBtns.forEach(btn => {
+            btn.addEventListener('change', (e) => {
+                if (e.target.value === 'schedule') {
+                    timeContainer.style.maxHeight = '100px';
+                    if(isDeliveryOptOpen) deliveryOptBody.style.maxHeight = (deliveryOptBody.scrollHeight + 100) + "px";
+                } else {
+                    timeContainer.style.maxHeight = '0';
+                }
+            });
+        });
+
+        deliveryOptSection.appendChild(deliveryOptHeader);
+        deliveryOptSection.appendChild(deliveryOptBody);
+        checkoutContent.appendChild(deliveryOptSection);
+
         // 4. Payment placeholder
         const paymentSection = document.createElement('div');
         paymentSection.className = 'checkout-section';
@@ -2450,6 +2523,47 @@ if (checkoutBackBtn) {
         document.getElementById('checkoutActionScreen').classList.remove('active');
     });
 }
+
+/* Auto-scroll function for horizontal lists */
+function initAutoScroll() {
+    const scrollSelectors = [
+        '#shopScroll',
+        '.filter-scroll',
+        '.brands-scroll',
+        '#prefScroll',
+        '.text-filter-scroll'
+    ];
+
+    scrollSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+            if (el.dataset.autoScrollInitialized) return;
+            el.dataset.autoScrollInitialized = 'true';
+
+            let scrollInterval;
+            const startScrolling = () => {
+                clearInterval(scrollInterval);
+                scrollInterval = setInterval(() => {
+                    if (el.offsetParent === null) return; // Skip if element is hidden
+
+                    if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 10) {
+                        el.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        el.scrollBy({ left: 160, behavior: 'smooth' });
+                    }
+                }, 2500);
+            };
+
+            el.addEventListener('touchstart', () => clearInterval(scrollInterval), {passive: true});
+            el.addEventListener('touchend', startScrolling, {passive: true});
+            el.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+            el.addEventListener('mouseleave', startScrolling);
+
+            startScrolling();
+        });
+    });
+}
+initAutoScroll();
 </script>
 </body>
 </html>
