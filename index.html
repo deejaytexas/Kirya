@@ -373,6 +373,196 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   opacity: 1;
 }
 
+/* Cart Screen */
+#cartScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 5000; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#cartScreen.active { transform: translateX(0); }
+#cartScreen .cart-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+#cartScreen .cart-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#cartScreen .cart-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#cartScreen .cart-content { flex: 1; overflow-y: auto; padding: 20px; }
+#cartScreen .cart-item { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #f5f5f5; padding-bottom: 15px; }
+#cartScreen .cart-item:last-child { border-bottom: none; }
+#cartScreen .cart-item-info { display: flex; flex-direction: column; gap: 6px; }
+#cartScreen .cart-item-header { font-weight: bold; color: #333; font-size: 1.1em; }
+#cartScreen .cart-item-details { font-size: 0.9em; color: #777; line-height: 1.4; }
+#cartScreen .cart-item-price { font-weight: bold; color: #333; font-size: 1.1em; }
+#cartScreen .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#cartScreen .cart-total-row { display: flex; justify-content: space-between; font-size: 1.3em; font-weight: 800; margin-bottom: 20px; color: #333; }
+#cartScreen .checkout-btn { width: 100%; background: #019E81; color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+#cartScreen .checkout-btn:hover { background: #017a63; }
+
+#cartScreen .cart-controls { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+#cartScreen .cart-control-btn { width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; color: #333; transition: background 0.2s; user-select: none; font-size: 1.2em; }
+#cartScreen .cart-control-btn:hover { background: #e0e0e0; }
+#cartScreen .cart-control-btn:active { transform: scale(0.9); }
+#cartScreen .cart-control-btn.delete { color: #ff4757; background: #ffe0e3; }
+#cartScreen .cart-control-btn.delete:hover { background: #ffd0d3; }
+#cartScreen .cart-quantity-text { font-weight: 700; font-size: 1.1em; min-width: 24px; text-align: center; }
+#cartScreen .cart-item-img-box { width: 65px; height: 65px; background: #f5f5f5; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.5em; margin-right: 15px; flex-shrink: 0; }
+
+#cartScreen .add-more-items-btn { width: 100%; background: #f5f5f5; color: #333; font-weight: bold; padding: 15px; border-radius: 12px; text-align: center; margin-top: 20px; cursor: pointer; border: 1px solid #eee; font-size: 1.1em; transition: background 0.2s; }
+#cartScreen .add-more-items-btn:hover { background: #e0e0e0; }
+
+/* Suggested Section in Cart */
+#cartScreen .suggested-section { margin-top: 30px; padding-bottom: 20px; border-top: 1px solid #f5f5f5; padding-top: 20px; }
+#cartScreen .suggested-title { font-size: 1.1em; font-weight: 800; color: #333; margin-bottom: 15px; }
+#cartScreen .suggested-scroll { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 5px; scrollbar-width: none; }
+#cartScreen .suggested-scroll::-webkit-scrollbar { display: none; }
+#cartScreen .suggested-item { flex: 0 0 auto; width: 130px; border: 1px solid #eee; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px; background: #fff; transition: transform 0.2s; }
+#cartScreen .suggested-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+#cartScreen .suggested-img-box { height: 80px; background: #f9f9f9; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 2.5em; position: relative; margin-bottom: 4px; }
+#cartScreen .suggested-name { font-weight: 700; font-size: 0.9em; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#cartScreen .suggested-price { font-size: 0.9em; color: #555; font-weight: 600; }
+#cartScreen .suggested-add-btn { position: absolute; bottom: 6px; right: 6px; width: 28px; height: 28px; background: #fff; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2em; color: #019E81; font-weight: bold; transition: background 0.2s; }
+#cartScreen .suggested-add-btn:hover { background: #f0f0f0; }
+#cartScreen .suggested-add-btn:active { transform: scale(0.9); }
+
+/* Cart Accordion */
+.cart-accordion-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; cursor: pointer; font-weight: 800; color: #333; margin-bottom: 0; user-select: none; transition: background 0.2s; }
+.cart-accordion-header:hover { background: #fafafa; }
+.cart-accordion-header .header-text { display: flex; flex-direction: column; gap: 4px; }
+.cart-accordion-header .header-title { font-size: 1.1em; }
+.cart-accordion-header .header-subtitle { font-size: 0.9em; color: #666; font-weight: 600; }
+.cart-accordion-icon { font-size: 1.2em; transition: transform 0.3s ease; }
+.cart-accordion-header.active .cart-accordion-icon { transform: rotate(180deg); }
+.cart-accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; opacity: 0; }
+.cart-accordion-body.open { opacity: 1; margin-top: 15px; }
+
+/* Custom Map Pin */
+.delivery-pin-icon {
+    font-size: 2.5em;
+    background: transparent;
+    border: none;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.checkout-mini-map { width: 100%; height: 150px; background: #f5f5f5; border-radius: 12px; margin-top: 15px; z-index: 1; }
+
+/* Checkout Action Screen */
+#checkoutActionScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 5500; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#checkoutActionScreen.active { transform: translateX(0); }
+#checkoutActionScreen .checkout-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+#checkoutActionScreen .checkout-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#checkoutActionScreen .checkout-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#checkoutActionScreen .checkout-content { flex: 1; overflow-y: auto; padding: 20px; }
+#checkoutActionScreen .checkout-section { margin-bottom: 20px; border: 1px solid #eee; border-radius: 12px; padding: 15px; }
+#checkoutActionScreen .checkout-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+#checkoutActionScreen .checkout-section-header h4 { font-size: 1.1em; color: #333; }
+#checkoutActionScreen .change-btn { background: none; border: none; color: #019E81; font-weight: bold; cursor: pointer; font-size: 0.9em; }
+#checkoutActionScreen .address-details { display: flex; align-items: center; gap: 10px; font-size: 0.95em; color: #555; }
+#checkoutActionScreen .address-icon { font-size: 1.5em; }
+#checkoutActionScreen .checkout-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#checkoutActionScreen .place-order-btn { width: 100%; background: #019E81; color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+#checkoutActionScreen .place-order-btn:hover { background: #017a63; }
+
+/* Allergy Screen */
+#allergyScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 6000; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#allergyScreen.active { transform: translateX(0); }
+#allergyScreen .allergy-header { padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+#allergyScreen .allergy-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#allergyScreen .allergy-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#allergyScreen .allergy-content { flex: 1; overflow-y: auto; padding: 20px; }
+#allergyScreen .allergy-content p { color: #666; font-size: 0.9em; line-height: 1.5; margin-bottom: 15px; }
+#allergyScreen #allergyInput { width: 100%; height: 150px; border: 1px solid #ddd; border-radius: 12px; padding: 12px; font-size: 1em; resize: vertical; }
+#allergyScreen .allergy-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#allergyScreen #saveAllergyBtn { width: 100%; background: #019E81; color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+#allergyScreen #saveAllergyBtn:hover { background: #017a63; }
+
+/* Cutlery Switch */
+.cutlery-section { margin-top: 25px; padding: 0 5px; }
+.cutlery-header { display: flex; justify-content: space-between; align-items: center; }
+.cutlery-title { font-weight: bold; display: flex; align-items: center; gap: 10px; font-size: 0.95em; color: #333; }
+.cutlery-title span:first-child { font-size: 1.5em; }
+.cutlery-switch { position: relative; display: inline-block; width: 50px; height: 28px; flex-shrink: 0; }
+.cutlery-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e0e0e0; transition: .4s; border-radius: 28px; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+input:checked + .slider { background-color: #019E81; }
+input:checked + .slider:before { transform: translateX(22px); }
+.cutlery-description { font-size: 0.8em; color: #666; margin-top: 8px; line-height: 1.4; padding-left: 34px; }
+
+/* Toast Notification */
+
+/* Recipient Details Section in Checkout */
+.recipient-details-section, .user-phone-section {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.recipient-details-section:hover, .user-phone-section:hover { background: #f0f0f0; }
+.recipient-details-section h4, .user-phone-section h4 { font-size: 0.9em; font-weight: bold; color: #333; margin: 0 0 4px 0; }
+.recipient-details-section p, .user-phone-section p { font-size: 0.8em; color: #666; margin: 0; line-height: 1.4; }
+
+/* Recipient Details Screen */
+#recipientScreen {
+  position: fixed; bottom: -100%; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 6500; display: flex; flex-direction: column;
+  transition: bottom 0.4s ease-in-out;
+}
+#recipientScreen.active { bottom: 0; }
+#recipientScreen .recipient-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: 60px; }
+#recipientScreen .recipient-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#recipientScreen .recipient-close-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#recipientScreen .recipient-content { flex: 1; padding: 20px; overflow-y: auto; }
+#recipientScreen .recipient-content label { display: block; font-weight: bold; color: #333; margin-bottom: 8px; margin-top: 20px; font-size: 0.9em; }
+#recipientScreen .recipient-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; }
+#recipientScreen .phone-input-group { display: flex; gap: 10px; }
+#recipientScreen #phonePrefix { flex: 0 0 70px; }
+#recipientScreen #phoneNumber { flex: 1; }
+#recipientScreen .recipient-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#recipientScreen #saveRecipientBtn {
+  width: 100%; background: #019E81; color: #fff; border: none;
+  padding: 16px; border-radius: 12px; font-size: 1.2em; font-weight: bold;
+  cursor: pointer; transition: background 0.2s;
+}
+#recipientScreen #saveRecipientBtn:hover { background: #017a63; }
+
+/* User Phone Screen */
+#userPhoneScreen {
+  position: fixed; bottom: -100%; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 6500; display: flex; flex-direction: column;
+  transition: bottom 0.4s ease-in-out;
+}
+#userPhoneScreen.active { bottom: 0; }
+#userPhoneScreen .user-phone-header { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05); height: 60px; }
+#userPhoneScreen .user-phone-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#userPhoneScreen .user-phone-close-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#userPhoneScreen .user-phone-content { flex: 1; padding: 20px; overflow-y: auto; }
+#userPhoneScreen .user-phone-content p { color: #666; font-size: 0.9em; line-height: 1.5; margin-bottom: 20px; }
+#userPhoneScreen .user-phone-content label { display: block; font-weight: bold; color: #333; margin-bottom: 8px; font-size: 0.9em; }
+#userPhoneScreen .user-phone-content input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; }
+#userPhoneScreen .phone-input-group { display: flex; gap: 10px; }
+#userPhoneScreen #userPhonePrefix { flex: 0 0 70px; }
+#userPhoneScreen #userPhoneNumberInput { flex: 1; }
+#userPhoneScreen .user-phone-footer { padding: 20px; border-top: 1px solid #eee; background: #fff; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+#userPhoneScreen #saveUserPhoneBtn {
+  width: 100%; background: #019E81; color: #fff; border: none;
+  padding: 16px; border-radius: 12px; font-size: 1.2em; font-weight: bold;
+  cursor: pointer; transition: background 0.2s;
+}
+#userPhoneScreen #saveUserPhoneBtn:hover { background: #017a63; }
+
+#toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 6000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 17px; opacity: 0; transition: opacity 0.5s, bottom 0.5s; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+#toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+
 @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 </style>
 </head>
@@ -957,14 +1147,98 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   </div>
 </div>
 
+<div id="cartScreen">
+  <div class="cart-header">
+    <div class="cart-back-btn" id="cartBackBtn">⬅️</div>
+    <div class="cart-title">Checkout</div>
+  </div>
+  <div class="cart-content" id="cartContent">
+    <!-- Cart items populated by JS -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cartTotalAmount">0.00</span>
+    </div>
+    <button class="checkout-btn">Checkout</button>
+  </div>
+</div>
+
+<div id="checkoutActionScreen">
+  <div class="checkout-header">
+    <div class="checkout-back-btn" id="checkoutBackBtn">⬅️</div>
+    <div class="checkout-title">Checkout</div>
+  </div>
+  <div class="checkout-content">
+    <!-- Content populated by JS -->
+  </div>
+  <div class="checkout-footer"><button class="place-order-btn" id="placeOrderBtn">Place Order</button></div>
+</div>
+
+<div id="allergyScreen">
+  <div class="allergy-header">
+    <div class="allergy-back-btn" id="allergyBackBtn">⬅️</div>
+    <div class="allergy-title">Allergies</div>
+  </div>
+  <div class="allergy-content">
+    <p>Please list any allergies or dietary restrictions. The restaurant will do its best to accommodate them.</p>
+    <textarea id="allergyInput" placeholder="e.g., allergic to peanuts, gluten-free..."></textarea>
+  </div>
+  <div class="allergy-footer">
+    <button id="saveAllergyBtn">Save</button>
+  </div>
+</div>
+
+<div id="recipientScreen">
+  <div class="recipient-header">
+    <div class="recipient-title">Recipient Details</div>
+    <div id="recipientCloseBtn" class="recipient-close-btn">✖</div>
+  </div>
+  <div class="recipient-content">
+    <label for="recipientName">Recipient Name</label>
+    <input type="text" id="recipientName" placeholder="Enter full name">
+    
+    <label>Phone Number</label>
+    <div class="phone-input-group">
+      <input type="text" id="phonePrefix" placeholder="+971" value="+971">
+      <input type="tel" id="phoneNumber" placeholder="50 123 4567">
+    </div>
+  </div>
+  <div class="recipient-footer">
+    <button id="saveRecipientBtn">Save Details</button>
+  </div>
+</div>
+
+<div id="userPhoneScreen">
+  <div class="user-phone-header">
+    <div class="user-phone-title">Your Phone Number</div>
+    <div id="userPhoneCloseBtn" class="user-phone-close-btn">✖</div>
+  </div>
+  <div class="user-phone-content">
+    <p>We will send you a message to validate your number.</p>
+    <label>Phone Number</label>
+    <div class="phone-input-group">
+      <input type="text" id="userPhonePrefix" placeholder="+971" value="+971">
+      <input type="tel" id="userPhoneNumberInput" placeholder="50 123 4567">
+    </div>
+  </div>
+  <div class="user-phone-footer">
+    <button id="saveUserPhoneBtn">Save Number</button>
+  </div>
+</div>
+
 <div id="viewCartBtn">
   <div style="position: relative;">🛒<span id="cartItemCount" style="position: absolute; top: -10px; right: -10px; background: #ff4757; color: white; border-radius: 50%; padding: 4px 8px; font-size: 0.5em; min-width: 20px; text-align: center;">0</span></div>
 </div>
+
+<div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 let map, marker;
 let cart = [];
+let suggestedScrollInterval;
+let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = '';
 
 function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
 function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
@@ -1000,8 +1274,14 @@ document.getElementById('openMapBtn').addEventListener('click',()=>{
 
   if(!map){
     map=L.map('map').setView([24.4539,54.3773],13);
+    const deliveryPinIcon = L.divIcon({
+        html: '📍',
+        className: 'delivery-pin-icon',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+    });
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19, attribution:'© OpenStreetMap'}).addTo(map);
-    marker=L.marker([24.4539,54.3773],{draggable:true}).addTo(map);
+    marker=L.marker([24.4539,54.3773],{draggable:true, icon: deliveryPinIcon}).addTo(map);
     marker.on('dragend', ()=>{
       reverseGeocode(marker.getLatLng());
       showSearchCard();
@@ -1624,6 +1904,7 @@ if (dishFooter) {
             const title = document.getElementById('dishDetailTitle').textContent;
             const basePrice = parseFloat(document.getElementById('dishDetailPrice').textContent);
             const currentQuantity = parseInt(quantityEl.textContent, 10);
+            const image = document.getElementById('dishDetailImage').innerHTML;
             
             const selectedAddons = [];
             dishDetailScreen.querySelectorAll('.addon-checkbox:checked').forEach(checkbox => {
@@ -1638,7 +1919,8 @@ if (dishFooter) {
                 title,
                 basePrice,
                 quantity: currentQuantity,
-                addons: selectedAddons
+                addons: selectedAddons,
+                image
             });
             updateCartView();
             closeDishDetail();
@@ -1648,28 +1930,10 @@ if (dishFooter) {
 
 if (resMenuContent) {
     resMenuContent.addEventListener('click', (e) => {
-        const addBtn = e.target.closest('.res-item-add-btn');
         const itemCard = e.target.closest('.res-item-card');
 
-        if (addBtn) { // Click was on the add button or its children
-            e.stopPropagation();
-
-            const isInitialAdd = e.target.classList.contains('initial-plus');
-            const isPlus = e.target.classList.contains('plus');
-            const isMinus = e.target.classList.contains('minus');
-
-            if (isInitialAdd) {
-                addBtn.classList.add('active');
-            } else if (isPlus) {
-                const valueSpan = addBtn.querySelector('.quantity-value');
-                valueSpan.textContent = parseInt(valueSpan.textContent, 10) + 1;
-            } else if (isMinus) {
-                const valueSpan = addBtn.querySelector('.quantity-value');
-                let currentValue = parseInt(valueSpan.textContent, 10);
-                if (currentValue > 1) { valueSpan.textContent = currentValue - 1; } 
-                else { addBtn.classList.remove('active'); }
-            }
-        } else if (itemCard) { // Click was on the card, but not the add button
+        // If a card was clicked (including its add button), open the detail screen
+        if (itemCard) {
             openDishDetail(itemCard);
         }
     });
@@ -1677,6 +1941,514 @@ if (resMenuContent) {
 
 if (optionsOverlay) {
     optionsOverlay.addEventListener('click', hideOptionsSheet);
+}
+
+/* Toast Function */
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.className = "show";
+    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
+/* Cart Screen Logic */
+const cartScreen = document.getElementById('cartScreen');
+const cartBackBtn = document.getElementById('cartBackBtn');
+
+function openCart() {
+    const cartContent = document.getElementById('cartContent');
+    const cartTotalAmount = document.getElementById('cartTotalAmount');
+    
+    clearInterval(suggestedScrollInterval);
+    cartContent.innerHTML = '';
+    let grandTotal = 0;
+
+    if (cart.length === 0) {
+        cartContent.innerHTML = '<div style="text-align:center; margin-top:50px; color:#999; font-size: 1.1em;">Your cart is empty</div>';
+    } else {
+        cart.forEach((item, index) => {
+            let itemTotal = item.basePrice;
+            let detailsHtml = '';
+            
+            if (item.addons && item.addons.length > 0) {
+                item.addons.forEach(addon => {
+                    itemTotal += addon.price;
+                    detailsHtml += `<div>+ ${addon.name} (${addon.price.toFixed(2)})</div>`;
+                });
+            }
+            
+            itemTotal *= item.quantity;
+            grandTotal += itemTotal;
+
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div class="cart-item-img-box">${item.image || '🍽️'}</div>
+                <div class="cart-item-info" style="flex:1;">
+                    <div class="cart-item-header">${item.title}</div>
+                    <div class="cart-item-details">${detailsHtml}</div>
+                    <div class="cart-controls">
+                        <div class="cart-control-btn minus" data-index="${index}">-</div>
+                        <div class="cart-quantity-text">${item.quantity}</div>
+                        <div class="cart-control-btn plus" data-index="${index}">+</div>
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:flex-end; justify-content:space-between; gap:10px;">
+                    <div class="cart-item-price">${itemTotal.toFixed(2)}</div>
+                    <div class="cart-control-btn delete" data-index="${index}">🗑️</div>
+                </div>
+            `;
+            cartContent.appendChild(div);
+        });
+
+        const addMoreBtn = document.createElement('div');
+        addMoreBtn.className = 'add-more-items-btn';
+        addMoreBtn.textContent = 'Add More Items';
+        addMoreBtn.addEventListener('click', () => {
+            cartScreen.classList.remove('active');
+            clearInterval(suggestedScrollInterval);
+        });
+        cartContent.appendChild(addMoreBtn);
+
+        // Suggested Items Section
+        const suggestedSection = document.createElement('div');
+        suggestedSection.className = 'suggested-section';
+        suggestedSection.innerHTML = '<div class="suggested-title">You may also like</div>';
+        
+        const suggestedScroll = document.createElement('div');
+        suggestedScroll.className = 'suggested-scroll';
+        
+        const suggestedItems = [
+            { title: 'French Fries', price: 15.00, emoji: '🍟' },
+            { title: 'Coca Cola', price: 5.00, emoji: '🥤' },
+            { title: 'Choco Ice Cream', price: 12.00, emoji: '🍦' },
+            { title: 'Fresh Salad', price: 20.00, emoji: '🥗' },
+            { title: 'Onion Rings', price: 18.00, emoji: '🧅' }
+        ];
+
+        suggestedItems.forEach(sItem => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'suggested-item';
+            itemEl.innerHTML = `
+                <div class="suggested-img-box">
+                    ${sItem.emoji}
+                    <div class="suggested-add-btn">+</div>
+                </div>
+                <div class="suggested-name">${sItem.title}</div>
+                <div class="suggested-price">${sItem.price.toFixed(2)}</div>
+            `;
+            
+            itemEl.querySelector('.suggested-add-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                cart.push({ title: sItem.title, basePrice: sItem.price, quantity: 1, addons: [], image: sItem.emoji });
+                showToast(`${sItem.title} added!`);
+                openCart();
+            });
+            suggestedScroll.appendChild(itemEl);
+        });
+        
+        suggestedSection.appendChild(suggestedScroll);
+        cartContent.appendChild(suggestedSection);
+
+        suggestedScrollInterval = setInterval(() => {
+            if (suggestedScroll.scrollLeft + suggestedScroll.clientWidth >= suggestedScroll.scrollWidth - 10) {
+                suggestedScroll.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                suggestedScroll.scrollBy({ left: 160, behavior: 'smooth' });
+            }
+        }, 2500);
+    }
+
+    cartTotalAmount.textContent = grandTotal.toFixed(2);
+    cartScreen.classList.add('active');
+}
+
+/* Cart Actions (Delegation) */
+document.getElementById('cartContent').addEventListener('click', (e) => {
+    const btn = e.target.closest('.cart-control-btn');
+    if (!btn) return;
+    
+    const index = parseInt(btn.dataset.index, 10);
+    
+    if (btn.classList.contains('plus')) {
+        cart[index].quantity++;
+    } else if (btn.classList.contains('minus')) {
+        if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+        }
+    } else if (btn.classList.contains('delete')) {
+        cart.splice(index, 1);
+    }
+    
+    updateCartView();
+    openCart();
+});
+
+/* Checkout Action */
+document.querySelector('.checkout-btn').addEventListener('click', () => {
+    if (cart.length > 0) {
+        const checkoutScreen = document.getElementById('checkoutActionScreen');
+        const checkoutContent = checkoutScreen.querySelector('.checkout-content');
+        
+        // Calculate totals
+        let grandTotal = 0;
+        let totalItems = 0;
+        cart.forEach(item => {
+            let itemTotal = item.basePrice;
+            if (item.addons) item.addons.forEach(a => itemTotal += a.price);
+            grandTotal += itemTotal * item.quantity;
+            totalItems += item.quantity;
+        });
+        const resName = document.getElementById('resScreenName').textContent || 'Restaurant';
+
+        checkoutContent.innerHTML = '';
+
+        // 1. "Your Order" Subtitle
+        const yourOrderTitle = document.createElement('h3');
+        yourOrderTitle.textContent = 'Your Order';
+        yourOrderTitle.style.cssText = 'margin: 5px 0 15px 0; font-size: 1.1em; font-weight: 800; color: #333;';
+        checkoutContent.appendChild(yourOrderTitle);
+
+        // 2. Accordion for Items
+        const accordionHeader = document.createElement('div');
+        accordionHeader.className = 'cart-accordion-header';
+        if (isCheckoutAccordionOpen) accordionHeader.classList.add('active');
+        accordionHeader.innerHTML = `
+            <div class="header-text">
+                <div class="header-title">${totalItems} Items from</div>
+                <div class="header-subtitle">${resName}</div>
+            </div>
+            <div class="cart-accordion-icon">v</div>
+        `;
+
+        const accordionBody = document.createElement('div');
+        accordionBody.className = 'cart-accordion-body';
+        if (isCheckoutAccordionOpen) accordionBody.classList.add('open');
+
+        // Populate Accordion Body with simple list
+        cart.forEach((item) => {
+            const div = document.createElement('div');
+            div.style.cssText = 'padding: 10px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; font-size: 0.9em;';
+            div.innerHTML = `<span>${item.quantity}x ${item.title}</span> <span>${(item.basePrice * item.quantity).toFixed(2)}</span>`;
+            accordionBody.appendChild(div);
+        });
+
+        accordionHeader.addEventListener('click', () => {
+            isCheckoutAccordionOpen = !isCheckoutAccordionOpen;
+            accordionHeader.classList.toggle('active');
+            if (isCheckoutAccordionOpen) {
+                accordionBody.classList.add('open');
+                accordionBody.style.maxHeight = accordionBody.scrollHeight + "px";
+            } else {
+                accordionBody.classList.remove('open');
+                accordionBody.style.maxHeight = null;
+            }
+        });
+
+        checkoutContent.appendChild(accordionHeader);
+        checkoutContent.appendChild(accordionBody);
+        if (isCheckoutAccordionOpen) { setTimeout(() => { accordionBody.style.maxHeight = accordionBody.scrollHeight + "px"; }, 0); }
+
+        // Allergy Section
+        const allergySection = document.createElement('div');
+        allergySection.style.cssText = 'margin-top: 25px; cursor: pointer; padding: 0 5px;';
+        allergySection.id = 'checkoutAllergySection';
+        allergySection.innerHTML = `
+            <div class="address-details">
+                <span class="address-icon">⚠️</span>
+                <div style="flex: 1;">
+                    <span style="font-weight: bold;">Any Allergies?</span>
+                    <div id="allergyNotesDisplay" style="font-size: 0.8em; color: #666; margin-top: 4px; white-space: pre-wrap; word-break: break-word; display: none;"></div>
+                </div>
+            </div>
+        `;
+        allergySection.addEventListener('click', () => {
+            document.getElementById('allergyInput').value = allergyNotes;
+            document.getElementById('allergyScreen').classList.add('active');
+        });
+        checkoutContent.appendChild(allergySection);
+        updateAllergyDisplay();
+
+        // Cutlery Section
+        const cutlerySection = document.createElement('div');
+        cutlerySection.className = 'cutlery-section';
+        cutlerySection.innerHTML = `
+            <div class="cutlery-header">
+                <div class="cutlery-title">
+                    <span>🍴</span>
+                    <b>Need Cutlery?</b>
+                </div>
+                <label class="cutlery-switch">
+                    <input type="checkbox" id="cutlerySwitch">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="cutlery-description" id="cutleryDescription">
+                Help us minimize waste. Only ask for cutley when you need it.
+            </div>
+        `;
+        checkoutContent.appendChild(cutlerySection);
+
+        const cutlerySwitch = cutlerySection.querySelector('#cutlerySwitch');
+        const cutleryDescription = cutlerySection.querySelector('#cutleryDescription');
+        cutlerySwitch.addEventListener('change', () => {
+            if (cutlerySwitch.checked) {
+                cutleryDescription.textContent = 'Cutlery will be requested from the restaurant for this order.';
+            } else {
+                cutleryDescription.textContent = 'Help us minimize waste. Only ask for cutley when you need it.';
+            }
+        });
+
+        // 3. Delivery Address Section
+        const addressSection = document.createElement('div');
+        addressSection.className = 'checkout-section';
+        addressSection.style.marginTop = '20px';
+        const currentAddress = document.getElementById('selectedAddressText').textContent || 'No address selected';
+        addressSection.innerHTML = `
+            <div class="checkout-section-header">
+                <h4>Delivery Address</h4>
+                <button class="change-btn">Change</button>
+            </div>
+            <div class="address-details">
+                <span class="address-icon">🏠</span>
+                <span class="address-text" style="line-height: 1.4;">${currentAddress}</span>
+            </div>
+            <div id="checkoutMiniMap" class="checkout-mini-map"></div>
+            <div class="recipient-details-section" id="checkoutRecipientSection"></div>
+            <div class="user-phone-section" id="checkoutUserPhoneSection"></div>
+        `;
+        addressSection.querySelector('.change-btn').addEventListener('click', () => {
+            document.getElementById('checkoutActionScreen').classList.remove('active');
+        });
+        checkoutContent.appendChild(addressSection);
+
+        const recipientSection = document.getElementById('checkoutRecipientSection');
+        recipientSection.addEventListener('click', () => {
+            const recipientScreen = document.getElementById('recipientScreen');
+            document.getElementById('recipientName').value = recipientDetails.name;
+            const phoneParts = recipientDetails.phone.split(' ');
+            if (phoneParts.length > 1) {
+                document.getElementById('phonePrefix').value = phoneParts[0];
+                document.getElementById('phoneNumber').value = phoneParts.slice(1).join(' ');
+            } else {
+                document.getElementById('phoneNumber').value = recipientDetails.phone;
+            }
+            recipientScreen.classList.add('active');
+        });
+        updateRecipientDisplay();
+
+        const userPhoneSection = document.getElementById('checkoutUserPhoneSection');
+        userPhoneSection.addEventListener('click', () => {
+            const userPhoneScreen = document.getElementById('userPhoneScreen');
+            const phoneParts = userPhoneNumber.split(' ');
+            if (phoneParts.length > 1) {
+                document.getElementById('userPhonePrefix').value = phoneParts[0];
+                document.getElementById('userPhoneNumberInput').value = phoneParts.slice(1).join(' ');
+            } else {
+                document.getElementById('userPhoneNumberInput').value = userPhoneNumber;
+                document.getElementById('userPhonePrefix').value = '+971'; // Default prefix
+            }
+            userPhoneScreen.classList.add('active');
+        });
+        updateUserPhoneDisplay();
+
+        setTimeout(() => {
+            const center = marker ? marker.getLatLng() : [24.4539,54.3773];
+            const miniMap = L.map('checkoutMiniMap', { zoomControl:false, dragging:false, scrollWheelZoom:false, doubleClickZoom:false, touchZoom:false, attributionControl:false }).setView(center, 16);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(miniMap);
+            const pinIcon = L.divIcon({ html: '📍', className: 'delivery-pin-icon', iconSize: [30, 30], iconAnchor: [15, 30] });
+            L.marker(center, {icon: pinIcon}).addTo(miniMap);
+        }, 300);
+
+        // 4. Payment placeholder
+        const paymentSection = document.createElement('div');
+        paymentSection.className = 'checkout-section';
+        paymentSection.innerHTML = `
+            <div class="checkout-section-header">
+                <h4>Payment Method</h4>
+                <button class="change-btn">Select</button>
+            </div>
+            <div class="address-details">
+                <span class="address-icon">💳</span>
+                <span>Cash on Delivery</span>
+            </div>
+        `;
+        checkoutContent.appendChild(paymentSection);
+
+        checkoutScreen.classList.add('active');
+    }
+});
+
+if (viewCartBtn) {
+    viewCartBtn.addEventListener('click', openCart);
+}
+
+if (cartBackBtn) {
+    cartBackBtn.addEventListener('click', () => {
+        cartScreen.classList.remove('active');
+        clearInterval(suggestedScrollInterval);
+    });
+}
+
+const placeOrderBtn = document.getElementById('placeOrderBtn');
+if (placeOrderBtn) {
+    placeOrderBtn.addEventListener('click', () => {
+        if (cart.length > 0) {
+            showToast("Order placed successfully! 🎉");
+            cart = [];
+            updateCartView();
+            document.getElementById('checkoutActionScreen').classList.remove('active');
+            setTimeout(() => {
+                cartScreen.classList.remove('active');
+                clearInterval(suggestedScrollInterval);
+            }, 300);
+        }
+    });
+}
+
+const allergyScreen = document.getElementById('allergyScreen');
+const allergyBackBtn = document.getElementById('allergyBackBtn');
+const saveAllergyBtn = document.getElementById('saveAllergyBtn');
+const allergyInput = document.getElementById('allergyInput');
+
+function updateAllergyDisplay() {
+    const displayEl = document.getElementById('allergyNotesDisplay');
+    const allergySection = document.getElementById('checkoutAllergySection');
+    if (displayEl && allergySection) {
+        const mainTextSpan = allergySection.querySelector('span:not(.address-icon)');
+        if (allergyNotes) {
+            displayEl.textContent = allergyNotes;
+            displayEl.style.display = 'block';
+            if(mainTextSpan) mainTextSpan.textContent = 'Allergies / Notes';
+        } else {
+            displayEl.style.display = 'none';
+            if(mainTextSpan) mainTextSpan.textContent = 'Any Allergies?';
+        }
+    }
+}
+
+function updateRecipientDisplay() {
+    const section = document.getElementById('checkoutRecipientSection');
+    if (!section) return;
+
+    if (recipientDetails.name) {
+        section.innerHTML = `
+            <span class="address-icon">🎁</span>
+            <div>
+                <h4>Sending to: ${recipientDetails.name}</h4>
+                <p>Courier will contact ${recipientDetails.phone}. Tap to edit.</p>
+            </div>
+        `;
+    } else {
+        section.innerHTML = `
+            <span class="address-icon">🎁</span>
+            <div>
+                <h4>Sending to someone else?</h4>
+                <p>Add their details to help the courier</p>
+            </div>
+        `;
+    }
+}
+
+function updateUserPhoneDisplay() {
+    const section = document.getElementById('checkoutUserPhoneSection');
+    if (!section) return;
+
+    if (userPhoneNumber) {
+        section.innerHTML = `
+            <span class="address-icon">📱</span>
+            <div>
+                <h4>Your Phone Number</h4>
+                <p>${userPhoneNumber}. Tap to edit.</p>
+            </div>
+        `;
+    } else {
+        section.innerHTML = `
+            <span class="address-icon">📱</span>
+            <div>
+                <h4>Add Your Phone Number</h4>
+                <p>We will send you massage to validate it</p>
+            </div>
+        `;
+    }
+}
+
+const recipientScreen = document.getElementById('recipientScreen');
+const recipientCloseBtn = document.getElementById('recipientCloseBtn');
+const saveRecipientBtn = document.getElementById('saveRecipientBtn');
+
+if (recipientCloseBtn) {
+    recipientCloseBtn.addEventListener('click', () => {
+        recipientScreen.classList.remove('active');
+    });
+}
+
+if (saveRecipientBtn) {
+    saveRecipientBtn.addEventListener('click', () => {
+        const name = document.getElementById('recipientName').value.trim();
+        const prefix = document.getElementById('phonePrefix').value.trim();
+        const number = document.getElementById('phoneNumber').value.trim();
+
+        if (name && number) {
+            recipientDetails.name = name;
+            recipientDetails.phone = `${prefix} ${number}`;
+            showToast("Recipient details saved!");
+            updateRecipientDisplay();
+            recipientScreen.classList.remove('active');
+        } else {
+            showToast("Please fill in all fields.");
+        }
+    });
+}
+
+const userPhoneScreen = document.getElementById('userPhoneScreen');
+const userPhoneCloseBtn = document.getElementById('userPhoneCloseBtn');
+const saveUserPhoneBtn = document.getElementById('saveUserPhoneBtn');
+
+if (userPhoneCloseBtn) {
+    userPhoneCloseBtn.addEventListener('click', () => {
+        userPhoneScreen.classList.remove('active');
+    });
+}
+
+if (saveUserPhoneBtn) {
+    saveUserPhoneBtn.addEventListener('click', () => {
+        const prefix = document.getElementById('userPhonePrefix').value.trim();
+        const number = document.getElementById('userPhoneNumberInput').value.trim();
+
+        if (number) {
+            userPhoneNumber = `${prefix} ${number}`;
+            showToast("Phone number saved!");
+            updateUserPhoneDisplay();
+            userPhoneScreen.classList.remove('active');
+        } else {
+            showToast("Please enter a phone number.");
+        }
+    });
+}
+
+if (allergyBackBtn) {
+    allergyBackBtn.addEventListener('click', () => {
+        allergyScreen.classList.remove('active');
+    });
+}
+
+if (saveAllergyBtn) {
+    saveAllergyBtn.addEventListener('click', () => {
+        allergyNotes = allergyInput.value;
+        if(allergyNotes) {
+            showToast("Allergy information saved!");
+        }
+        allergyScreen.classList.remove('active');
+        updateAllergyDisplay();
+    });
+}
+
+const checkoutBackBtn = document.getElementById('checkoutBackBtn');
+if (checkoutBackBtn) {
+    checkoutBackBtn.addEventListener('click', () => {
+        document.getElementById('checkoutActionScreen').classList.remove('active');
+    });
 }
 </script>
 </body>
