@@ -535,6 +535,28 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 #recipientScreen #saveRecipientBtn:hover { background: #017a63; }
 
+/* Payment Method Sheet */
+#paymentOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 7000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
+#paymentOverlay.show { opacity: 1; pointer-events: auto; }
+#paymentSheet { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); padding: 20px; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 7001; display: flex; flex-direction: column; gap: 15px; }
+#paymentSheet.show { transform: translateY(0); }
+#paymentSheet h3 { font-size: 1.2em; font-weight: 800; margin-bottom: 10px; text-align: center; }
+.payment-option-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; font-size: 1.1em; padding: 15px 10px; cursor: pointer; border-radius: 8px; border-bottom: 1px solid #f5f5f5; }
+.payment-option-item:last-child { border-bottom: none; }
+.payment-option-item:hover { background: #f5f5f5; }
+.payment-option-info { display: flex; align-items: center; gap: 15px; }
+.payment-option-item .payment-icon { font-size: 1.5em; width: 30px; text-align: center; }
+.payment-option-item input[type="radio"] { accent-color: #019E81; width: 20px; height: 20px; }
+
+/* Tip Options */
+.tip-option { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; text-align: center; font-weight: bold; cursor: pointer; transition: all 0.2s; background: #fff; font-size: 0.9em; }
+.tip-option:hover { background: #f9f9f9; }
+.tip-option.selected { background: #FFD700; border-color: #e6c200; color: #333; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+/* Summary Section */
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.95em; color: #555; }
+.summary-row.total { font-weight: 800; color: #333; font-size: 1.2em; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; }
+
 /* User Phone Screen */
 #userPhoneScreen {
   position: fixed; bottom: -100%; left: 0; width: 100%; height: 100%;
@@ -1227,6 +1249,34 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 </div>
 
+<div id="paymentOverlay"></div>
+<div id="paymentSheet">
+  <h3>Select Payment Method</h3>
+  <div class="payment-options-list">
+    <label class="payment-option-item">
+      <div class="payment-option-info">
+        <span class="payment-icon">💵</span>
+        <span>Cash on Delivery</span>
+      </div>
+      <input type="radio" name="paymentMethod" value="cod" data-icon="💵" data-text="Cash on Delivery" checked>
+    </label>
+    <label class="payment-option-item">
+      <div class="payment-option-info">
+        <span class="payment-icon" style="color: #ffcb00;">●</span>
+        <span>MTN Mobile Money</span>
+      </div>
+      <input type="radio" name="paymentMethod" value="mtn" data-icon="📱" data-text="MTN Mobile Money">
+    </label>
+    <label class="payment-option-item">
+      <div class="payment-option-info">
+        <span class="payment-icon" style="color: #ed1c24;">●</span>
+        <span>Airtel Money</span>
+      </div>
+      <input type="radio" name="paymentMethod" value="airtel" data-icon="📱" data-text="Airtel Money">
+    </label>
+  </div>
+</div>
+
 <div id="viewCartBtn">
   <div style="position: relative;">🛒<span id="cartItemCount" style="position: absolute; top: -10px; right: -10px; background: #ff4757; color: white; border-radius: 50%; padding: 4px 8px; font-size: 0.5em; min-width: 20px; text-align: center;">0</span></div>
 </div>
@@ -1238,7 +1288,7 @@ input:checked + .slider:before { transform: translateX(22px); }
 let map, marker;
 let cart = [];
 let suggestedScrollInterval;
-let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = '';
+let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = ''; let selectedPaymentMethod = { value: 'cod', icon: '💵', text: 'Cash on Delivery' }; let tipPercentage = 0;
 
 function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
 function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
@@ -2333,20 +2383,110 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
         deliveryOptSection.appendChild(deliveryOptBody);
         checkoutContent.appendChild(deliveryOptSection);
 
-        // 4. Payment placeholder
+        // 4. Payment Method
         const paymentSection = document.createElement('div');
         paymentSection.className = 'checkout-section';
+        paymentSection.id = 'paymentSection';
         paymentSection.innerHTML = `
             <div class="checkout-section-header">
                 <h4>Payment Method</h4>
                 <button class="change-btn">Select</button>
             </div>
             <div class="address-details">
-                <span class="address-icon">💳</span>
-                <span>Cash on Delivery</span>
+                <span class="address-icon">${selectedPaymentMethod.icon}</span>
+                <span>${selectedPaymentMethod.text}</span>
             </div>
         `;
+        paymentSection.querySelector('.change-btn').addEventListener('click', () => {
+            const currentPayment = selectedPaymentMethod.value;
+            const radioToCheck = document.querySelector(`#paymentSheet input[value="${currentPayment}"]`);
+            if (radioToCheck) {
+                radioToCheck.checked = true;
+            }
+            document.getElementById('paymentOverlay').classList.add('show');
+            document.getElementById('paymentSheet').classList.add('show');
+        });
+        
+        if (selectedPaymentMethod.value === 'mtn' || selectedPaymentMethod.value === 'airtel') {
+             const infoDiv = document.createElement('div');
+             infoDiv.id = 'paymentDepositInfo';
+             infoDiv.style.cssText = 'margin-top: 15px; font-size: 0.9em; color: #555; background-color: #f9f9f9; padding: 10px; border-radius: 8px; border: 1px solid #eee;';
+             const number = '+971562889428';
+             infoDiv.innerHTML = `<strong>Deposit Number:</strong> ${number}<br><small>After deposit, send screenshot proof to the WhatsApp number you placed the order with.</small>`;
+             paymentSection.appendChild(infoDiv);
+        }
+
         checkoutContent.appendChild(paymentSection);
+
+        // Courier Tip Section
+        const tipSection = document.createElement('div');
+        tipSection.className = 'checkout-section';
+        tipSection.style.marginTop = '20px';
+        tipPercentage = 0;
+        const summarySection = document.createElement('div');
+        summarySection.className = 'checkout-section';
+        summarySection.style.marginTop = '20px';
+
+        const updateSummary = () => {
+            const currency = 'UGX';
+            const productTotal = grandTotal;
+            const deliveryFee = 0.00; 
+            const promotion = 0.00;
+            const subTotal = productTotal - promotion;
+            const tipAmount = subTotal * (tipPercentage / 100);
+            const totalToPay = subTotal + deliveryFee + tipAmount;
+
+            summarySection.innerHTML = `
+                <div class="checkout-section-header" style="margin-bottom:15px;"><h4>Delivery Summary</h4></div>
+                <div class="summary-row"><span>Products</span><span>${currency} ${productTotal.toFixed(2)}</span></div>
+                <div class="summary-row"><span>Promotions</span><span>-${currency} ${promotion.toFixed(2)}</span></div>
+                <div class="summary-row" style="font-weight: 800; color: #333;"><span>Subtotal</span><span>${currency} ${subTotal.toFixed(2)}</span></div>
+                <div class="summary-row"><span>Delivery Fees</span><span>${currency} ${deliveryFee.toFixed(2)}</span></div>
+                <div class="summary-row"><span>Courier Tip (${tipPercentage}%)</span><span>${currency} ${tipAmount.toFixed(2)}</span></div>
+                <div class="summary-row total"><span>Total to Pay</span><span>${currency} ${totalToPay.toFixed(2)}</span></div>
+            `;
+        };
+        
+        const tipHeader = document.createElement('div');
+        tipHeader.className = 'checkout-section-header';
+        tipHeader.style.marginBottom = '5px';
+        tipHeader.innerHTML = `
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:1.5em;">🤲</span>
+                <h4>Courier tip</h4>
+            </div>
+        `;
+        
+        const tipSubtitle = document.createElement('div');
+        tipSubtitle.style.cssText = 'font-size: 0.85em; color: #666; margin-bottom: 15px;';
+        tipSubtitle.textContent = 'The Courier will get the full amount';
+
+        const tipOptionsContainer = document.createElement('div');
+        tipOptionsContainer.style.cssText = 'display: flex; gap: 10px; margin-bottom: 15px;';
+        
+        [0, 5, 10, 15].forEach(amount => {
+            const el = document.createElement('div');
+            el.className = 'tip-option';
+            if (amount === 0) el.classList.add('selected');
+            el.textContent = amount + '%';
+            el.addEventListener('click', () => {
+                tipOptionsContainer.querySelectorAll('.tip-option').forEach(opt => opt.classList.remove('selected'));
+                el.classList.add('selected');
+                tipPercentage = amount;
+                updateSummary();
+            });
+            tipOptionsContainer.appendChild(el);
+        });
+
+        const saveTipContainer = document.createElement('label');
+        saveTipContainer.style.cssText = 'display: flex; align-items: center; gap: 8px; font-size: 0.9em; cursor: pointer; user-select: none;';
+        saveTipContainer.innerHTML = `<input type="checkbox" style="accent-color: #019E81; width: 18px; height: 18px;"><span>Save tip for next order</span>`;
+
+        tipSection.append(tipHeader, tipSubtitle, tipOptionsContainer, saveTipContainer);
+        checkoutContent.appendChild(tipSection);
+
+        updateSummary();
+        checkoutContent.appendChild(summarySection);
 
         checkoutScreen.classList.add('active');
     }
@@ -2367,6 +2507,64 @@ const placeOrderBtn = document.getElementById('placeOrderBtn');
 if (placeOrderBtn) {
     placeOrderBtn.addEventListener('click', () => {
         if (cart.length > 0) {
+            if (!userPhoneNumber && !recipientDetails.phone) {
+                showToast("Please provide a contact number and select payment mode");
+                const userPhoneSection = document.getElementById('checkoutUserPhoneSection');
+                if (userPhoneSection) userPhoneSection.click();
+                return;
+            }
+
+            // WhatsApp Integration
+            const resName = document.getElementById('resScreenName').textContent || 'Restaurant';
+            const currency = 'UGX';
+            let message = `*New Order from Kirya App* 🛒\n\n`;
+            message += `*Restaurant:* ${resName}\n\n`;
+            message += `*Items:*\n`;
+
+            let subTotal = 0;
+            cart.forEach(item => {
+                let itemPrice = item.basePrice;
+                let addonsText = '';
+                if (item.addons && item.addons.length > 0) {
+                    item.addons.forEach(addon => {
+                        itemPrice += addon.price;
+                        addonsText += ` + ${addon.name}`;
+                    });
+                }
+                const lineTotal = itemPrice * item.quantity;
+                subTotal += lineTotal;
+                message += `${item.quantity}x ${item.title}${addonsText} - ${lineTotal.toFixed(2)}\n`;
+            });
+
+            const deliveryFee = 0.00;
+            const tipAmount = subTotal * (tipPercentage / 100);
+            const totalToPay = subTotal + deliveryFee + tipAmount;
+
+            message += `\n*Subtotal:* ${currency} ${subTotal.toFixed(2)}\n`;
+            message += `*Delivery Fee:* ${currency} ${deliveryFee.toFixed(2)}\n`;
+            message += `*Courier Tip (${tipPercentage}%):* ${currency} ${tipAmount.toFixed(2)}\n`;
+            message += `*Total to Pay:* ${currency} ${totalToPay.toFixed(2)}\n\n`;
+
+            message += `*Payment Method:* ${selectedPaymentMethod.text}\n`;
+            const deliveryAddress = document.getElementById('selectedAddressText').textContent || 'Not set';
+            message += `*Delivery Address:* ${deliveryAddress}\n`;
+
+            const customerName = recipientDetails.name || 'Valued Customer';
+            const contactPhone = recipientDetails.phone || userPhoneNumber || 'Not provided';
+            message += `*Customer:* ${customerName}\n`;
+            message += `*Contact:* ${contactPhone}\n`;
+
+            if (allergyNotes) {
+                message += `*Allergies/Notes:* ${allergyNotes}\n`;
+            }
+
+            const cutlery = document.getElementById('cutlerySwitch') && document.getElementById('cutlerySwitch').checked ? 'Yes' : 'No';
+            message += `*Cutlery:* ${cutlery}\n`;
+
+            const whatsappNumber = '971562889428'; // Business WhatsApp Number
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+
             showToast("Order placed successfully! 🎉");
             cart = [];
             updateCartView();
@@ -2521,6 +2719,59 @@ const checkoutBackBtn = document.getElementById('checkoutBackBtn');
 if (checkoutBackBtn) {
     checkoutBackBtn.addEventListener('click', () => {
         document.getElementById('checkoutActionScreen').classList.remove('active');
+    });
+}
+
+const paymentOverlay = document.getElementById('paymentOverlay');
+const paymentSheet = document.getElementById('paymentSheet');
+
+function closePaymentSheet() {
+    if(paymentOverlay) paymentOverlay.classList.remove('show');
+    if(paymentSheet) paymentSheet.classList.remove('show');
+}
+
+if (paymentOverlay) {
+    paymentOverlay.addEventListener('click', closePaymentSheet);
+}
+
+if (paymentSheet) {
+    paymentSheet.addEventListener('change', (e) => {
+        if (e.target.name === 'paymentMethod') {
+            const radio = e.target;
+            selectedPaymentMethod = {
+                value: radio.value,
+                icon: radio.dataset.icon,
+                text: radio.dataset.text
+            };
+            
+            const paymentSection = document.getElementById('paymentSection');
+            if (paymentSection) {
+                paymentSection.querySelector('.address-icon').innerHTML = selectedPaymentMethod.icon;
+                const textSpan = paymentSection.querySelector('.address-details span:last-of-type');
+                if (textSpan) textSpan.textContent = selectedPaymentMethod.text;
+
+                // Handle Deposit Info display update
+                let infoDiv = document.getElementById('paymentDepositInfo');
+                if (!infoDiv) {
+                    infoDiv = document.createElement('div');
+                    infoDiv.id = 'paymentDepositInfo';
+                    infoDiv.style.cssText = 'margin-top: 15px; font-size: 0.9em; color: #555; background-color: #f9f9f9; padding: 10px; border-radius: 8px; border: 1px solid #eee;';
+                    paymentSection.appendChild(infoDiv);
+                }
+
+                if (selectedPaymentMethod.value === 'mtn') {
+                    infoDiv.innerHTML = `<strong>Deposit Number:</strong> +971562889428<br><small>After deposit, send screenshot proof to the WhatsApp number you placed the order with.</small>`;
+                    infoDiv.style.display = 'block';
+                } else if (selectedPaymentMethod.value === 'airtel') {
+                    infoDiv.innerHTML = `<strong>Deposit Number:</strong> +971562889428<br><small>After deposit, send screenshot proof to the WhatsApp number you placed the order with.</small>`;
+                    infoDiv.style.display = 'block';
+                } else {
+                    infoDiv.style.display = 'none';
+                }
+            }
+            
+            setTimeout(closePaymentSheet, 200);
+        }
     });
 }
 
