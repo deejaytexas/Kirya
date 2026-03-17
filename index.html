@@ -50,6 +50,7 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #bottomCard.show{ transform:translateY(0); }
 #bottomCard h2{ margin-bottom:10px; }
 #bottomCard .subtitle{ display:flex; align-items:center; }
+#bottomCard #selectedAddress { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 #bottomCard .icon{ margin-right:8px; }
 #addAddressBtn{ background:#a8d8ff; padding:12px; border:none; border-radius:10px; text-align:center; font-size:1.1em; font-weight:bold; cursor:pointer; margin-top:auto; }
 #addAddressBtn:hover{ background:#7ec6ff; }
@@ -95,19 +96,53 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 .autocomplete-list li{ padding:10px; cursor:pointer; border-bottom:1px solid #eee;}
 .autocomplete-list li:hover{ background:#f2f2f2; }
 
+#searchNormalContent { display: flex; flex-direction: column; width: 100%; height: 100%; gap: 10px; }
+#searchErrorContent { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; padding-top: 40px; }
+#searchErrorContent.active { display: flex; }
+.error-emoji { font-size: 4em; margin-bottom: 15px; }
+.error-title { font-size: 1.5em; font-weight: bold; color: #333; margin-bottom: 10px; }
+.error-msg { font-size: 1.1em; color: #666; margin-bottom: 20px; padding: 0 20px; }
+#errorBackBtn {
+    padding: 10px 24px;
+    background: transparent;
+    color: #019E81;
+    border: 2px solid #019E81;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+#errorBackBtn:hover {
+    background: #019E81;
+    color: #fff;
+}
+
+/* Animation for error content */
+#searchErrorContent > * {
+    opacity: 0; /* Initial state for animation */
+}
+#searchErrorContent.active > * {
+    animation: slideUpFadeIn 0.5s ease-out forwards;
+}
+#searchErrorContent.active .error-title { animation-delay: 0.1s; }
+#searchErrorContent.active .error-msg { animation-delay: 0.2s; }
+#searchErrorContent.active #errorBackBtn { animation-delay: 0.3s; }
+
 /* New Home Screen for Add Location */
 #newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
 #newHomeScreen.active{ pointer-events:auto; bottom:0; }
 #newHomeScreen .header{ height:55%; background:#FFBF42; display:flex; justify-content:flex-start; align-items:center; flex-direction:column; color:#fff; padding-top: 60px; }
 #newHomeScreen .selected-address-card{ position: absolute; top: 8px; left: 50%; transform: translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap: 6px; padding:8px 12px; border-radius:10px; background:#FFF8D0; border:1px solid #F0E080; color:#4A4A20; box-shadow:0 2px 6px rgba(0,0,0,0.08); font-weight:600; font-size:0.85em; cursor:pointer; max-width:calc(100% - 90px); transition: background-color .2s, box-shadow .2s; white-space:nowrap; }
+#newHomeScreen .selected-address-card #selectedAddressText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 #newHomeScreen .selected-address-card:hover{ background-color:#fff2a8; box-shadow:0 4px 8px rgba(0,0,0,.12); }
 #newHomeScreen .selected-address-card .home-icon{ font-size:1.2rem; }
-#newHomeScreen .top-grid{ width:100%; max-width:1000px; padding:15px 16px 10px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
-#newHomeScreen .grid-item{ display:flex; flex-direction:column; align-items:center; gap:0px; margin-bottom:14px; cursor:pointer; transition:transform .2s; }
-#newHomeScreen .grid-item:hover{ transform:translateY(-5px); }
-#newHomeScreen .circle{ width:95px; height:95px; border:2px solid #019E81; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; color:#019E81; font-weight:700; font-size:3em; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'EmojiSymbols', sans-serif; }
-#newHomeScreen .grid-label{ width:80%; min-width:70px; text-align:center; border:2px solid #019E81; border-radius:8px; background:#fff; color:#019E81; font-size:0.85em; padding:4px 6px; margin-top:-2px; }
-#newHomeScreen .grid-item{ touch-action: manipulation; }
+#newHomeScreen .top-grid, #contentSearchScreen .top-grid { width:100%; max-width:1000px; padding:15px 16px 10px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+#newHomeScreen .grid-item, #contentSearchScreen .grid-item { display:flex; flex-direction:column; align-items:center; gap:0px; margin-bottom:14px; cursor:pointer; transition:transform .2s; }
+#newHomeScreen .grid-item:hover, #contentSearchScreen .grid-item:hover { transform:translateY(-5px); }
+#newHomeScreen .circle, #contentSearchScreen .circle { width:95px; height:95px; border:2px solid #019E81; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; color:#019E81; font-weight:700; font-size:3em; font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', 'EmojiSymbols', sans-serif; }
+#newHomeScreen .grid-label, #contentSearchScreen .grid-label { width:80%; min-width:70px; text-align:center; border:2px solid #019E81; border-radius:8px; background:#fff; color:#019E81; font-size:0.85em; padding:4px 6px; margin-top:-2px; }
+#newHomeScreen .grid-item, #contentSearchScreen .grid-item { touch-action: manipulation; }
 #newHomeScreen .content{ flex:1; background:#fff; padding: 20px 0 80px; overflow-y:auto; }
 #newHomeScreen .for-you-text {
   font-size: 1.2em;
@@ -116,10 +151,10 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
   margin-bottom: 15px;
   padding: 0 20px;
 }
-#newHomeScreen .shop-scroll{ display:flex; align-items:center; gap:12px; overflow-x:auto; padding: 0 20px 16px; touch-action: pan-x; scroll-snap-type:x mandatory; }
-#newHomeScreen .shop-item{ width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s; scroll-snap-align: center; }
-#newHomeScreen .shop-item:hover{ transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.1); }
-#newHomeScreen .shop-item.is-active {
+#newHomeScreen .shop-scroll, #contentSearchScreen .shop-scroll { display:flex; align-items:center; gap:12px; overflow-x:auto; padding: 0 20px 16px; touch-action: pan-x; scroll-snap-type:x mandatory; }
+#newHomeScreen .shop-item, #contentSearchScreen .shop-item { width:78px; height:78px; min-width:78px; border:2px solid #019E81; border-radius:14px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:2.2em; color:#019E81; flex:0 0 auto; cursor:pointer; transition:transform .2s, box-shadow .2s, border-color .2s; scroll-snap-align: center; }
+#newHomeScreen .shop-item:hover, #contentSearchScreen .shop-item:hover { transform:scale(1.05); box-shadow:0 4px 10px rgba(0,0,0,.1); }
+#newHomeScreen .shop-item.is-active, #contentSearchScreen .shop-item.is-active {
   transform: scale(1.1);
   border-color: #FFBF42;
   box-shadow: 0 6px 12px rgba(0,0,0,.15);
@@ -150,6 +185,39 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #newHomeScreen nav .nav-item span{ font-size:.7em; }
 #newHomeScreen nav .nav-item.active, #newHomeScreen nav .nav-item:hover{ color:#019E81; }
 
+/* Content Search Screen */
+#contentSearchScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #fff; z-index: 1500; display: none; flex-direction: column;
+}
+#contentSearchScreen.active { display: flex; }
+#contentSearchScreen .cs-header { padding: 15px; padding-top: 50px; border-bottom: 1px solid #eee; background: #fff; }
+#contentSearchScreen .cs-search-bar { background: #f5f5f5; border-radius: 12px; padding: 12px 15px; display: flex; align-items: center; gap: 10px; }
+#contentSearchScreen .cs-search-bar input { border: none; background: transparent; outline: none; width: 100%; font-size: 1.1em; }
+#contentSearchScreen .cs-content { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 80px; }
+#contentSearchScreen h3 { font-size: 1.2em; font-weight: 800; color: #333; margin: 25px 0 15px; }
+#contentSearchScreen h3:first-child { margin-top: 5px; }
+#contentSearchScreen nav { position:absolute; bottom:0; left:0; right:0; display:flex; overflow-x:auto; white-space:nowrap; padding:4px 0; background:#fff; border-top:1px solid #ddd; z-index:1501; }
+#contentSearchScreen nav .nav-item { flex:0 0 auto; padding:0 15px; text-align:center; color:#555; cursor:pointer; font-size:1.1em; display:flex; flex-direction:column; align-items:center; }
+#contentSearchScreen nav .nav-item span { font-size:.7em; }
+#contentSearchScreen nav .nav-item.active, #contentSearchScreen nav .nav-item:hover { color:#019E81; }
+
+/* Search Screen Items Section */
+.search-category-section { margin-top: 25px; border-top: 1px solid #f5f5f5; padding-top: 20px; }
+.search-cat-title { font-size: 1.1em; font-weight: 800; color: #333; margin-bottom: 15px; padding: 0 5px; }
+.search-item-scroll { display: flex; overflow-x: auto; gap: 15px; padding: 0 5px 15px; scrollbar-width: none; }
+.search-item-scroll::-webkit-scrollbar { display: none; }
+.search-item-card { flex: 0 0 auto; width: 140px; background: #fff; border: 1px solid #eee; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+.search-item-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.search-item-img { height: 90px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; font-size: 3.5em; }
+.search-item-details { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+.search-item-name { font-weight: 700; font-size: 0.9em; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-item-res { font-size: 0.75em; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+.search-item-price { font-weight: 700; font-size: 0.95em; color: #333; }
+.search-add-btn { width: 26px; height: 26px; background: #f0f0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #019E81; font-weight: bold; font-size: 1.1em; transition: background 0.2s; }
+.search-add-btn:hover { background: #e0e0e0; }
+
 /* Category Details Screen */
 #categoryScreen{
   position:fixed;
@@ -176,7 +244,8 @@ nav{ display:flex; overflow-x:auto; white-space:nowrap; padding:10px 0; backgrou
 #categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content: space-between; position: relative; height: 60px; box-shadow:0 2px 4px rgba(0,0,0,0.05); }
 #categoryScreen .back-btn{ font-size:1.5em; cursor:pointer; padding:5px; border-radius:50%; transition:background-color .2s; }
 #categoryScreen .back-btn:hover{ background-color:#f0f0f0; }
-#categoryScreen .cat-address-card{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #FFF8D0; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; color: #4A4A20; display: flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 60%; overflow: hidden; text-overflow: ellipsis; border:1px solid #F0E080; }
+#categoryScreen .cat-address-card{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #FFF8D0; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; color: #4A4A20; display: flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 60%; overflow: hidden; border:1px solid #F0E080; }
+#categoryScreen .cat-address-card #catAddressText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 #categoryScreen .cat-title{ font-size:1.8em; font-weight:800; margin-bottom: 15px; color:#333; }
 #categoryScreen .cat-search-wrapper{ margin-bottom: 20px; }
 #categoryScreen .cat-search-bar{ background: #f5f5f5; border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; border: 1px solid #eee; }
@@ -582,10 +651,57 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 #userPhoneScreen #saveUserPhoneBtn:hover { background: #017a63; }
 
+/* Profile Screen */
+#profileScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #f9f9f9; z-index: 6000; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#profileScreen.active { transform: translateX(0); }
+#profileScreen .profile-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+#profileScreen .profile-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#profileScreen .profile-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#profileScreen .profile-content { flex: 1; overflow-y: auto; padding: 20px; }
+#profileScreen .profile-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
+#profileScreen .profile-pic { width: 70px; height: 70px; background: #FFBF42; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5em; color: #fff; cursor: pointer; position: relative; overflow: hidden; background-size: cover; background-position: center; }
+#profileScreen .profile-pic:hover::after { content: '📷'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+#profileScreen .profile-info { display: flex; flex-direction: column; gap: 5px; }
+#profileScreen .profile-name { font-size: 1.2em; font-weight: 800; color: #333; }
+#profileScreen .profile-phone { font-size: 1em; color: #666; }
+#profileScreen .profile-section-title { font-size: 1.1em; font-weight: 800; color: #333; margin-bottom: 10px; margin-top: 10px; }
+#profileScreen .profile-menu-item { background: #fff; padding: 15px; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; font-size: 1em; color: #333; cursor: pointer; transition: background 0.2s; }
+#profileScreen .profile-menu-item:hover { background: #f0f0f0; }
+#profileScreen .profile-menu-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
+#profileScreen .profile-menu-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+#profileScreen .menu-icon { margin-right: 15px; width: 25px; text-align: center; display: inline-block; }
+
+/* Saved Address Screen */
+#savedAddressScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #f9f9f9; z-index: 6500; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#savedAddressScreen.active { transform: translateX(0); }
+#savedAddressScreen .sa-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+#savedAddressScreen .sa-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+#savedAddressScreen .sa-title { font-size: 1.4em; font-weight: 800; color: #333; }
+#savedAddressScreen .sa-content { flex: 1; overflow-y: auto; padding: 20px; }
+.saved-addr-card { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #eee; display: flex; gap: 12px; align-items: flex-start; }
+.saved-addr-icon { font-size: 1.4em; }
+.saved-addr-info { flex: 1; }
+.saved-addr-type { font-weight: 800; color: #333; margin-bottom: 4px; font-size: 1em; }
+.saved-addr-text { color: #666; font-size: 0.9em; line-height: 1.4; }
+.saved-addr-actions { display: flex; gap: 15px; margin-top: 10px; font-size: 0.85em; font-weight: 600; color: #019E81; }
+.saved-addr-action { cursor: pointer; }
+
 #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 6000; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 17px; opacity: 0; transition: opacity 0.5s, bottom 0.5s; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
 @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes slideUpFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -605,10 +721,9 @@ input:checked + .slider:before { transform: translateX(22px); }
 
   <nav>
     <div class="nav-item active">🏠<span>Home</span></div>
-    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🔍<span>Discover</span></div>
     <div class="nav-item">🛒<span>Cart</span></div>
     <div class="nav-item">👤<span>Profile</span></div>
-    <div class="nav-item">👥<span>User</span></div>
     <div class="nav-item">🚴‍♂️<span>Rider</span></div>
     <div class="nav-item">🏪<span>Shop</span></div>
     <div class="nav-item">🛎️<span>Admin</span></div>
@@ -632,13 +747,21 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 
   <div id="searchCard">
-    <div class="search-title">Trouble using the Location? <br> try using search instead</div>
-    <div class="search-bar">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search city, Streets, Districts" id="searchInput" autocomplete="off"/>
-      <span id="closeSearch" class="close-btn">✖</span>
+    <div id="searchNormalContent">
+      <div class="search-title">Trouble using the Location? <br> try using search instead</div>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search city, Streets, Districts" id="searchInput" autocomplete="off"/>
+        <span id="closeSearch" class="close-btn">✖</span>
+      </div>
+      <ul id="autocompleteSuggestions" class="autocomplete-list"></ul>
     </div>
-    <ul id="autocompleteSuggestions" class="autocomplete-list"></ul>
+    <div id="searchErrorContent">
+      <div class="error-emoji">⚠️</div>
+      <div class="error-title">Something Went Wrong.</div>
+      <div class="error-msg">Kindly go back on home page and select your address</div>
+      <button id="errorBackBtn">Go Back</button>
+    </div>
   </div>
 </div>
 
@@ -682,10 +805,34 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
   <nav>
     <div class="nav-item active">🏠<span>Home</span></div>
-    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🔍<span>Discover</span></div>
     <div class="nav-item">🛒<span>Cart</span></div>
     <div class="nav-item">👤<span>Profile</span></div>
-    <div class="nav-item">👥<span>User</span></div>
+    <div class="nav-item">🚴‍♂️<span>Rider</span></div>
+    <div class="nav-item">🏪<span>Shop</span></div>
+    <div class="nav-item">🛎️<span>Admin</span></div>
+  </nav>
+</div>
+
+<div id="contentSearchScreen">
+  <div class="cs-header">
+    <div class="cs-search-bar">
+      <span>🔍</span>
+      <input type="text" placeholder="Search food, groceries, shops..." id="contentSearchInput">
+    </div>
+  </div>
+  <div class="cs-content">
+    <h3>Browse Categories</h3>
+    <div class="top-grid" id="searchCategoriesGrid"></div>
+    <h3>Popular Shops</h3>
+    <div class="shop-scroll" id="searchShopsScroll"></div>
+    <div id="searchAllItemsContainer"></div>
+  </div>
+  <nav>
+    <div class="nav-item">🏠<span>Home</span></div>
+    <div class="nav-item active">🔍<span>Discover</span></div>
+    <div class="nav-item">🛒<span>Cart</span></div>
+    <div class="nav-item">👤<span>Profile</span></div>
     <div class="nav-item">🚴‍♂️<span>Rider</span></div>
     <div class="nav-item">🏪<span>Shop</span></div>
     <div class="nav-item">🛎️<span>Admin</span></div>
@@ -1134,10 +1281,9 @@ input:checked + .slider:before { transform: translateX(22px); }
 
   <nav>
     <div class="nav-item">🏠<span>Home</span></div>
-    <div class="nav-item">🔍<span>Search</span></div>
+    <div class="nav-item">🔍<span>Discover</span></div>
     <div class="nav-item">🛒<span>Cart</span></div>
     <div class="nav-item">👤<span>Profile</span></div>
-    <div class="nav-item">👥<span>User</span></div>
     <div class="nav-item">🚴‍♂️<span>Rider</span></div>
     <div class="nav-item active">🏪<span>Shop</span></div>
     <div class="nav-item">🛎️<span>Admin</span></div>
@@ -1249,6 +1395,55 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 </div>
 
+<div id="profileScreen">
+  <div class="profile-header">
+    <div class="profile-back-btn" id="profileBackBtn">⬅️</div>
+    <div class="profile-title">Profile</div>
+  </div>
+  <div class="profile-content">
+    <div class="profile-card">
+      <div class="profile-pic" id="profilePic">👤</div>
+      <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+      <div class="profile-info">
+        <div class="profile-name" id="profileNameDisplay">Guest User</div>
+        <div class="profile-phone" id="profilePhoneDisplay">No phone set</div>
+      </div>
+    </div>
+    
+    <div class="profile-section-title">Account</div>
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <div class="profile-menu-item" id="profileSavedAddressesBtn">
+            <div><span class="menu-icon">📍</span> Saved Addresses</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item" id="profileEditPhoneBtn">
+            <div><span class="menu-icon">📱</span> Update Phone Number</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item">
+            <div><span class="menu-icon">💳</span> Payment Methods</div>
+            <span>></span>
+        </div>
+    </div>
+
+    <div class="profile-section-title">General</div>
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <div class="profile-menu-item">
+            <div><span class="menu-icon">💬</span> Help & Support</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item">
+            <div><span class="menu-icon">📜</span> Terms of Service</div>
+            <span>></span>
+        </div>
+    </div>
+    
+    <div style="margin-top: 25px; text-align: center; color: #999; font-size: 0.9em;">
+        Version 1.0.0
+    </div>
+  </div>
+</div>
+
 <div id="paymentOverlay"></div>
 <div id="paymentSheet">
   <h3>Select Payment Method</h3>
@@ -1274,6 +1469,48 @@ input:checked + .slider:before { transform: translateX(22px); }
       </div>
       <input type="radio" name="paymentMethod" value="airtel" data-icon="📱" data-text="Airtel Money">
     </label>
+  </div>
+</div>
+
+<div id="savedAddressScreen">
+  <div class="sa-header">
+    <div class="sa-back-btn" id="savedAddressBackBtn">⬅️</div>
+    <div class="sa-title">Saved Addresses</div>
+  </div>
+  <div class="sa-content">
+    <div class="saved-addr-card">
+      <div class="saved-addr-icon">🏠</div>
+      <div class="saved-addr-info">
+        <div class="saved-addr-type">Home</div>
+        <div class="saved-addr-text">Flat 402, Building A, Al Majaz 2, Sharjah</div>
+        <div class="saved-addr-actions">
+          <div class="saved-addr-action">Edit</div>
+          <div class="saved-addr-action" style="color:#ff4757;">Delete</div>
+        </div>
+      </div>
+    </div>
+    <div class="saved-addr-card">
+      <div class="saved-addr-icon">🏢</div>
+      <div class="saved-addr-info">
+        <div class="saved-addr-type">Work</div>
+        <div class="saved-addr-text">Office 1205, Business Tower, Downtown Dubai</div>
+        <div class="saved-addr-actions">
+          <div class="saved-addr-action">Edit</div>
+          <div class="saved-addr-action" style="color:#ff4757;">Delete</div>
+        </div>
+      </div>
+    </div>
+    <div class="saved-addr-card">
+      <div class="saved-addr-icon">📍</div>
+      <div class="saved-addr-info">
+        <div class="saved-addr-type">Other</div>
+        <div class="saved-addr-text">Villa 12, Street 45, Jumeirah 1</div>
+        <div class="saved-addr-actions">
+          <div class="saved-addr-action">Edit</div>
+          <div class="saved-addr-action" style="color:#ff4757;">Delete</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1373,7 +1610,14 @@ function navigateBack() {
     const newHomeScreen = document.getElementById('newHomeScreen');
     const categoryScreen = document.getElementById('categoryScreen');
     const restaurantScreen = document.getElementById('restaurantScreen');
+    const contentSearchScreen = document.getElementById('contentSearchScreen');
     const searchCard = document.getElementById('searchCard');
+
+    // From Content Search, go back to New Home Screen
+    if (contentSearchScreen && contentSearchScreen.classList.contains('active')) {
+        contentSearchScreen.classList.remove('active');
+        return;
+    }
 
     // From Restaurant screen, go back to Category screen
     if (restaurantScreen.classList.contains('active')) {
@@ -1424,8 +1668,50 @@ function navigateBack() {
     }
 }
 
+/* Search Error on Home */
+document.querySelector('#home nav .nav-item:nth-child(2)').addEventListener('click', () => {
+  showSearchErrorState();
+});
+
+function showSearchErrorState() {
+  document.getElementById('home').style.display = 'none';
+  document.getElementById('mapScreen').style.display = 'block';
+  hideMap();
+  document.getElementById('bottomCard').classList.remove('show');
+
+  // Hide floating buttons on map screen since we are in error state
+  document.getElementById('backBtn').style.display = 'none';
+  document.getElementById('currentLocationBtn').style.display = 'none';
+
+  const searchCard = document.getElementById('searchCard');
+  document.getElementById('searchNormalContent').style.display = 'none';
+  document.getElementById('searchErrorContent').classList.add('active');
+
+  searchCard.classList.add('show');
+  searchCard.classList.add('expanded');
+  
+  // Back button in error state
+  document.getElementById('errorBackBtn').onclick = function() {
+    searchCard.classList.remove('show');
+    searchCard.classList.remove('expanded');
+    document.getElementById('mapScreen').style.display = 'none';
+    document.getElementById('home').style.display = 'block';
+    
+    // Restore buttons for normal map usage
+    document.getElementById('backBtn').style.display = 'flex';
+    document.getElementById('currentLocationBtn').style.display = 'flex';
+
+    setTimeout(() => {
+        document.getElementById('searchNormalContent').style.display = 'flex';
+        document.getElementById('searchErrorContent').classList.remove('active');
+    }, 400);
+  };
+}
+
 /* Show search card */
 function showSearchCard(){
+  document.getElementById('searchNormalContent').style.display = 'flex';
+  document.getElementById('searchErrorContent').classList.remove('active');
   const searchCard = document.getElementById('searchCard');
   const bottomCard = document.getElementById('bottomCard');
   searchCard.classList.add('show');
@@ -1566,6 +1852,93 @@ draggables.forEach((tile, index)=>{
     tile.classList.remove('dragging');
     tile.style.transform = `translate(0, 0)`;
   });
+});
+
+/* Content Search from New Home Screen */
+document.querySelector('#newHomeScreen nav .nav-item:nth-child(2)').addEventListener('click', () => {
+    openContentSearch();
+});
+
+function openContentSearch() {
+    const screen = document.getElementById('contentSearchScreen');
+    screen.classList.add('active');
+    
+    // Populate if empty
+    const grid = document.getElementById('searchCategoriesGrid');
+    if(grid.innerHTML.trim() === '') {
+        grid.innerHTML = document.querySelector('#newHomeScreen .top-grid').innerHTML;
+        document.getElementById('searchShopsScroll').innerHTML = document.querySelector('#newHomeScreen .shop-scroll').innerHTML;
+        
+        // Add listeners to cloned items
+        grid.querySelectorAll('.grid-item').forEach(item => {
+            item.addEventListener('click', () => showDetailScreen(item.querySelector('.grid-label').textContent));
+        });
+        document.getElementById('searchShopsScroll').querySelectorAll('.shop-item').forEach(item => {
+            item.addEventListener('click', () => showDetailScreen(`Shop: ${item.textContent}`));
+        });
+        
+        populateSearchAllItems();
+    }
+}
+
+function populateSearchAllItems() {
+    const container = document.getElementById('searchAllItemsContainer');
+    if(!container || container.innerHTML.trim() !== '') return;
+
+    const categories = [
+        {
+            title: "Trending Dishes 🔥",
+            items: [
+                { name: "Double Cheese Burger", price: 25.00, emoji: "🍔", res: "Burger King" },
+                { name: "Pepperoni Pizza", price: 45.00, emoji: "🍕", res: "Pizza Hut" },
+                { name: "Spicy Chicken Wings", price: 30.00, emoji: "🍗", res: "KFC" }
+            ]
+        },
+        {
+            title: "Healthy Options 🥗",
+            items: [
+                { name: "Caesar Salad", price: 22.00, emoji: "🥗", res: "Healthy Bites" },
+                { name: "Grilled Chicken", price: 35.00, emoji: "🍖", res: "Grill House" },
+                { name: "Fresh Fruit Bowl", price: 15.00, emoji: "🍇", res: "Fresh & Co" }
+            ]
+        },
+        {
+            title: "Sweet Cravings 🍩",
+            items: [
+                { name: "Choco Glazed Donut", price: 8.00, emoji: "🍩", res: "Dunkin" },
+                { name: "Strawberry Cheesecake", price: 18.00, emoji: "🍰", res: "Bakery One" },
+                { name: "Vanilla Ice Cream", price: 10.00, emoji: "🍦", res: "Cold Stone" }
+            ]
+        }
+    ];
+
+    categories.forEach(cat => {
+        const section = document.createElement('div');
+        section.className = 'search-category-section';
+        section.innerHTML = `<div class="search-cat-title">${cat.title}</div>`;
+        const scroll = document.createElement('div');
+        scroll.className = 'search-item-scroll';
+        cat.items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'search-item-card';
+            card.innerHTML = `<div class="search-item-img">${item.emoji}</div><div class="search-item-details"><div class="search-item-name">${item.name}</div><div class="search-item-res">${item.res}</div><div class="search-item-row"><div class="search-item-price">${item.price.toFixed(2)}</div><div class="search-add-btn">+</div></div></div>`;
+            card.querySelector('.search-add-btn').addEventListener('click', (e) => { e.stopPropagation(); cart.push({ title: item.name, basePrice: item.price, quantity: 1, addons: [], image: item.emoji }); showToast(`${item.name} added!`); updateCartView(); });
+            scroll.appendChild(card);
+        });
+        section.appendChild(scroll);
+        container.appendChild(section);
+    });
+    initAutoScroll();
+}
+
+// Nav handling in Content Search Screen
+document.querySelectorAll('#contentSearchScreen nav .nav-item').forEach((item, index) => {
+    item.addEventListener('click', () => {
+        if(index === 0) { // Home
+            document.getElementById('contentSearchScreen').classList.remove('active');
+        }
+        // Additional nav logic can be added here
+    });
 });
 
 /* Category Screen Logic */
@@ -2436,15 +2809,44 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
             const tipAmount = subTotal * (tipPercentage / 100);
             const totalToPay = subTotal + deliveryFee + tipAmount;
 
-            summarySection.innerHTML = `
-                <div class="checkout-section-header" style="margin-bottom:15px;"><h4>Delivery Summary</h4></div>
-                <div class="summary-row"><span>Products</span><span>${currency} ${productTotal.toFixed(2)}</span></div>
-                <div class="summary-row"><span>Promotions</span><span>-${currency} ${promotion.toFixed(2)}</span></div>
+            let summaryHtml = `<div class="checkout-section-header" style="margin-bottom:15px;"><h4>Delivery Summary</h4></div>`;
+
+            // Product list header
+            summaryHtml += `
+                <div class="summary-row" style="font-weight: bold; color: #333; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+                <span style="flex: 4; text-align: left;">Products</span>
+                    <span style="flex: 1; text-align: center;">Qty</span>
+                <span style="flex: 2; text-align: center;">Unit Price</span>
+                <span style="flex: 2; text-align: center;">Price</span>
+                </div>
+            `;
+
+            // List each product
+            cart.forEach(item => {
+                let itemPrice = item.basePrice;
+                if (item.addons) item.addons.forEach(a => itemPrice += a.price);
+                const lineTotal = itemPrice * item.quantity;
+
+                summaryHtml += `
+                    <div class="summary-row">
+                    <span style="flex: 4; text-align: left; white-space: normal; word-break: break-word;">${item.title}</span>
+                        <span style="flex: 1; text-align: center;">${item.quantity}</span>
+                    <span style="flex: 2; text-align: center;">${itemPrice.toFixed(2)}</span>
+                    <span style="flex: 2; text-align: center;">${lineTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            // Rest of the summary
+            summaryHtml += `
+                <div class="summary-row" style="border-top: 1px solid #eee; padding-top: 8px;"><span>Promotions</span><span>-${currency} ${promotion.toFixed(2)}</span></div>
                 <div class="summary-row" style="font-weight: 800; color: #333;"><span>Subtotal</span><span>${currency} ${subTotal.toFixed(2)}</span></div>
                 <div class="summary-row"><span>Delivery Fees</span><span>${currency} ${deliveryFee.toFixed(2)}</span></div>
                 <div class="summary-row"><span>Courier Tip (${tipPercentage}%)</span><span>${currency} ${tipAmount.toFixed(2)}</span></div>
                 <div class="summary-row total"><span>Total to Pay</span><span>${currency} ${totalToPay.toFixed(2)}</span></div>
             `;
+            
+            summarySection.innerHTML = summaryHtml;
         };
         
         const tipHeader = document.createElement('div');
@@ -2775,6 +3177,83 @@ if (paymentSheet) {
     });
 }
 
+/* Profile Screen Logic */
+const profileScreen = document.getElementById('profileScreen');
+const profileBackBtn = document.getElementById('profileBackBtn');
+
+function openProfile() {
+    const nameDisplay = document.getElementById('profileNameDisplay');
+    const phoneDisplay = document.getElementById('profilePhoneDisplay');
+    
+    nameDisplay.textContent = recipientDetails.name || 'Guest User';
+    phoneDisplay.textContent = userPhoneNumber || recipientDetails.phone || 'No phone set';
+    
+    profileScreen.classList.add('active');
+}
+
+// Attach listener to all Profile nav items
+document.querySelectorAll('.nav-item').forEach(item => {
+    const span = item.querySelector('span');
+    if(span && span.textContent === 'Profile') {
+        item.addEventListener('click', openProfile);
+    }
+});
+
+if(profileBackBtn) {
+    profileBackBtn.addEventListener('click', () => {
+        profileScreen.classList.remove('active');
+    });
+}
+
+const profileEditPhoneBtn = document.getElementById('profileEditPhoneBtn');
+if(profileEditPhoneBtn) {
+    profileEditPhoneBtn.addEventListener('click', () => {
+        const userPhoneScreen = document.getElementById('userPhoneScreen');
+        if(userPhoneScreen) {
+             // Reuse the existing phone screen logic to populate fields
+             document.getElementById('checkoutUserPhoneSection').click();
+        }
+    });
+}
+
+/* Profile Picture Upload Logic */
+const profilePic = document.getElementById('profilePic');
+const profilePicInput = document.getElementById('profilePicInput');
+
+if(profilePic && profilePicInput) {
+    profilePic.addEventListener('click', () => {
+        profilePicInput.click();
+    });
+
+    profilePicInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                profilePic.style.backgroundImage = `url(${event.target.result})`;
+                profilePic.textContent = ''; // Remove the default emoji
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+/* Saved Addresses Screen Logic */
+const savedAddressScreen = document.getElementById('savedAddressScreen');
+const savedAddressBackBtn = document.getElementById('savedAddressBackBtn');
+const profileSavedAddressesBtn = document.getElementById('profileSavedAddressesBtn');
+
+if(profileSavedAddressesBtn && savedAddressScreen) {
+    profileSavedAddressesBtn.addEventListener('click', () => {
+        savedAddressScreen.classList.add('active');
+    });
+}
+if(savedAddressBackBtn && savedAddressScreen) {
+    savedAddressBackBtn.addEventListener('click', () => {
+        savedAddressScreen.classList.remove('active');
+    });
+}
+
 /* Auto-scroll function for horizontal lists */
 function initAutoScroll() {
     const scrollSelectors = [
@@ -2782,7 +3261,8 @@ function initAutoScroll() {
         '.filter-scroll',
         '.brands-scroll',
         '#prefScroll',
-        '.text-filter-scroll'
+        '.text-filter-scroll',
+        '.search-item-scroll'
     ];
 
     scrollSelectors.forEach(selector => {
