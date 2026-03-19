@@ -2257,6 +2257,30 @@ const categoryConfig = {
       {name: "Burger King", image: "🍔", rating: "4.5", time: "25-35 Mins", delivery: "500"},
       {name: "Pizza Hut", image: "🍕", rating: "4.7", time: "30-40 Mins", delivery: "Free"},
       {name: "KFC", image: "🍗", rating: "4.6", time: "20-30 Mins", delivery: "Free"}
+    ],
+    menu: [
+      {
+        name: "Promotions",
+        items: [
+          { title: "Family Feast", desc: "2 Large Pizzas, Garlic Bread & Coke", price: "85.00", oldPrice: "120.00", image: "🍕" },
+          { title: "Mega Burger Box", desc: "2 Burgers, Fries & Nuggets", price: "45.00", oldPrice: "60.00", image: "🍔" }
+        ]
+      },
+      {
+        name: "Best Sellers",
+        items: [
+          { title: "Crispy Chicken", desc: "3pcs Fried Chicken with Coleslaw", price: "25.00", image: "🍗" },
+          { title: "Cheese Burger", desc: "Beef patty, Cheddar, Lettuce", price: "18.00", image: "🍔" },
+          { title: "Pepperoni Pizza", desc: "Mozzarella & Beef Pepperoni", price: "40.00", image: "🍕" }
+        ]
+      },
+      {
+        name: "Drinks",
+        items: [
+          { title: "Cola", desc: "Regular Ice Cold", price: "5.00", image: "🥤" },
+          { title: "Orange Juice", desc: "Freshly squeezed", price: "12.00", image: "🍊" }
+        ]
+      }
     ]
   },
   "Groceries": {
@@ -2273,6 +2297,31 @@ const categoryConfig = {
       {name: "Lulu Hypermarket", image: "🛍️", rating: "4.7", time: "45-90 Mins", delivery: "2000"},
       {name: "Spinneys", image: "🏪", rating: "4.9", time: "30-60 Mins", delivery: "Free"},
       {name: "Local Grocery", image: "🧺", rating: "4.5", time: "15-30 Mins", delivery: "Free"}
+    ],
+    menu: [
+      {
+        name: "Fresh Produce",
+        items: [
+          { title: "Bananas (1kg)", desc: "Fresh Ecuador Bananas", price: "6.00", image: "🍌" },
+          { title: "Red Apples (1kg)", desc: "Sweet Royal Gala Apples", price: "8.50", image: "🍎" },
+          { title: "Tomatoes (1kg)", desc: "Local Fresh Tomatoes", price: "4.00", image: "🍅" }
+        ]
+      },
+      {
+        name: "Dairy & Eggs",
+        items: [
+          { title: "Fresh Milk (1L)", desc: "Full Cream Milk", price: "6.50", image: "🥛" },
+          { title: "Eggs (30pcs)", desc: "Large White Eggs", price: "22.00", image: "🥚" },
+          { title: "Cheddar Cheese", desc: "Block 200g", price: "15.00", image: "🧀" }
+        ]
+      },
+      {
+        name: "Bakery",
+        items: [
+          { title: "Sliced Bread", desc: "White Toast Bread", price: "5.00", image: "🍞" },
+          { title: "Croissants (4pcs)", desc: "Butter Croissants", price: "12.00", image: "🥐" }
+        ]
+      }
     ]
   },
   "Shops": {
@@ -2289,6 +2338,23 @@ const categoryConfig = {
       {name: "Sharaf DG", image: "📱", rating: "4.7", time: "60-120 Mins", delivery: "Free"},
       {name: "Sephora", image: "💄", rating: "4.9", time: "45-60 Mins", delivery: "2500"},
       {name: "Virgin Megastore", image: "💿", rating: "4.8", time: "60-90 Mins", delivery: "3000"}
+    ],
+    menu: [
+      {
+        name: "Clothing",
+        items: [
+          { title: "Cotton T-Shirt", desc: "100% Cotton Basic Tee", price: "45.00", image: "👕" },
+          { title: "Denim Jeans", desc: "Slim Fit Blue Jeans", price: "120.00", image: "👖" },
+          { title: "Running Shoes", desc: "Sports Sneakers", price: "250.00", image: "👟" }
+        ]
+      },
+      {
+        name: "Electronics",
+        items: [
+          { title: "Wireless Earbuds", desc: "Bluetooth 5.0 with Case", price: "150.00", image: "🎧" },
+          { title: "USB-C Cable", desc: "Fast Charging 1m", price: "35.00", image: "🔌" }
+        ]
+      }
     ]
   },
   "Pharmacies": {
@@ -2305,6 +2371,23 @@ const categoryConfig = {
       {name: "Aster Pharmacy", image: "🏥", rating: "4.8", time: "30-45 Mins", delivery: "Free"},
       {name: "Boots", image: "💊", rating: "4.7", time: "45-60 Mins", delivery: "1000"},
       {name: "Supercare", image: "🩺", rating: "4.6", time: "20-40 Mins", delivery: "500"}
+    ],
+    menu: [
+      {
+        name: "Medicines",
+        items: [
+          { title: "Panadol Extra", desc: "Pain Relief 24 Tablets", price: "12.00", image: "💊" },
+          { title: "Vitamin C", desc: "Effervescent 20 Tabs", price: "25.00", image: "🍊" },
+          { title: "Cough Syrup", desc: "Herbal Relief 100ml", price: "18.00", image: "🥄" }
+        ]
+      },
+      {
+        name: "Personal Care",
+        items: [
+          { title: "Face Mask", desc: "Surgical Masks 50pcs", price: "15.00", image: "😷" },
+          { title: "Hand Sanitizer", desc: "Gel 500ml", price: "20.00", image: "🧴" }
+        ]
+      }
     ]
   },
   "Packages": {
@@ -2321,6 +2404,16 @@ const categoryConfig = {
       {name: "Local Courier", image: "🛵", rating: "4.5", time: "Pickup: 10m", delivery: "5000"},
       {name: "Aramex", image: "🟥", rating: "4.7", time: "Pickup: 20m", delivery: "Var"},
       {name: "Fetchr", image: "📦", rating: "4.4", time: "Pickup: 30m", delivery: "3000"}
+    ],
+    menu: [
+      {
+        name: "Delivery Services",
+        items: [
+          { title: "Standard Delivery", desc: "Within City (Same Day)", price: "15.00", image: "🛵" },
+          { title: "Express Delivery", desc: "Within City (2 Hours)", price: "30.00", image: "🚀" },
+          { title: "Document Service", desc: "Secure document handling", price: "20.00", image: "📄" }
+        ]
+      }
     ]
   },
   "Drinks": {
@@ -2337,12 +2430,32 @@ const categoryConfig = {
       {name: "Mai Dubai Water", image: "💧", rating: "4.9", time: "60-120 Mins", delivery: "Free"},
       {name: "Juice World", image: "🥤", rating: "4.6", time: "25-35 Mins", delivery: "1500"},
       {name: "Tea Corner", image: "🍵", rating: "4.5", time: "15-25 Mins", delivery: "500"}
+    ],
+    menu: [
+      {
+        name: "Coffee & Tea",
+        items: [
+          { title: "Iced Latte", desc: "Espresso with milk & ice", price: "18.00", image: "🥤" },
+          { title: "Hot Cappuccino", desc: "Frothy milk coffee", price: "16.00", image: "☕" },
+          { title: "Green Tea", desc: "Hot brewed tea", price: "10.00", image: "🍵" }
+        ]
+      },
+      {
+        name: "Cold Drinks",
+        items: [
+          { title: "Fresh Orange Juice", desc: "No sugar added", price: "20.00", image: "🍊" },
+          { title: "Mineral Water", desc: "6 x 1.5L Case", price: "12.00", image: "💧" },
+          { title: "Mango Smoothie", desc: "Thick & Sweet", price: "22.00", image: "🥭" }
+        ]
+      }
     ]
   }
 };
 
 function renderCategoryContent(category) {
   const config = categoryConfig[category] || categoryConfig["Food"]; 
+  // Store current category for use in opening restaurants
+  window.currentCategoryConfig = config;
 
   // Render Filters
   const filterScroll = document.querySelector('.filter-scroll');
@@ -2371,7 +2484,7 @@ function renderCategoryContent(category) {
           <div class="brand-name">${b.name}</div>
           <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
       `;
-      container.addEventListener('click', () => openRestaurant(b.name));
+      container.addEventListener('click', () => openRestaurant(b.name, config.menu));
       brandsScroll.appendChild(container);
     });
   }
@@ -2424,7 +2537,7 @@ function renderCategoryContent(category) {
         
         card.addEventListener('click', (e) => {
              if(e.target.classList.contains('heart-btn')) return;
-             openRestaurant(card.querySelector('.res-name').textContent);
+             openRestaurant(card.querySelector('.res-name').textContent, config.menu);
         });
         prefScroll.appendChild(card);
     }
@@ -2572,9 +2685,54 @@ const resBackBtn = document.getElementById('resBackBtn');
 const resCloseBtn = document.getElementById('resCloseBtn');
 const resShareBtn = document.getElementById('resShareBtn');
 
-function openRestaurant(name) {
+function openRestaurant(name, menuData) {
   document.getElementById('resScreenName').textContent = name;
-  // You can also populate likes/time dynamically here if passed
+  
+  // Default to Food menu if no menuData provided
+  const menu = menuData || categoryConfig["Food"].menu;
+  
+  // Render Menu Nav and Content
+  const navContainer = document.getElementById('resMenuNav');
+  const contentContainer = document.getElementById('resMenuContent');
+  
+  navContainer.innerHTML = '';
+  contentContainer.innerHTML = '';
+  
+  menu.forEach((category, index) => {
+      // Nav Item
+      const navItem = document.createElement('div');
+      navItem.className = `res-menu-item ${index === 0 ? 'active' : ''}`;
+      navItem.textContent = category.name;
+      navContainer.appendChild(navItem);
+      
+      // Content Category Title
+      const catTitle = document.createElement('div');
+      catTitle.className = 'res-category-title';
+      catTitle.textContent = category.name;
+      contentContainer.appendChild(catTitle);
+      
+      // Content Items
+      category.items.forEach(item => {
+          const itemCard = document.createElement('div');
+          itemCard.className = 'res-item-card';
+          itemCard.innerHTML = `
+            <div class="res-item-info">
+                <div class="res-item-title">${item.title}</div>
+                <div class="res-item-desc">${item.desc}</div>
+                <div class="res-item-price-row">
+                    ${item.oldPrice ? `<span class="res-item-old-price">${item.oldPrice}</span>` : ''}
+                    <span class="res-item-current-price">${item.price}</span>
+                </div>
+            </div>
+            <div class="res-item-img-box">
+                ${item.image}
+                <div class="res-item-add-btn"><span class="initial-plus">+</span><div class="quantity-selector"><span class="quantity-btn minus">-</span><span class="quantity-value">1</span><span class="quantity-btn plus">+</span></div></div>
+            </div>
+          `;
+          contentContainer.appendChild(itemCard);
+      });
+  });
+
   restaurantScreen.classList.add('active');
   // Reset scroll and parallax on open
   restaurantScreen.scrollTop = 0;
@@ -2663,7 +2821,7 @@ const prefScroll = document.getElementById('prefScroll'); // Just reference
     const card = e.target.closest('.pref-card');
     if(card){
       const name = card.querySelector('.res-name').textContent;
-      openRestaurant(name);
+      openRestaurant(name, window.currentCategoryConfig?.menu);
     }
   });
 
@@ -2734,7 +2892,7 @@ if(restaurantList){
       const card = e.target.closest('.res-card');
       if(card){
         const name = card.querySelector('.res-name').textContent;
-        openRestaurant(name);
+        openRestaurant(name, window.currentCategoryConfig?.menu);
       }
     }
   });
@@ -3846,7 +4004,7 @@ function renderFavorites() {
             e.stopPropagation();
             toggleFavorite(resName, e.target);
         });
-        card.addEventListener('click', () => openRestaurant(resName));
+        card.addEventListener('click', () => openRestaurant(resName, window.currentCategoryConfig?.menu));
         container.appendChild(card);
     });
 }
