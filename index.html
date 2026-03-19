@@ -6,15 +6,18 @@
 <title>Delivery Map Selection</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;-webkit-tap-highlight-color:transparent;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter', sans-serif;-webkit-tap-highlight-color:transparent;}
 /* Hide all scrollbars */
 *{ -ms-overflow-style: none; scrollbar-width: none; } *::-webkit-scrollbar { display: none; }
 html,body{ width:100%; height:100%; }
 
 /* Splash */
-#splash{ display:flex; justify-content:center; align-items:center; height:100vh; background:#ffbf42; color:#019E81; font-size:3em; font-weight:900; transition:opacity .5s; }
+#splash{ display:flex; justify-content:center; align-items:center; height:100vh; background:orange; color:#019E81; font-size:3em; font-weight:900; transition:opacity .5s; }
 #splash .letter{ display:inline-block; animation:bounce 0.6s ease infinite; }
 #splash .letter:nth-child(1){ animation-delay:0s; }
 #splash .letter:nth-child(2){ animation-delay:0.1s; }
@@ -27,7 +30,7 @@ html,body{ width:100%; height:100%; }
 
 /* Home */
 #home{ display:none; height:100vh; }
-.card{ position:absolute; top:0; left:0; right:0; bottom:60px; background:#FFBF42; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.card{ position:absolute; top:0; left:0; right:0; bottom:0; background:orange; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
 .address-card{ position:absolute; top:20px; left:50%; transform:translateX(-50%); background:#fff; border-radius:30px; padding:12px 24px; display:inline-flex; align-items:center; cursor:pointer; white-space:nowrap; transition:transform .2s, box-shadow .2s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 600; color: #333; }
 .address-card:hover{ transform:translateX(-50%) translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.15); }
 .address-card .icon{ margin-left:6px; }
@@ -151,8 +154,8 @@ nav {
 #newHomeScreen{ position:fixed; bottom:-100%; left:0; width:100%; height:100%; z-index:1000; display:flex; flex-direction:column; transition:bottom 0.5s ease; pointer-events:none; }
 #newHomeScreen.active{ pointer-events:auto; bottom:0; }
 #newHomeScreen .header{ 
-  min-height: 48%; height: auto; background:#FFBF42; display:flex; justify-content:flex-start; align-items:center; flex-direction:column; color:#fff; padding-top: 70px; padding-bottom: 30px; 
-  border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 4px 15px rgba(255, 191, 66, 0.4); position: relative; z-index: 2; 
+  min-height: 48%; height: auto; background:orange; display:flex; justify-content:flex-start; align-items:center; flex-direction:column; color:#fff; padding-top: 70px; padding-bottom: 30px; 
+  border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.4); position: relative; z-index: 2; 
 }
 #newHomeScreen .selected-address-card{ 
   position: absolute; top: 15px; left: 50%; transform: translateX(-50%); display:inline-flex; align-items:center; justify-content:center; gap: 6px; padding:10px 20px; border-radius:30px; background:#fff; border:none; color:#333; box-shadow:0 4px 10px rgba(0,0,0,0.1); font-weight:700; font-size:0.9em; cursor:pointer; max-width:calc(100% - 90px); transition: transform .2s, box-shadow .2s; white-space:nowrap; 
@@ -211,7 +214,7 @@ nav {
 #newHomeScreen .shop-item:active, #contentSearchScreen .shop-item:active { transform:scale(0.95); box-shadow:0 4px 10px rgba(0,0,0,0.08); }
 #newHomeScreen .shop-item.is-active, #contentSearchScreen .shop-item.is-active {
   transform: scale(1.15);
-  border-color: #FFBF42;
+  border-color: orange;
   box-shadow: 0 8px 20px rgba(0,0,0,.15);
 }
 #newHomeScreen .shop-info{ margin: 10px 20px 0; padding: 15px; background: linear-gradient(135deg, #019E81, #017a63); border-radius: 20px; color: #fff; box-shadow: 0 10px 25px rgba(1, 158, 129, 0.25); }
@@ -301,7 +304,8 @@ nav {
   bottom:0;
   width:100%;
   height:100%;
-  background:#fff;
+  background:rgba(235, 235, 235, 0.85);
+  backdrop-filter: blur(12px);
   z-index:2000;
   display:none;
   flex-direction:column;
@@ -315,11 +319,11 @@ nav {
   pointer-events:auto;
 }
 #categoryScreen.active{ opacity:1; pointer-events:auto; }
-#categoryScreen .cat-header{ padding:15px; background:#fff; border-bottom:1px solid #eee; display:flex; align-items:center; justify-content: space-between; position: relative; height: 60px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+#categoryScreen .cat-header{ padding:15px; background:orange; border-bottom:none; display:flex; align-items:center; justify-content: space-between; position: relative; height: 60px; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
 #categoryScreen .back-btn{ font-size:1.5em; cursor:pointer; padding:5px; border-radius:50%; transition:background-color .2s; }
 #categoryScreen .back-btn:hover{ background-color:#f0f0f0; }
 #categoryScreen .back-btn:active { background-color:#e0e0e0; transform: scale(0.95); }
-#categoryScreen .cat-address-card{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #FFF8D0; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; color: #4A4A20; display: flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 60%; overflow: hidden; border:1px solid #F0E080; }
+#categoryScreen .cat-address-card{ position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: #fff; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; color: #333; display: flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 60%; overflow: hidden; border:none; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
 #categoryScreen .cat-address-card #catAddressText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 #categoryScreen .cat-title{ font-size:1.8em; font-weight:800; margin-bottom: 15px; color:#333; }
 #categoryScreen .cat-search-wrapper{ margin-bottom: 20px; }
@@ -327,13 +331,12 @@ nav {
 #categoryScreen .brands-section h3,
 #categoryScreen .pref-title,
 #categoryScreen .restaurant-list-section h3 {
-    background: #fff; padding: 8px 15px; border-radius: 12px;
-    display: inline-block; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border: 1px solid #f0f0f0;
+    background: transparent; padding: 0; border-radius: 0;
+    display: block; box-shadow: none; border: none;
 }
 #categoryScreen .cat-search-bar{ background: #f5f5f5; border-radius: 12px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; border: 1px solid #eee; }
 #categoryScreen .cat-search-bar input{ border: none; background: transparent; outline: none; width: 100%; font-size: 1em; }
-#categoryScreen .cat-content{ flex:1; padding:20px; overflow-y:auto; background: #f9f9f9; }
+#categoryScreen .cat-content{ flex:1; padding:20px; overflow-y:auto; background: transparent; }
 #categoryScreen .filter-scroll{ display:flex; overflow-x:auto; gap:12px; padding: 5px 5px 15px 5px; margin-bottom:10px; scrollbar-width:none; }
 #categoryScreen .filter-scroll::-webkit-scrollbar{ display:none; }
 #categoryScreen .filter-item{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:64px; cursor:pointer; }
@@ -365,8 +368,19 @@ nav {
 #categoryScreen .brand-delivery-info .bike-icon{ font-size: 1.2em; display: inline-block; transform: scaleX(-1); }
 #categoryScreen .pref-section{ margin-top:20px; }
 #categoryScreen .pref-title{ font-size:1.2em; font-weight:800; color:#333; margin-bottom:15px; }
-#categoryScreen .pref-scroll{ display:flex; overflow-x:auto; gap:15px; padding-left:12px; padding-bottom:10px; }
-#categoryScreen .pref-card{ flex:0 0 auto; width:367px; display:flex; flex-direction:column; gap:8px; cursor:pointer; }
+#categoryScreen .pref-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-right: 5px; }
+#categoryScreen .pref-header-row .pref-title { margin-bottom: 0; }
+#categoryScreen .see-all-btn { color: #019E81; font-weight: 800; font-size: 0.9em; cursor: pointer; background: #e0f2f1; padding: 6px 12px; border-radius: 20px; transition: background 0.2s; }
+#categoryScreen .see-all-btn:active { background: #b2dfdb; }
+#categoryScreen .pref-scroll{ display:flex; overflow-x:auto; gap:15px; padding-bottom:15px; scroll-snap-type: x mandatory; transition: all 0.3s; }
+#categoryScreen .pref-scroll.expanded { flex-direction: column; overflow-x: visible; scroll-snap-type: none; height: auto; padding-bottom: 0; }
+#categoryScreen .pref-scroll.expanded .pref-card { width: 100%; flex: none; margin-bottom: 20px; opacity: 1 !important; transform: scale(1) !important; }
+#categoryScreen .pref-card{ flex:0 0 100%; width:100%; display:flex; flex-direction:column; gap:8px; cursor:pointer; scroll-snap-align: center; opacity: 0.5; transform: scale(0.92); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+#categoryScreen .pref-card.in-focus{ opacity: 1; transform: scale(1); }
+#categoryScreen .pref-pagination { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; transition: opacity 0.3s; }
+#categoryScreen .pref-pagination.hidden { opacity: 0; pointer-events: none; height: 0; margin: 0; }
+#categoryScreen .pref-dot { width: 8px; height: 8px; border-radius: 50%; background: #e0e0e0; transition: all 0.3s ease; }
+#categoryScreen .pref-dot.active { background: orange; width: 24px; border-radius: 4px; }
 #categoryScreen .pref-image{ width:100%; height:167px; border-radius:20px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:3em; color:#ccc; }
 #categoryScreen .pref-info{ display:flex; align-items:center; gap:15px; color:#555; font-size:0.9em; font-weight:600; }
 #categoryScreen .pref-stat{ display:flex; align-items:center; gap:5px; }
@@ -377,16 +391,56 @@ nav {
 #categoryScreen .res-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
 #categoryScreen .res-card:active { transform: translateY(0) scale(0.98); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 #categoryScreen .res-image { position: relative; width: 100%; height: 167px; border-radius: 20px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 3em; color: #ccc; overflow: hidden; }
-#categoryScreen .heart-btn { position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(5px); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 1.2em; cursor: pointer; border: none; transition: all .2s; line-height: 0; padding: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-#categoryScreen .heart-btn:hover { transform: scale(1.1); }
-#categoryScreen .heart-btn:active { transform: scale(1); background: rgba(255, 255, 255, 1); }
+/* Heart Button */
+.heart-btn { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; color: #888; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(4px); z-index: 5; padding-top: 2px; }
+.heart-btn:hover { transform: scale(1.1); color: #ff4757; background: #fff; box-shadow: 0 6px 15px rgba(255, 71, 87, 0.25); }
+.heart-btn.liked { color: #ff4757; background: #fff; box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2); }
+.heart-btn:active { transform: scale(0.95); }
 #categoryScreen .res-name { font-weight: 800; font-size: 1.1em; color: #333; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top:-2px; }
 
-#restaurantScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 3000; display: none; flex-direction: column; overflow-y: auto; }
+/* Popular Brands Carousel */
+#categoryScreen .brands-scroll { padding-bottom: 15px; scroll-snap-type: x mandatory; }
+#categoryScreen .brand-container { scroll-snap-align: center; opacity: 1; transform: none; transition: all 0.3s ease; }
+#categoryScreen .brand-container.in-focus { opacity: 1; transform: none; }
+#categoryScreen .brands-pagination { display: flex; justify-content: center; gap: 5px; margin-bottom: 20px; }
+.brands-dot { width: 6px; height: 6px; border-radius: 50%; background: #e0e0e0; transition: all 0.3s; }
+.brands-dot.active { background: orange; width: 18px; border-radius: 3px; }
+
+#categoryScreen .brands-scroll.expanded {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    scroll-snap-type: none;
+    justify-content: flex-start;
+    gap: 20px 15px;
+}
+#categoryScreen .brands-scroll.expanded .brand-container { opacity: 0; transform: translateY(20px) scale(0.9); animation: brandPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(1) { animation-delay: 0s; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(2) { animation-delay: 0.05s; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(3) { animation-delay: 0.1s; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(4) { animation-delay: 0.15s; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(5) { animation-delay: 0.2s; }
+#categoryScreen .brands-scroll.expanded .brand-container:nth-child(6) { animation-delay: 0.25s; }
+@keyframes brandPopIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+#categoryScreen .brands-pagination.hidden { display: none; }
+
+#restaurantScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(235, 235, 235, 0.85); backdrop-filter: blur(12px); z-index: 3000; display: none; flex-direction: column; overflow-y: auto; }
 #restaurantScreen.active { display: flex; }
-#restaurantScreen .res-cover { width: 100%; height: 205px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: relative; flex-shrink: 0; }
-#restaurantScreen .res-cover-bg { width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 5em; color: #ccc; opacity: 0.9; background-size: cover; background-position: center; }
-#restaurantScreen .res-header-content { padding: 20px 20px 0; margin-top: 55px; }
+#restaurantScreen .res-cover { 
+  width: 100%; 
+  height: 205px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+  position: relative; 
+  flex-shrink: 0; 
+  overflow: hidden; 
+}
+#restaurantScreen .res-cover-bg { 
+  width: 100%; 
+  height: 130%; /* Taller for parallax */
+  position: absolute; top: -15%; left: 0; /* Center the taller image */
+  background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 5em; color: #ccc; opacity: 0.9; background-size: cover; background-position: center; 
+  will-change: transform; /* Performance hint */
+}
+#restaurantScreen .res-header-content { padding: 50px 20px 0; margin-top: 0; position: relative; }
 #restaurantScreen .res-screen-name { font-size: 1.8em; font-weight: 800; color: #333; margin-bottom: 8px; }
 #restaurantScreen .res-meta-row { display: flex; align-items: center; gap: 15px; color: #555; font-size: 0.95em; flex-wrap: wrap; }
 #restaurantScreen .res-meta-item { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-weight: 600; }
@@ -397,41 +451,44 @@ nav {
 #restaurantScreen .res-cover-header {
   display: flex; justify-content: space-between; align-items: center;
   padding: 10px 15px;
-  border-bottom: 1px solid #eee;
+  background: orange;
+  border-bottom: none;
 }
 #restaurantScreen .res-cover-actions-right { display: flex; gap: 8px; }
 
 #restaurantScreen .res-action-btn { width: 40px; height: 40px; padding: 6px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.3); font-size: 1em; transition: transform .2s; color: black; }
 #restaurantScreen .res-action-btn:active { transform: scale(0.9); }
-#restaurantScreen .res-profile-pic { position: absolute; bottom: -40px; left: 15px; width: 80px; height: 80px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 3em; z-index: 20; }
+#restaurantScreen .res-profile-pic { position: absolute; top: -40px; left: 15px; width: 80px; height: 80px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 3em; z-index: 20; }
 #restaurantScreen .res-badges-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 #restaurantScreen .res-badge-discount { background: #FFF8D0; color: #4A4A20; font-size: 0.75em; font-weight: 700; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; gap: 4px; }
 #restaurantScreen .res-badge-top { background: #333; color: #fff; font-size: 0.75em; font-weight: 700; padding: 4px 8px; border-radius: 6px; display: flex; align-items: center; gap: 4px; border: 1px solid #FFD700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
 #restaurantScreen .res-price-disclaimer { font-size: 0.75em; color: #999; margin-top: 12px; font-weight: normal; line-height: 1.4; }
 #restaurantScreen .res-menu-nav {
   display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
   gap: 20px;
-  /* Card styles */
-  background: #fff;
-  margin: 15px 20px 0; /* Add space above and on sides */
-  padding: 15px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  border: 1px solid #f0f0f0;
-  /* Sticky behavior */
+  justify-content: flex-start;
+  align-items: center;
+  background: orange;
+  margin: 0;
+  padding: 20px 0 20px 20px;
+  border-radius: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-bottom: 1px solid #eee;
   position: sticky;
-  top: 10px;
-  z-index: 100;
-  /* Required for sticky element with horizontal margins */
-  width: calc(100% - 40px);
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, black 90%, transparent 100%);
 }
-#restaurantScreen .res-menu-item { flex: 0 0 auto; padding-bottom: 12px; color: #666; cursor: pointer; white-space: nowrap; font-size: 0.95em; position: relative; border-bottom: 3px solid transparent; transition: all 0.2s; }
-#restaurantScreen .res-menu-item:active { background-color: #f5f5f5; }
-#restaurantScreen .res-menu-item.active { color: #333; font-weight: 800; border-bottom: 3px solid transparent; }
-#restaurantScreen .res-menu-content { padding: 0 20px 100px; background: #fff; }
-#restaurantScreen .res-category-title { font-weight: 800; font-size: 1.2em; color: #333; margin: 25px 0 15px; scroll-margin-top: 95px; }
+#restaurantScreen .res-menu-item { flex: 0 0 auto; padding-bottom: 8px; color: rgba(255,255,255,0.85); cursor: pointer; white-space: nowrap; font-size: 1em; position: relative; border-bottom: 3px solid transparent; transition: all 0.2s; }
+#restaurantScreen .res-menu-item:active { background-color: rgba(255,255,255,0.2); }
+#restaurantScreen .res-menu-item.active { color: #fff; font-weight: 800; border-bottom: 3px solid #fff; }
+#restaurantScreen .res-menu-content { padding: 0 20px 100px; background: transparent; }
+#restaurantScreen .res-category-title { font-weight: 800; font-size: 1.2em; color: #333; margin: 20px 0 15px 0; padding: 0; scroll-margin-top: 80px; }
 #restaurantScreen .res-item-card { 
   display: flex; justify-content: space-between; margin-bottom: 20px; 
   background: #fff; border-radius: 16px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); 
@@ -457,14 +514,10 @@ nav {
 #restaurantScreen .quantity-btn:active { background-color: #e0f2f1; }
 #restaurantScreen .quantity-value { font-size: 12px; font-weight: 600; color: black; }
 
-#optionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
-#optionsOverlay.show { opacity: 1; pointer-events: auto; }
-#resOptionsSheet { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); padding: 20px; transform: translateY(100%); transition: transform 0.4s ease-in-out; z-index: 3001; display: flex; flex-direction: column; gap: 15px; }
-#resOptionsSheet.show { transform: translateY(0); }
-#resOptionsSheet .res-option-item { display: flex; align-items: center; gap: 15px; font-size: 1.1em; padding: 10px 5px; cursor: pointer; border-radius: 8px; }
-#resOptionsSheet .res-option-item:active { background: #e8e8e8; }
-#resOptionsSheet .res-option-item:hover { background: #f5f5f5; }
-#resOptionsSheet .res-option-item span { font-size: 1.4em; }
+#resBackToTopBtn { position: fixed; top: 18px; right: 15px; bottom: auto; width: 40px; height: 40px; background: #fff; border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2em; color: #333; cursor: pointer; z-index: 1100; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(0.8); }
+#resBackToTopBtn.visible { opacity: 1; pointer-events: auto; }
+#resBackToTopBtn.visible { transform: scale(1); }
+#resBackToTopBtn:active { transform: scale(0.9); }
 
 #categoryScreen .cat-header-search { display: none; flex: 1; margin-left: 15px; background: #f5f5f5; border-radius: 12px; padding: 0 15px; height: 40px; align-items: center; gap: 10px; border: 1px solid #eee; }
 #categoryScreen .cat-header-search input { border: none; background: transparent; outline: none; width: 100%; font-size: 1em; }
@@ -528,6 +581,7 @@ nav {
   transform: scale(0.95);
   opacity: 0;
   transition: transform 0.5s ease-out 0.1s, opacity 0.4s ease-out;
+  will-change: transform;
 }
 #dishDetailScreen .dish-title-large { font-size: 1.8em; font-weight: 800; margin-bottom: 10px; text-align: left; }
 #dishDetailScreen .dish-desc-full { font-size: 1em; color: #666; line-height: 1.5; margin-bottom: 20px; text-align: left; }
@@ -862,7 +916,13 @@ input:checked + .slider:before { transform: translateX(22px); }
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-.animate-entry { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+.animate-entry {
+    opacity: 0;
+    transform: translateY(20px);
+}
+#categoryScreen.active .animate-entry {
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 </style>
 </head>
 <body>
@@ -1055,8 +1115,11 @@ input:checked + .slider:before { transform: translateX(22px); }
       <div class="text-filter-btn"><span>👑</span>Top Rated</div>
     </div>
     <div class="brands-section">
-      <h3>Popular Brands</h3>
-      <div class="brands-scroll">
+      <div class="pref-header-row">
+        <div class="pref-title">Popular Brands</div>
+        <div class="see-all-btn" id="brandsSeeAllBtn">See All</div>
+      </div>
+      <div class="brands-scroll" id="brandsScroll">
         <div class="brand-container">
           <div class="brand-item">
             <div class="brand-image"><span>🍔</span></div>
@@ -1093,11 +1156,16 @@ input:checked + .slider:before { transform: translateX(22px); }
           <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
         </div>
       </div>
+      <div class="brands-pagination" id="brandsPagination"></div>
     </div>
-    <div class="pref-title">Based on Your Preferences</div>
+    <div class="pref-header-row">
+      <div class="pref-title">For You</div>
+      <div class="see-all-btn" id="prefSeeAllBtn">See All</div>
+    </div>
     <div class="pref-scroll" id="prefScroll">
       <!-- Populated by JS -->
     </div>
+    <div class="pref-pagination" id="prefPagination"></div>
     <div class="restaurant-list-section">
       <h3>All Restaurants</h3>
       <div id="restaurantList"></div>
@@ -1114,9 +1182,9 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
   <div class="res-cover">
     <div class="res-cover-bg">🍽️</div>
-    <div class="res-profile-pic">🏪</div>
   </div>
   <div class="res-header-content">
+    <div class="res-profile-pic">🏪</div>
     <div class="res-screen-name" id="resScreenName">Restaurant Name</div>
     <div class="res-badges-row">
       <div class="res-badge-discount"><span>🏷️</span> -20% some items</div>
@@ -1425,14 +1493,7 @@ input:checked + .slider:before { transform: translateX(22px); }
         </div></div>
     </div>
   </div>
-
-  <div id="optionsOverlay"></div>
-  <div id="resOptionsSheet">
-    <div class="res-option-item"><span>ℹ️</span> Store Information</div>
-    <div class="res-option-item"><span>💰</span> Fees Information</div>
-    <div class="res-option-item"><span>🔗</span> Share Store</div>
-  </div>
-
+  <div id="resBackToTopBtn">⬆️</div>
 </div>
 
 <div id="dishDetailScreen">
@@ -2179,9 +2240,232 @@ const categoryScreen = document.getElementById('categoryScreen');
 const catTitle = document.getElementById('catTitle');
 const catBackBtn = document.getElementById('catBackBtn');
 
+/* Category Configuration */
+const categoryConfig = {
+  "Food": {
+    filters: [
+      {icon: "🏷️", name: "Promotions"}, {icon: "🍟", name: "Fast Food"}, {icon: "🍗", name: "Chicken"},
+      {icon: "🍔", name: "Burgers"}, {icon: "🥩", name: "Halal"}, {icon: "🍕", name: "Pizza"},
+      {icon: "🥘", name: "Local"}, {icon: "🍰", name: "Desserts"}
+    ],
+    brands: [
+      {icon: "🍔", name: "McDonald's"}, {icon: "🍗", name: "KFC"}, {icon: "🍕", name: "Pizza Hut"},
+      {icon: "☕", name: "Starbucks"}, {icon: "🥪", name: "Subway"}
+    ],
+    items: [
+      {name: "Tasty Restaurant", image: "🍽️", rating: "4.8", time: "20-30 Mins", delivery: "Free"},
+      {name: "Burger King", image: "🍔", rating: "4.5", time: "25-35 Mins", delivery: "500"},
+      {name: "Pizza Hut", image: "🍕", rating: "4.7", time: "30-40 Mins", delivery: "Free"},
+      {name: "KFC", image: "🍗", rating: "4.6", time: "20-30 Mins", delivery: "Free"}
+    ]
+  },
+  "Groceries": {
+    filters: [
+      {icon: "🥬", name: "Vegetables"}, {icon: "🍎", name: "Fruits"}, {icon: "🥛", name: "Dairy"},
+      {icon: "🥩", name: "Meat"}, {icon: "🥖", name: "Bakery"}, {icon: "🥫", name: "Pantry"}
+    ],
+    brands: [
+      {icon: "🛒", name: "Carrefour"}, {icon: "🛍️", name: "Lulu"}, {icon: "🏪", name: "Spinneys"},
+      {icon: "🍏", name: "Viva"}, {icon: "🧺", name: "Choithrams"}
+    ],
+    items: [
+      {name: "Carrefour City", image: "🛒", rating: "4.8", time: "30-60 Mins", delivery: "1500"},
+      {name: "Lulu Hypermarket", image: "🛍️", rating: "4.7", time: "45-90 Mins", delivery: "2000"},
+      {name: "Spinneys", image: "🏪", rating: "4.9", time: "30-60 Mins", delivery: "Free"},
+      {name: "Local Grocery", image: "🧺", rating: "4.5", time: "15-30 Mins", delivery: "Free"}
+    ]
+  },
+  "Shops": {
+    filters: [
+      {icon: "👗", name: "Clothes"}, {icon: "👠", name: "Shoes"}, {icon: "📱", name: "Electronics"},
+      {icon: "💄", name: "Beauty"}, {icon: "🎁", name: "Gifts"}, {icon: "⚽", name: "Sports"}
+    ],
+    brands: [
+      {icon: "🏬", name: "H&M"}, {icon: "👟", name: "Nike"}, {icon: "💄", name: "Sephora"},
+      {icon: "📱", name: "Sharaf DG"}, {icon: "🧸", name: "Toys R Us"}
+    ],
+    items: [
+      {name: "Zara", image: "👗", rating: "4.8", time: "60-90 Mins", delivery: "5000"},
+      {name: "Sharaf DG", image: "📱", rating: "4.7", time: "60-120 Mins", delivery: "Free"},
+      {name: "Sephora", image: "💄", rating: "4.9", time: "45-60 Mins", delivery: "2500"},
+      {name: "Virgin Megastore", image: "💿", rating: "4.8", time: "60-90 Mins", delivery: "3000"}
+    ]
+  },
+  "Pharmacies": {
+    filters: [
+      {icon: "💊", name: "Medicine"}, {icon: "🧴", name: "Skincare"}, {icon: "🩹", name: "First Aid"},
+      {icon: "💪", name: "Vitamins"}, {icon: "👶", name: "Baby Care"}, {icon: "🧼", name: "Hygiene"}
+    ],
+    brands: [
+      {icon: "⚕️", name: "Life Pharmacy"}, {icon: "🏥", name: "Aster"}, {icon: "💊", name: "Boots"},
+      {icon: "🩺", name: "Supercare"}, {icon: "🌿", name: "Bin Sina"}
+    ],
+    items: [
+      {name: "Life Pharmacy", image: "⚕️", rating: "4.9", time: "30-45 Mins", delivery: "Free"},
+      {name: "Aster Pharmacy", image: "🏥", rating: "4.8", time: "30-45 Mins", delivery: "Free"},
+      {name: "Boots", image: "💊", rating: "4.7", time: "45-60 Mins", delivery: "1000"},
+      {name: "Supercare", image: "🩺", rating: "4.6", time: "20-40 Mins", delivery: "500"}
+    ]
+  },
+  "Packages": {
+    filters: [
+      {icon: "📦", name: "Send"}, {icon: "📬", name: "Receive"}, {icon: "🏙️", name: "Local"},
+      {icon: "✈️", name: "International"}, {icon: "🚚", name: "Moving"}
+    ],
+    brands: [
+      {icon: "🟨", name: "DHL"}, {icon: "🟧", name: "FedEx"}, {icon: "🟥", name: "Aramex"},
+      {icon: "🟦", name: "UPS"}, {icon: "🛵", name: "Careem Box"}
+    ],
+    items: [
+      {name: "DHL Express", image: "🟨", rating: "4.9", time: "Pickup: 15m", delivery: "Var"},
+      {name: "Local Courier", image: "🛵", rating: "4.5", time: "Pickup: 10m", delivery: "5000"},
+      {name: "Aramex", image: "🟥", rating: "4.7", time: "Pickup: 20m", delivery: "Var"},
+      {name: "Fetchr", image: "📦", rating: "4.4", time: "Pickup: 30m", delivery: "3000"}
+    ]
+  },
+  "Drinks": {
+    filters: [
+      {icon: "💧", name: "Water"}, {icon: "🥤", name: "Juices"}, {icon: "☕", name: "Coffee"},
+      {icon: "🍵", name: "Tea"}, {icon: "🥛", name: "Milkshakes"}, {icon: "🧉", name: "Smoothies"}
+    ],
+    brands: [
+      {icon: "🧜‍♀️", name: "Starbucks"}, {icon: "☕", name: "Costa"}, {icon: "🍩", name: "Tim Hortons"},
+      {icon: "🥤", name: "Juice Time"}, {icon: "💧", name: "Mai Dubai"}
+    ],
+    items: [
+      {name: "Starbucks", image: "☕", rating: "4.8", time: "20-30 Mins", delivery: "Free"},
+      {name: "Mai Dubai Water", image: "💧", rating: "4.9", time: "60-120 Mins", delivery: "Free"},
+      {name: "Juice World", image: "🥤", rating: "4.6", time: "25-35 Mins", delivery: "1500"},
+      {name: "Tea Corner", image: "🍵", rating: "4.5", time: "15-25 Mins", delivery: "500"}
+    ]
+  }
+};
+
+function renderCategoryContent(category) {
+  const config = categoryConfig[category] || categoryConfig["Food"]; 
+
+  // Render Filters
+  const filterScroll = document.querySelector('.filter-scroll');
+  if(filterScroll) {
+    filterScroll.innerHTML = '';
+    config.filters.forEach(f => {
+      const item = document.createElement('div');
+      item.className = 'filter-item';
+      item.innerHTML = `<div class="filter-box">${f.icon}</div><div class="filter-name">${f.name}</div>`;
+      item.addEventListener('click', () => showDetailScreen(f.name)); 
+      filterScroll.appendChild(item);
+    });
+  }
+
+  // Render Brands
+  const brandsScroll = document.getElementById('brandsScroll');
+  if(brandsScroll) {
+    brandsScroll.innerHTML = '';
+    config.brands.forEach(b => {
+      const container = document.createElement('div');
+      container.className = 'brand-container';
+      container.innerHTML = `
+          <div class="brand-item">
+            <div class="brand-image"><span>${b.icon}</span></div>
+          </div>
+          <div class="brand-name">${b.name}</div>
+          <div class="brand-delivery-info"><span class="bike-icon">🚴‍♂️</span><span>Free delivery</span></div>
+      `;
+      container.addEventListener('click', () => openRestaurant(b.name));
+      brandsScroll.appendChild(container);
+    });
+  }
+
+  // Render Restaurants / Items
+  const generateCardHTML = (item) => `
+      <div class="res-image">
+        ${item.image}
+        <button class="heart-btn">♡</button>
+      </div>
+      <div class="res-name">${item.name}</div>
+      <div class="pref-info">
+        <span class="pref-stat"><span>👍</span>(${item.rating})</span>
+        <span class="pref-stat"><span style="display:inline-block; transform:scaleX(-1);">🚴‍♂️</span>${item.delivery}</span>
+        <span class="pref-stat">${item.time}</span>
+      </div>
+  `;
+
+  const restaurantList = document.getElementById('restaurantList');
+  if(restaurantList) {
+    restaurantList.innerHTML = '';
+    for(let i=0; i<10; i++) {
+        const item = config.items[i % config.items.length];
+        const card = document.createElement('div');
+        card.className = 'res-card animate-entry';
+        card.style.animationDelay = `${i * 0.05}s`;
+        card.innerHTML = generateCardHTML({...item, name: item.name + " " + (i+1)});
+        
+        card.querySelector('.heart-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleFavorite(card.querySelector('.res-name').textContent, e.target);
+        });
+        card.addEventListener('click', (e) => {
+             if(e.target.classList.contains('heart-btn')) return;
+             openRestaurant(card.querySelector('.res-name').textContent);
+        });
+        restaurantList.appendChild(card);
+    }
+  }
+
+  // Render "For You" Section
+  const prefScroll = document.getElementById('prefScroll');
+  if(prefScroll) {
+    prefScroll.innerHTML = '';
+    for(let i=0; i<5; i++) {
+        const item = config.items[i % config.items.length];
+        const card = document.createElement('div');
+        card.className = 'pref-card';
+        card.innerHTML = generateCardHTML({...item, name: item.name + (i>0 ? " " + (i+1) : "")}); 
+        
+        card.addEventListener('click', (e) => {
+             if(e.target.classList.contains('heart-btn')) return;
+             openRestaurant(card.querySelector('.res-name').textContent);
+        });
+        prefScroll.appendChild(card);
+    }
+    // Re-init pagination dots
+    const prefPagination = document.getElementById('prefPagination');
+    if(prefPagination) {
+        prefPagination.innerHTML = '';
+        for(let i=0; i<5; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'pref-dot';
+            if(i===0) dot.classList.add('active');
+            prefPagination.appendChild(dot);
+        }
+    }
+    // Re-bind intersection observer if necessary, but simplicity suggests CSS scroll snap works mostly.
+    // We'll re-add a simple observer logic here
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const index = Array.from(prefScroll.children).indexOf(entry.target);
+          Array.from(prefScroll.children).forEach(c => c.classList.remove('in-focus'));
+          entry.target.classList.add('in-focus');
+          const dots = document.getElementById('prefPagination').querySelectorAll('.pref-dot');
+          dots.forEach(d => d.classList.remove('active'));
+          if(dots[index]) dots[index].classList.add('active');
+        }
+      });
+    }, { root: prefScroll, threshold: 0.6 });
+    Array.from(prefScroll.children).forEach(card => observer.observe(card));
+  }
+  
+  // Re-init auto scroll if applicable
+  initAutoScroll();
+}
+
 function showDetailScreen(title) {
   // Update content
   catTitle.textContent = title;
+  
+  // Render dynamic content
+  renderCategoryContent(title);
 
   // Update address in category screen
   const addrText = document.getElementById('selectedAddressText').textContent;
@@ -2292,8 +2576,34 @@ function openRestaurant(name) {
   document.getElementById('resScreenName').textContent = name;
   // You can also populate likes/time dynamically here if passed
   restaurantScreen.classList.add('active');
+  // Reset scroll and parallax on open
+  restaurantScreen.scrollTop = 0;
+  const bg = restaurantScreen.querySelector('.res-cover-bg');
+  if (bg) bg.style.transform = 'translateY(0px)';
   updateCartView();
 }
+
+// Parallax effect for restaurant header & Back to Top Logic
+const resCoverBg = restaurantScreen.querySelector('.res-cover-bg');
+const resBackToTopBtn = document.getElementById('resBackToTopBtn');
+const resMenuNavSticky = document.getElementById('resMenuNav');
+
+if (restaurantScreen && resCoverBg) {
+    restaurantScreen.addEventListener('scroll', () => {
+        const scrollTop = restaurantScreen.scrollTop;
+        resCoverBg.style.transform = `translateY(${scrollTop * 0.5}px)`;
+        
+        if (resBackToTopBtn && resMenuNavSticky) {
+            // Check if navbar is stuck (at top). getBoundingClientRect().top will be <= 0 (or close to 0 due to borders)
+            const navRect = resMenuNavSticky.getBoundingClientRect();
+            // Using 1px buffer
+            if (navRect.top <= 1) resBackToTopBtn.classList.add('visible');
+            else resBackToTopBtn.classList.remove('visible');
+        }
+    }, { passive: true }); // Use passive listener for scroll performance
+}
+
+if (resBackToTopBtn) { resBackToTopBtn.addEventListener('click', () => restaurantScreen.scrollTo({ top: 0, behavior: 'smooth' })); }
 
 if (resBackBtn) {
   resBackBtn.addEventListener('click', () => {
@@ -2314,21 +2624,39 @@ if (resShareBtn) {
 }
 
 /* Populate Preferences */
-const prefScroll = document.getElementById('prefScroll');
-if(prefScroll){
-  for(let i=0; i<20; i++){
-    const card = document.createElement('div');
-    card.className = 'pref-card';
-    card.innerHTML = `
-      <div class="pref-image">🍽️</div>
-      <div class="res-name">Restaurant ${i+1}</div>
-      <div class="pref-info">
-        <span class="pref-stat"><span>👍</span>(300)</span>
-        <span class="pref-stat"><span style="display:inline-block; transform:scaleX(-1);">🚴‍♂️</span>200</span>
-        <span class="pref-stat">20-30 Mins</span>
-      </div>
-    `;
-    prefScroll.appendChild(card);
+// Pref logic moved to renderCategoryContent
+const prefScroll = document.getElementById('prefScroll'); // Just reference
+
+  // See All Button Logic
+  const prefSeeAllBtn = document.getElementById('prefSeeAllBtn');
+  if(prefSeeAllBtn){
+    prefSeeAllBtn.addEventListener('click', () => {
+      prefScroll.classList.toggle('expanded');
+      prefPagination.classList.toggle('hidden');
+      if(prefScroll.classList.contains('expanded')){
+        prefSeeAllBtn.textContent = 'Show Less';
+      } else {
+        prefSeeAllBtn.textContent = 'See All';
+        prefScroll.scrollTo({left: 0});
+      }
+    });
+  }
+
+  // See All Button Logic for Brands
+  const brandsSeeAllBtn = document.getElementById('brandsSeeAllBtn');
+  const brandsScrollForSeeAll = document.getElementById('brandsScroll');
+  const brandsPaginationForSeeAll = document.getElementById('brandsPagination');
+  if(brandsSeeAllBtn && brandsScrollForSeeAll && brandsPaginationForSeeAll){
+    brandsSeeAllBtn.addEventListener('click', () => {
+      brandsScrollForSeeAll.classList.toggle('expanded');
+      brandsPaginationForSeeAll.classList.toggle('hidden');
+      if(brandsScrollForSeeAll.classList.contains('expanded')){
+        brandsSeeAllBtn.textContent = 'Show Less';
+      } else {
+        brandsSeeAllBtn.textContent = 'See All';
+        brandsScrollForSeeAll.scrollTo({left: 0});
+      }
+    });
   }
   // Add click listener for pref items
   prefScroll.addEventListener('click', (e) => {
@@ -2338,32 +2666,62 @@ if(prefScroll){
       openRestaurant(name);
     }
   });
+
+/* Initialize Popular Brands Carousel */
+const brandsScroll = document.querySelector('.brands-scroll');
+const brandsPagination = document.getElementById('brandsPagination');
+if(brandsScroll && brandsPagination) {
+  const brands = brandsScroll.querySelectorAll('.brand-container');
+  
+  // Create dots
+  brands.forEach((brand, index) => {
+    const dot = document.createElement('div');
+    dot.className = 'brands-dot';
+    if(index === 0) { dot.classList.add('active'); brand.classList.add('in-focus'); }
+    brandsPagination.appendChild(dot);
+  });
+
+  // Center Tracking for Brands
+  const updateActiveBrand = () => {
+    const containerRect = brandsScroll.getBoundingClientRect();
+    const containerCenter = containerRect.left + containerRect.width / 2;
+    
+    let closestBrand = null;
+    let minDistance = Infinity;
+    let closestIndex = 0;
+
+    brands.forEach((brand, index) => {
+      const rect = brand.getBoundingClientRect();
+      const center = rect.left + rect.width / 2;
+      const dist = Math.abs(center - containerCenter);
+      if(dist < minDistance) {
+        minDistance = dist;
+        closestBrand = brand;
+        closestIndex = index;
+      }
+    });
+
+    brands.forEach(b => b.classList.remove('in-focus'));
+    if(closestBrand) closestBrand.classList.add('in-focus');
+    
+    const dots = brandsPagination.querySelectorAll('.brands-dot');
+    dots.forEach(d => d.classList.remove('active'));
+    if(dots[closestIndex]) dots[closestIndex].classList.add('active');
+  };
+
+  brandsScroll.addEventListener('scroll', () => {
+    window.requestAnimationFrame(updateActiveBrand);
+  });
+  
+  // Init
+  setTimeout(updateActiveBrand, 100);
 }
 
 /* Populate Vertical Restaurant List */
+// Restaurant List population logic moved to renderCategoryContent
 const restaurantList = document.getElementById('restaurantList');
 if(restaurantList){
-  restaurantList.classList.add('restaurant-list'); // Add class for styling
-  for(let i=0; i<10; i++){
-    const card = document.createElement('div');
-    card.className = 'res-card';
-    card.style.animationDelay = `${i * 0.05}s`; // Stagger animation
-    card.classList.add('animate-entry');
-    card.innerHTML = `
-      <div class="res-image">
-        🍽️
-        <button class="heart-btn">♡</button>
-      </div>
-      <div class="res-name">Tasty Restaurant ${i+1}</div>
-      <div class="pref-info">
-        <span class="pref-stat"><span>👍</span>(${Math.floor(Math.random() * 500) + 50})</span>
-        <span class="pref-stat"><span style="display:inline-block; transform:scaleX(-1);">🚴‍♂️</span>${Math.floor(Math.random() * 300) + 100}</span>
-        <span class="pref-stat">${Math.floor(Math.random() * 20) + 15}-${Math.floor(Math.random() * 20) + 35} Mins</span>
-      </div>
-    `;
-    restaurantList.appendChild(card);
-  }
-
+  restaurantList.classList.add('restaurant-list');
   restaurantList.addEventListener('click', function(e) {
     const heartBtn = e.target.closest('.heart-btn');
     if (heartBtn) {
@@ -2415,32 +2773,6 @@ if(headerSearchInput && mainCatSearchInput){
   mainCatSearchInput.addEventListener('input', (e) => { headerSearchInput.value = e.target.value; filterRestaurants(e.target.value); });
 }
 
-/* Restaurant Options Sheet Logic */
-const resOptionsBtn = document.getElementById('resOptionsBtn');
-const resOptionsSheet = document.getElementById('resOptionsSheet');
-const optionsOverlay = document.getElementById('optionsOverlay');
-
-function showOptionsSheet() {
-    if (resOptionsSheet && optionsOverlay) {
-        resOptionsSheet.classList.add('show');
-        optionsOverlay.classList.add('show');
-    }
-}
-
-function hideOptionsSheet() {
-    if (resOptionsSheet && optionsOverlay) {
-        resOptionsSheet.classList.remove('show');
-        optionsOverlay.classList.remove('show');
-    }
-}
-
-if (resOptionsBtn) {
-    resOptionsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showOptionsSheet();
-    });
-}
-
 /* Restaurant Menu Nav Logic */
 const resMenuNav = document.getElementById('resMenuNav');
 if (resMenuNav) {
@@ -2449,7 +2781,8 @@ if (resMenuNav) {
             resMenuNav.querySelectorAll('.res-menu-item').forEach(item => item.classList.remove('active'));
             e.target.classList.add('active');
 
-            // Auto-scroll the navigation bar to center the clicked item
+            // Auto-scroll the navigation bar to center the clicked item.
+            // This ensures the active item is always visible.
             e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             
             const targetName = e.target.textContent.trim();
@@ -2522,7 +2855,7 @@ function updateDishDetailTotal() {
 
     if (!isNaN(basePrice) && !isNaN(quantity)) {
         const total = (basePrice + addonsPrice) * quantity;
-        addToCartBtn.textContent = `Add to cart - ${total.toFixed(2)}`;
+        addToCartBtn.textContent = `Add to cart`;
     }
 }
 
@@ -2555,6 +2888,13 @@ function openDishDetail(itemCard) {
     // Show the screen
     dishDetailScreen.classList.add('active');
 
+    // Reset image transform for parallax
+    const dishImage = document.getElementById('dishDetailImage');
+    if(dishImage) {
+        dishImage.style.transform = '';
+        dishImage.style.transition = ''; 
+    }
+
     // Update total after screen is active and populated
     updateDishDetailTotal();
 }
@@ -2567,6 +2907,19 @@ function closeDishDetail() {
 
 if (dishCloseBtn) {
     dishCloseBtn.addEventListener('click', closeDishDetail);
+}
+
+// Dish Detail Parallax
+const dishContent = document.querySelector('.dish-content');
+const dishImage = document.getElementById('dishDetailImage');
+if (dishContent && dishImage) {
+    dishContent.addEventListener('scroll', () => {
+        const sc = dishContent.scrollTop;
+        if (dishDetailScreen.classList.contains('active')) {
+             if (sc > 5) dishImage.style.transition = 'none'; // Disable transition during scroll to avoid jank
+             dishImage.style.transform = `translateY(${sc * 0.4}px) scale(1)`;
+        }
+    }, { passive: true });
 }
 
 const addonsContainer = document.getElementById('dishDetailAddons');
@@ -2628,10 +2981,6 @@ if (resMenuContent) {
             openDishDetail(itemCard);
         }
     });
-}
-
-if (optionsOverlay) {
-    optionsOverlay.addEventListener('click', hideOptionsSheet);
 }
 
 /* Toast Function */
@@ -3454,10 +3803,12 @@ function toggleFavorite(resName, btnElement) {
     if (favorites.has(resName)) {
         favorites.delete(resName);
         btnElement.textContent = '♡';
+        btnElement.classList.remove('liked');
         showToast('Removed from favorites');
     } else {
         favorites.add(resName);
         btnElement.textContent = '♥';
+        btnElement.classList.add('liked');
         showToast('Added to favorites');
     }
     // If on favorites screen, refresh list
@@ -3482,7 +3833,7 @@ function renderFavorites() {
         card.innerHTML = `
           <div class="res-image">
             🍽️
-            <button class="heart-btn" style="color:#ff4757;">♥</button>
+            <button class="heart-btn liked">♥</button>
           </div>
           <div class="res-name">${resName}</div>
           <div class="pref-info">
@@ -3723,10 +4074,10 @@ function initAutoScroll() {
     const scrollSelectors = [
         '#shopScroll',
         '.filter-scroll',
-        '.brands-scroll',
         '#prefScroll',
         '.text-filter-scroll',
-        '.search-item-scroll'
+        '.search-item-scroll',
+        '.brands-scroll'
     ];
 
     scrollSelectors.forEach(selector => {
