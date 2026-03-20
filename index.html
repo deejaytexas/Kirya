@@ -829,10 +829,9 @@ input:checked + .slider:before { transform: translateX(22px); }
 
 /* Profile Screen */
 #profileScreen {
-  position: fixed; top: 0; left: 0; width: 85%; max-width: 350px; height: 100%;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: #f9f9f9; z-index: 6000; display: flex; flex-direction: column;
-  transform: translateX(-100%); transition: transform 0.3s ease-in-out;
-  box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
 }
 #profileScreen.active { transform: translateX(0); }
 #profileScreen .profile-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
@@ -852,6 +851,97 @@ input:checked + .slider:before { transform: translateX(22px); }
 #profileScreen .profile-menu-item:first-child { border-top-left-radius: 12px; border-top-right-radius: 12px; }
 #profileScreen .profile-menu-item:last-child { border-bottom: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
 #profileScreen .menu-icon { margin-right: 15px; width: 25px; text-align: center; display: inline-block; }
+
+/* Rewards Screen */
+.rewards-balance-card { background: linear-gradient(135deg, #FFBF42, #ff9f43); color: #fff; border-radius: 20px; padding: 25px; text-align: center; margin-bottom: 25px; box-shadow: 0 8px 20px rgba(255, 191, 66, 0.3); }
+.rewards-points-label { font-size: 1em; font-weight: 600; opacity: 0.9; }
+.rewards-points-value { font-size: 2.8em; font-weight: 900; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.rewards-section-title { font-size: 1.2em; font-weight: 800; color: #333; margin-bottom: 15px; padding: 0 20px; }
+.coupon-card { background: #fff; border-radius: 16px; padding: 15px; margin: 0 20px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 15px; border: 1px solid #f0f0f0; }
+.coupon-icon { font-size: 2.5em; width: 60px; height: 60px; background: #f9f9f9; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.coupon-info { flex: 1; }
+.coupon-title { font-weight: 700; font-size: 1.05em; color: #333; }
+.coupon-desc { font-size: 0.85em; color: #777; margin: 4px 0 8px; }
+.coupon-cost { font-weight: 800; color: #FFBF42; }
+.redeem-btn { background: #019E81; color: #fff; border: none; border-radius: 10px; padding: 10px 15px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+.redeem-btn:disabled { background: #ccc; cursor: not-allowed; }
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid #f5f5f5; }
+.history-item:last-child { border-bottom: none; }
+.history-info { display: flex; flex-direction: column; gap: 4px; }
+.history-title { font-weight: 600; color: #333; }
+.history-date { font-size: 0.8em; color: #999; }
+.history-points { font-weight: 800; font-size: 1.1em; }
+.history-points.earned { color: #2ed573; }
+.history-points.spent { color: #ff4757; }
+
+/* Help & Support */
+.faq-item { background: #fff; border-bottom: 1px solid #eee; overflow: hidden; }
+.faq-header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: #333; cursor: pointer; user-select: none; }
+.faq-body { padding: 0 20px; max-height: 0; color: #666; font-size: 0.9em; line-height: 1.5; transition: all 0.3s ease-in-out; opacity: 0; padding-bottom: 0; }
+.faq-item.open .faq-body { padding-bottom: 20px; opacity: 1; max-height: 300px; }
+.faq-icon { transition: transform 0.3s; font-size: 0.8em; color: #999; }
+.faq-item.open .faq-icon { transform: rotate(180deg); }
+
+/* Wallet Screen */
+.wallet-card { background: linear-gradient(135deg, #019E81, #00b894); border-radius: 20px; padding: 30px 20px; color: #fff; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(1, 158, 129, 0.3); position: relative; overflow: hidden; }
+.wallet-card::after { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+.wallet-balance-label { font-size: 0.9em; opacity: 0.9; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+.wallet-balance-amount { font-size: 2.8em; font-weight: 800; margin-bottom: 25px; text-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.wallet-btn-row { display: flex; gap: 15px; justify-content: center; position: relative; z-index: 2; }
+.wallet-action-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; backdrop-filter: blur(5px); transition: background 0.2s, transform 0.2s; display: flex; align-items: center; gap: 8px; font-size: 0.95em; }
+.wallet-action-btn:active { background: rgba(255,255,255,0.3); transform: scale(0.95); }
+.transaction-section-title { font-weight: 800; font-size: 1.1em; color: #333; margin-bottom: 15px; padding: 0 5px; display: flex; justify-content: space-between; align-items: center; }
+.transaction-list { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
+.transaction-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; }
+.transaction-item:active { background: #f9f9f9; }
+.transaction-item:last-child { border-bottom: none; }
+.t-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2em; margin-right: 15px; flex-shrink: 0; }
+.t-icon.credit { background: #e0f2f1; color: #019E81; }
+.t-icon.debit { background: #ffebee; color: #ff4757; }
+.t-info { flex: 1; }
+.t-title { font-weight: 700; color: #333; font-size: 0.95em; margin-bottom: 3px; }
+.t-date { font-size: 0.8em; color: #999; }
+.t-amount { font-weight: 800; font-size: 1em; }
+.t-amount.credit { color: #019E81; }
+.t-amount.debit { color: #333; }
+
+/* Payment Methods Management */
+.pm-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+.pm-info { display: flex; align-items: center; gap: 15px; }
+.pm-icon { font-size: 1.5em; width: 40px; height: 40px; background: #f9f9f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.pm-text { font-weight: 700; color: #333; font-size: 1em; }
+.pm-sub { font-size: 0.85em; color: #888; margin-top: 2px; }
+.pm-delete { color: #ff4757; font-weight: 600; font-size: 0.9em; cursor: pointer; padding: 8px; }
+
+/* Referral Screen */
+.referral-card { background: #fff; border-radius: 20px; padding: 30px 20px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+.referral-icon { font-size: 4em; margin-bottom: 15px; display: inline-block; animation: bounce 2s infinite; }
+.referral-title { font-size: 1.4em; font-weight: 800; color: #333; margin-bottom: 10px; }
+.referral-text { color: #666; line-height: 1.6; margin-bottom: 25px; font-size: 0.95em; }
+.referral-code-box { background: #f0f0f0; border: 2px dashed #ccc; border-radius: 12px; padding: 15px; font-size: 1.5em; font-weight: 800; color: #333; letter-spacing: 2px; margin-bottom: 25px; position: relative; cursor: pointer; transition: all 0.2s; }
+.referral-code-box:active { background: #e0e0e0; border-color: #aaa; transform: scale(0.98); }
+.referral-copy-hint { font-size: 0.4em; color: #999; display: block; font-weight: 600; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+.share-btn { width: 100%; background: #019E81; color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1.1em; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 15px rgba(1, 158, 129, 0.3); }
+.share-btn:active { transform: scale(0.98); }
+
+/* Notifications Screen */
+.notification-item { display: flex; gap: 15px; padding: 15px; background: #fff; border-bottom: 1px solid #f0f0f0; align-items: flex-start; }
+.notification-item.unread { background: #f0fdfa; }
+.notif-icon { width: 40px; height: 40px; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 1.2em; flex-shrink: 0; }
+.notif-icon.order { background: #e0f2f1; color: #019E81; }
+.notif-icon.promo { background: #fff8e1; color: #ffb300; }
+.notif-content { flex: 1; }
+.notif-title { font-weight: bold; color: #333; font-size: 0.95em; margin-bottom: 4px; }
+.notif-body { font-size: 0.85em; color: #666; line-height: 1.4; }
+.notif-time { font-size: 0.75em; color: #999; margin-top: 6px; }
+
+/* Settings Screen */
+.settings-group { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.settings-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+.settings-item:last-child { border-bottom: none; }
+.settings-info { max-width: 80%; }
+.settings-label { font-weight: 600; color: #333; font-size: 1em; }
+.settings-sub { font-size: 0.85em; color: #888; margin-top: 2px; }
 
 /* Saved Address Screen */
 #savedAddressScreen {
@@ -877,7 +967,7 @@ input:checked + .slider:before { transform: translateX(22px); }
 #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
 /* Rider, Admin, Shop Portal Screens */
-.generic-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f9f9f9; z-index: 6000; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+.generic-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f9f9f9; z-index: 6500; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease-in-out; }
 .generic-screen.active { transform: translateX(0); }
 .generic-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 .generic-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
@@ -946,6 +1036,94 @@ input:checked + .slider:before { transform: translateX(22px); }
 .swipe-knob { position: absolute; left: 4px; top: 4px; width: 47px; height: 47px; background: #019E81; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2em; cursor: pointer; z-index: 2; transition: transform 0.1s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); touch-action: none; }
 .swipe-container.completed .swipe-text { color: #fff; z-index: 3; }
 .swipe-container.completed { background: #019E81; transition: background 0.3s; }
+
+/* Rider Actions */
+.rider-actions-row { display: flex; gap: 10px; margin-top: 15px; margin-bottom: 15px; }
+.rider-action-btn { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #eee; background: #fff; font-weight: bold; color: #333; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: background 0.2s; }
+.rider-action-btn:active { background: #f0f0f0; transform: scale(0.98); }
+
+/* Vendor Order Management */
+.vendor-tabs { display: flex; gap: 8px; margin-bottom: 15px; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px; overflow-x: auto; }
+.vendor-tab { padding: 8px 16px; border-radius: 20px; font-size: 0.9em; font-weight: bold; color: #666; cursor: pointer; transition: all 0.2s; background: #f5f5f5; white-space: nowrap; }
+.vendor-tab.active { background: #019E81; color: #fff; box-shadow: 0 2px 8px rgba(1, 158, 129, 0.2); }
+
+.vendor-order-card { border: 1px solid #eee; border-radius: 12px; padding: 15px; margin-bottom: 15px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); animation: slideUpFadeIn 0.3s ease-out; }
+.vendor-order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #f9f9f9; padding-bottom: 8px; }
+.vendor-order-id { font-weight: 800; color: #333; font-size: 1.1em; }
+.vendor-order-time { font-size: 0.85em; color: #888; font-weight: 600; }
+.vendor-order-items { margin-bottom: 15px; font-size: 0.95em; color: #555; line-height: 1.5; }
+.vendor-btn-row { display: flex; gap: 10px; }
+.vendor-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 0.95em; transition: opacity 0.2s; }
+.vendor-btn:active { opacity: 0.8; }
+
+/* Updated Profile Screen */
+.profile-header-new { background: linear-gradient(135deg, #019E81, #00b894); padding: 30px 20px 50px; color: #fff; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; box-shadow: 0 4px 15px rgba(1, 158, 129, 0.3); display: flex; flex-direction: column; align-items: center; position: relative; }
+.profile-header-new .close-btn { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+.profile-header-new .close-btn:active { background: rgba(255,255,255,0.4); }
+.profile-pic-large { width: 90px; height: 90px; border-radius: 50%; background: #fff; border: 4px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 3em; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; position: relative; overflow: hidden; background-size: cover; background-position: center; }
+.profile-name-large { font-size: 1.4em; font-weight: 800; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.profile-phone-large { font-size: 0.95em; opacity: 0.9; }
+.profile-stats-card { background: #fff; border-radius: 15px; padding: 20px; margin: -30px 20px 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-around; position: relative; z-index: 2; }
+.stat-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.stat-value { font-weight: 800; font-size: 1.2em; color: #333; }
+.stat-label { font-size: 0.75em; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+/* Active Order Widget */
+#activeOrderWidget { position: fixed; bottom: 90px; left: 20px; right: 20px; background: #333; color: #fff; padding: 12px 15px; border-radius: 15px; display: none; align-items: center; justify-content: space-between; box-shadow: 0 5px 20px rgba(0,0,0,0.25); z-index: 990; cursor: pointer; animation: slideUpFadeIn 0.3s ease-out; }
+#activeOrderWidget.visible { display: flex; }
+
+/* Track Order Screen */
+#trackOrderScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 7000; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s ease-in-out; }
+#trackOrderScreen.active { transform: translateY(0); }
+#trackMap { flex: 1; width: 100%; background: #eee; }
+.track-overlay-header { position: absolute; top: 0; left: 0; width: 100%; padding: 15px; display: flex; justify-content: space-between; z-index: 1000; pointer-events: none; }
+.track-back-btn { width: 40px; height: 40px; background: #fff; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto; font-size: 1.2em; transition: transform 0.2s; }
+.track-back-btn:active { transform: scale(0.9); }
+.track-bottom-sheet { background: #fff; border-top-left-radius: 25px; border-top-right-radius: 25px; padding: 25px 20px; box-shadow: 0 -5px 25px rgba(0,0,0,0.1); position: relative; z-index: 1000; max-height: 60%; overflow-y: auto; }
+.track-status-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
+.track-eta-label { font-size: 0.9em; color: #888; font-weight: 600; margin-bottom: 2px; }
+.track-time-big { font-size: 2em; font-weight: 800; color: #333; line-height: 1; }
+.track-status-text { font-weight: bold; color: #019E81; font-size: 1em; background: #e0f2f1; padding: 6px 12px; border-radius: 20px; }
+
+.track-progress-bar { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; padding: 0 10px; }
+.track-progress-bar::before { content: ''; position: absolute; top: 13px; left: 25px; right: 25px; height: 3px; background: #f0f0f0; z-index: 0; }
+.track-progress-fill { position: absolute; top: 13px; left: 25px; height: 3px; background: #019E81; z-index: 0; width: 0%; transition: width 1s ease; }
+.track-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 50px; }
+.step-dot { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 4px solid #eee; display: flex; align-items: center; justify-content: center; font-size: 0.7em; color: transparent; transition: all 0.3s; }
+.track-step.active .step-dot { border-color: #019E81; background: #019E81; color: #fff; transform: scale(1.1); }
+.track-step.completed .step-dot { border-color: #019E81; background: #019E81; color: #fff; }
+.step-label { font-size: 0.75em; color: #bbb; font-weight: 600; text-align: center; white-space: nowrap; position: absolute; top: 35px; }
+.track-step.active .step-label { color: #333; font-weight: 700; }
+.track-step.completed .step-label { color: #333; }
+
+.rider-info-card { display: flex; align-items: center; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #f0f0f0; }
+.rider-avatar { width: 50px; height: 50px; background: #ddd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5em; }
+.rider-name { font-weight: 800; color: #333; font-size: 1.05em; }
+.track-actions { display: flex; gap: 10px; }
+.track-btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95em; transition: opacity 0.2s; }
+.track-btn:active { opacity: 0.8; }
+
+/* Chat Screen */
+#chatScreen {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #f5f5f5; z-index: 8000; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform 0.3s ease-in-out;
+}
+#chatScreen.active { transform: translateX(0); }
+.chat-header { padding: 15px; background: #fff; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 15px; height: 60px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.chat-back-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+.chat-title { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.chat-call-btn { font-size: 1.5em; cursor: pointer; padding: 5px; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+.chat-date { text-align: center; color: #999; font-size: 0.8em; margin: 10px 0; }
+.message-bubble { max-width: 75%; padding: 10px 15px; border-radius: 15px; font-size: 0.95em; line-height: 1.4; position: relative; word-wrap: break-word; }
+.message-bubble.sent { align-self: flex-end; background: #019E81; color: #fff; border-bottom-right-radius: 2px; }
+.message-bubble.received { align-self: flex-start; background: #fff; color: #333; border-bottom-left-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.message-time { font-size: 0.7em; margin-top: 4px; opacity: 0.7; text-align: right; }
+.chat-input-area { padding: 10px 15px; background: #fff; border-top: 1px solid #eee; display: flex; align-items: center; gap: 10px; padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+#chatInput { flex: 1; padding: 12px 15px; border-radius: 25px; border: 1px solid #ddd; background: #f9f9f9; outline: none; font-size: 1em; }
+#chatSendBtn { width: 45px; height: 45px; border-radius: 50%; background: #019E81; color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 1.2em; cursor: pointer; transition: transform 0.2s; }
+#chatSendBtn:active { transform: scale(0.9); }
 
 @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 @keyframes slideUpFadeIn {
@@ -1084,6 +1262,14 @@ input:checked + .slider:before { transform: translateX(22px); }
         </div>
     </div>
   </div>
+</div>
+
+<div id="activeOrderWidget">
+    <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; background:#444; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.2em;">🚴</div>
+        <div style="display:flex; flex-direction:column;"><span style="font-weight:bold; font-size:0.95em;">Order in progress</span><span style="font-size:0.8em; color:#ccc;">Arriving in 15 mins</span></div>
+    </div>
+    <div style="background:#019E81; padding:6px 12px; border-radius:20px; font-weight:bold; font-size:0.85em;">Track</div>
 </div>
 
 <div id="contentSearchScreen">
@@ -1651,21 +1837,188 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 </div>
 
-<div id="profileScreen">
-  <div class="profile-header">
-    <div class="profile-title">Profile</div>
-    <div class="profile-back-btn" id="profileBackBtn">✖</div>
+<div id="rewardsScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="rewardsBackBtn">⬅️</div>
+    <div class="generic-title">My Rewards</div>
   </div>
-  <div class="profile-content">
-    <div class="profile-card">
-      <div class="profile-pic" id="profilePic">👤</div>
-      <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
-      <div class="profile-info">
-        <div class="profile-name" id="profileNameDisplay">Guest User</div>
-        <div class="profile-phone" id="profilePhoneDisplay">No phone set</div>
-      </div>
+  <div class="generic-content" id="rewardsContent">
+    <!-- Content populated by JS -->
+  </div>
+</div>
+
+<div id="helpSupportScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="helpBackBtn">⬅️</div>
+    <div class="generic-title">Help & Support</div>
+  </div>
+  <div class="generic-content" style="padding: 0;">
+    <div style="padding: 20px 20px 10px;">
+        <h3 style="margin-bottom: 10px; color: #333;">Frequently Asked Questions</h3>
     </div>
     
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-header">Where is my order? <span class="faq-icon">▼</span></div>
+            <div class="faq-body">You can track your order in real-time by going to the 'Track Order' screen from the home page or your active order widget.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-header">How do I contact the rider? <span class="faq-icon">▼</span></div>
+            <div class="faq-body">Once your order is picked up, a 'Call Rider' button will appear on the tracking screen. You can also send them a message directly.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-header">Can I cancel my order? <span class="faq-icon">▼</span></div>
+            <div class="faq-body">Orders can only be cancelled within 2 minutes of placing them. After that, the restaurant may have already started preparing your food.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-header">My food arrived cold/damaged. <span class="faq-icon">▼</span></div>
+            <div class="faq-body">We are sorry to hear that! Please contact our support team immediately using the button below, and we will resolve this for you.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-header">What payment methods do you accept? <span class="faq-icon">▼</span></div>
+            <div class="faq-body">We accept Cash on Delivery, MTN Mobile Money, and Airtel Money.</div>
+        </div>
+    </div>
+
+    <div style="margin: 30px 20px; padding: 25px; background: #fff; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+        <div style="font-size: 2.5em; margin-bottom: 10px;">🎧</div>
+        <h3 style="margin-bottom: 8px;">Still need help?</h3>
+        <p style="color: #666; font-size: 0.9em; margin-bottom: 20px;">Our support team is available 24/7 to assist you.</p>
+        <button onclick="window.open('https://wa.me/971562889428', '_blank')" style="background: #019E81; color: #fff; border: none; padding: 14px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-size: 1em; box-shadow: 0 4px 12px rgba(1, 158, 129, 0.3);"><span>💬</span> Chat with Support</button>
+    </div>
+  </div>
+</div>
+
+<div id="referralScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="referralBackBtn">⬅️</div>
+    <div class="generic-title">Refer & Earn</div>
+  </div>
+  <div class="generic-content">
+    <div class="referral-card">
+        <div class="referral-icon">🎁</div>
+        <div class="referral-title">Invite Friends, Get UGX 5,000</div>
+        <div class="referral-text">Share your code with friends. When they place their first order, you get UGX 5,000 added to your wallet!</div>
+        
+        <div class="referral-code-box" id="referralCodeBox" onclick="copyReferralCode()">
+            KIRYA-GIFT-2024
+            <span class="referral-copy-hint">Tap to copy</span>
+        </div>
+        
+        <button class="share-btn" onclick="shareReferral()">
+            <span>📤</span> Share Link
+        </button>
+    </div>
+    <div style="text-align: center; color: #888; font-size: 0.9em; margin-top: 20px;">Total earned: <span style="font-weight: bold; color: #019E81;">UGX 15,000</span></div>
+  </div>
+</div>
+
+<div id="notificationsScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="notifBackBtn">⬅️</div>
+    <div class="generic-title">Notifications</div>
+  </div>
+  <div class="generic-content" id="notificationList" style="padding: 0;">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<div id="settingsScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="settingsBackBtn">⬅️</div>
+    <div class="generic-title">Settings</div>
+  </div>
+  <div class="generic-content">
+     <div class="settings-group">
+        <div class="settings-item">
+            <div class="settings-info">
+                <div class="settings-label">Push Notifications</div>
+                <div class="settings-sub">Receive updates on your order status</div>
+            </div>
+            <label class="cutlery-switch">
+                <input type="checkbox" checked id="settingPushToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="settings-item">
+            <div class="settings-info">
+                <div class="settings-label">Location Services</div>
+                <div class="settings-sub">Allow app to access your location</div>
+            </div>
+            <label class="cutlery-switch">
+                <input type="checkbox" checked id="settingLocToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+     </div>
+  </div>
+</div>
+
+<div id="walletScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="walletBackBtn">⬅️</div>
+    <div class="generic-title">My Wallet</div>
+  </div>
+  <div class="generic-content" id="walletContent">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<div id="paymentMethodsScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="pmBackBtn">⬅️</div>
+    <div class="generic-title">Payment Methods</div>
+  </div>
+  <div class="generic-content">
+    <div id="pmList"></div>
+    <button class="add-more-items-btn" onclick="showToast('Add Payment Method feature coming soon!')">+ Add New Method</button>
+  </div>
+</div>
+
+<div id="termsScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="termsBackBtn">⬅️</div>
+    <div class="generic-title">Terms of Service</div>
+  </div>
+  <div class="generic-content">
+    <div style="padding: 10px; color: #555; line-height: 1.6; font-size: 0.95em;">
+        <h3 style="color:#333; margin-bottom:10px;">1. Introduction</h3>
+        <p style="margin-bottom:15px;">Welcome to Kirya. By using our app, you agree to these terms.</p>
+        <h3 style="color:#333; margin-bottom:10px;">2. Orders & Payments</h3>
+        <p style="margin-bottom:15px;">All orders are subject to availability. Prices may change without notice. We accept various payment methods including Mobile Money.</p>
+        <h3 style="color:#333; margin-bottom:10px;">3. Delivery</h3>
+        <p style="margin-bottom:15px;">Delivery times are estimates. We strive to deliver on time but cannot guarantee it due to traffic or weather conditions.</p>
+        <h3 style="color:#333; margin-bottom:10px;">4. Refunds</h3>
+        <p style="margin-bottom:15px;">Refunds are processed to your Kirya Wallet within 24 hours of approval.</p>
+    </div>
+  </div>
+</div>
+
+<div id="profileScreen">
+  <div class="profile-header-new">
+    <div class="close-btn" id="profileBackBtn">✖</div>
+    <div class="profile-pic-large" id="profilePic">👤</div>
+    <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+    <div class="profile-name-large" id="profileNameDisplay">Guest User</div>
+    <div class="profile-phone-large" id="profilePhoneDisplay">No phone set</div>
+  </div>
+  
+  <div class="profile-stats-card">
+    <div class="stat-item">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Orders</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value">UGX 0</div>
+        <div class="stat-label">Wallet</div>
+    </div>
+    <div class="stat-item" id="profileWalletStat" style="cursor: pointer;">
+        <div class="stat-value">1,250</div>
+        <div class="stat-label">Points</div>
+    </div>
+  </div>
+
+  <div class="profile-content" style="padding-top:0;">
     <div class="profile-section-title">Account</div>
     <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <div class="profile-menu-item" id="profileSavedAddressesBtn">
@@ -1680,19 +2033,35 @@ input:checked + .slider:before { transform: translateX(22px); }
             <div><span class="menu-icon">❤️</span> My Favorites</div>
             <span>></span>
         </div>
-        <div class="profile-menu-item">
+        <div class="profile-menu-item" id="profileRewardsBtn">
+            <div><span class="menu-icon">⭐</span> My Rewards</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item" id="profilePaymentBtn">
             <div><span class="menu-icon">💳</span> Payment Methods</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item" id="profileReferralBtn">
+            <div><span class="menu-icon">🎁</span> Refer a Friend</div>
             <span>></span>
         </div>
     </div>
 
     <div class="profile-section-title">General</div>
     <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-        <div class="profile-menu-item">
+        <div class="profile-menu-item" id="profileNotifBtn">
+            <div><span class="menu-icon">🔔</span> Notifications</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item" id="profileSettingsBtn">
+            <div><span class="menu-icon">⚙️</span> Settings</div>
+            <span>></span>
+        </div>
+        <div class="profile-menu-item" id="profileHelpBtn">
             <div><span class="menu-icon">💬</span> Help & Support</div>
             <span>></span>
         </div>
-        <div class="profile-menu-item">
+        <div class="profile-menu-item" id="profileTermsBtn">
             <div><span class="menu-icon">📜</span> Terms of Service</div>
             <span>></span>
         </div>
@@ -1776,6 +2145,77 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 </div>
 
+<div id="trackOrderScreen">
+    <div class="track-overlay-header">
+        <div class="track-back-btn" id="trackBackBtn">⬅️</div>
+        <div class="track-back-btn" style="font-size:1em;">❓</div>
+    </div>
+    <div id="trackMap"></div>
+    <div class="track-bottom-sheet">
+        <div class="track-status-header">
+            <div>
+                <div class="track-eta-label">Estimated Arrival</div>
+                <div class="track-time-big">15-20 <span style="font-size:0.4em; vertical-align:middle; color:#888;">MINS</span></div>
+            </div>
+            <div class="track-status-text">On the way</div>
+        </div>
+        
+        <div class="track-progress-bar">
+            <div class="track-progress-fill" style="width: 66%;"></div>
+            <div class="track-step completed">
+                <div class="step-dot">✔</div>
+                <div class="step-label">Confirmed</div>
+            </div>
+            <div class="track-step completed">
+                <div class="step-dot">✔</div>
+                <div class="step-label">Preparing</div>
+            </div>
+            <div class="track-step active">
+                <div class="step-dot">🛵</div>
+                <div class="step-label">On way</div>
+            </div>
+            <div class="track-step">
+                <div class="step-dot">🏠</div>
+                <div class="step-label">Delivered</div>
+            </div>
+        </div>
+        
+        <div class="rider-info-card">
+            <div class="rider-avatar">👨‍🚀</div>
+            <div class="rider-details">
+                <div class="rider-name">John Rider</div>
+                <div style="font-size:0.85em; color:#666;">Honda CB 150 • UBA 123X</div>
+                <div class="rider-rating">⭐ 4.8 (120 del.)</div>
+            </div>
+            <div style="width:40px; height:40px; background:#e0f2f1; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#019E81; font-weight:bold; cursor:pointer;" onclick="showToast('Calling rider...')">📞</div>
+        </div>
+        
+        <div class="track-actions">
+            <button class="track-btn btn-call" id="trackMsgBtn">💬 Message Rider</button>
+            <button class="track-btn btn-msg" style="background:#f9f9f9; border:1px solid #ddd;" onclick="document.getElementById('trackOrderScreen').classList.remove('active')">Close Tracking</button>
+        </div>
+    </div>
+</div>
+
+<div id="chatScreen">
+  <div class="chat-header">
+    <div class="chat-back-btn" id="chatBackBtn">⬅️</div>
+    <div class="chat-title">
+        <div style="font-weight:800; color:#333;">John Rider</div>
+        <div style="font-size:0.8em; color:#019E81;">Online</div>
+    </div>
+    <div class="chat-call-btn" onclick="showToast('Calling rider...')">📞</div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-date">Today</div>
+    <!-- Messages go here -->
+  </div>
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="Type a message...">
+    <button id="chatSendBtn">➤</button>
+  </div>
+</div>
+
 <div id="riderScreen" class="generic-screen">
   <div id="riderMap" class="rider-map-container"></div>
   
@@ -1825,6 +2265,11 @@ input:checked + .slider:before { transform: translateX(22px); }
                 <div style="font-weight:bold; font-size:0.8em; color:#666;">DROPOFF</div>
                 <div style="font-size:1.05em; font-weight:800; margin-top:2px; color:#333;">Flat 402, Al Majaz 2</div>
                 <div style="font-size:0.85em; color:#888; margin-top:2px;">Cash to collect: UGX 15,000</div>
+            </div>
+            
+            <div class="rider-actions-row">
+                <button class="rider-action-btn" onclick="showToast('Navigating to location...')"><span>📍</span> Navigate</button>
+                <button class="rider-action-btn" onclick="showToast('Calling customer...')"><span>📞</span> Call</button>
             </div>
 
             <div class="swipe-container" id="riderSwipeBtn">
@@ -1921,8 +2366,12 @@ input:checked + .slider:before { transform: translateX(22px); }
       <span style="font-size:1.2em;">></span>
     </div>
     <div class="dashboard-card">
-      <h3>Active Orders</h3>
-      <p style="color:#666; margin-top:10px;">No active orders pending.</p>
+      <div class="vendor-tabs">
+        <div class="vendor-tab active" data-tab="new" onclick="switchVendorTab('new')">New (2)</div>
+        <div class="vendor-tab" data-tab="processing" onclick="switchVendorTab('processing')">Processing (1)</div>
+        <div class="vendor-tab" data-tab="ready" onclick="switchVendorTab('ready')">Ready (0)</div>
+      </div>
+      <div id="vendorOrdersContainer"></div>
     </div>
   </div>
 </div>
@@ -1979,10 +2428,34 @@ input:checked + .slider:before { transform: translateX(22px); }
 let map, marker;
 let cart = [];
 let suggestedScrollInterval;
-let favorites = new Set();
-let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = ''; let selectedPaymentMethod = { value: 'cod', icon: '💵', text: 'Cash on Delivery' }; let tipPercentage = 0;
+let favorites = new Set(['Burger King', 'Pizza Hut']);
+let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = '+971 50 123 4567'; let selectedPaymentMethod = { value: 'cod', icon: '💵', text: 'Cash on Delivery' }; let tipPercentage = 0;
 let riderMarker, riderRoutePolyline, riderProgressPolyline, routeAnimationFrame;
 let dailySalesChartInstance, topItemsChartInstance;
+let trackMap, trackRiderMarker;
+let trackRouteAnimationFrame;
+let userPoints = 1250;
+let userWalletBalance = 0;
+
+const availableCoupons = [
+    { id: 'C1', title: 'UGX 5.00 Off Delivery', desc: 'Valid on any order above UGX 20.00', cost: 500, icon: '🛵' },
+    { id: 'C2', title: '10% Off Food Order', desc: 'Max discount UGX 15.00', cost: 1000, icon: '🍔' },
+    { id: 'C3', title: 'Free Drink', desc: 'Get a free soft drink from participating stores', cost: 750, icon: '🥤' }
+];
+
+let pointsHistory = [ 
+    { title: 'Order #9899', date: '2 days ago', points: 25, type: 'earned' },
+    { title: 'Redeemed Coupon', date: '5 days ago', points: -500, type: 'spent' },
+    { title: 'Order #9850', date: '1 week ago', points: 45, type: 'earned' },
+    { title: 'Welcome Bonus', date: '2 weeks ago', points: 100, type: 'earned' }
+];
+
+let walletTransactions = [
+    { title: 'Refund: Order #8818', date: 'Yesterday, 7:15 PM', amount: 5000, type: 'credit' },
+    { title: 'Payment: Order #8817', date: '22 Oct, 1:00 PM', amount: -22000, type: 'debit' },
+    { title: 'Top Up: Mobile Money', date: '20 Oct, 10:00 AM', amount: 50000, type: 'credit' }
+];
+
 
 function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
 function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
@@ -3894,6 +4367,12 @@ if (placeOrderBtn) {
             const cutlery = document.getElementById('cutlerySwitch') && document.getElementById('cutlerySwitch').checked ? 'Yes' : 'No';
             message += `*Cutlery:* ${cutlery}\n`;
 
+            // Show Active Order Widget
+            document.getElementById('activeOrderWidget').classList.add('visible');
+            
+            // Auto-open tracking after small delay
+            setTimeout(() => openTrackOrder(), 1500);
+
             const whatsappNumber = '971562889428'; // Business WhatsApp Number
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
@@ -4179,23 +4658,179 @@ if(favBackBtn) {
     });
 }
 
+/* Active Order Widget & Track Screen */
+document.getElementById('activeOrderWidget').addEventListener('click', openTrackOrder);
+document.getElementById('trackBackBtn').addEventListener('click', () => {
+    document.getElementById('trackOrderScreen').classList.remove('active');
+});
+
+function openTrackOrder() {
+    document.getElementById('trackOrderScreen').classList.add('active');
+    setTimeout(initTrackMap, 300);
+}
+
+function initTrackMap() {
+    if(trackMap) return;
+
+    trackMap = L.map('trackMap', { zoomControl: false }).setView([24.465, 54.39], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(trackMap);
+
+    // Sample locations
+    const shopLoc = [24.46, 54.38];
+    const userLoc = [24.47, 54.40];
+
+    // Markers
+    const shopIcon = L.divIcon({ html: '🍔', className: 'delivery-pin-icon', iconSize: [30,30], iconAnchor: [15,15] });
+    const userIcon = L.divIcon({ html: '🏠', className: 'delivery-pin-icon', iconSize: [30,30], iconAnchor: [15,15] });
+    
+    L.marker(shopLoc, {icon: shopIcon}).addTo(trackMap);
+    L.marker(userLoc, {icon: userIcon}).addTo(trackMap);
+
+    // Rider Marker
+    const riderIcon = L.divIcon({ 
+        html: `<div id="trackRiderIcon" style="
+            width: 36px; height: 36px; background: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); border: 2px solid #019E81;
+        ">🛵</div>`, 
+        className: '', 
+        iconSize: [36, 36], 
+        iconAnchor: [18, 18] 
+    });
+    trackRiderMarker = L.marker(shopLoc, {icon: riderIcon}).addTo(trackMap);
+
+    // Route Line
+    const routeCoords = [
+        [24.46, 54.38], [24.462, 54.385], [24.465, 54.387], [24.468, 54.386],
+        [24.47, 54.39], [24.472, 54.395], [24.47, 54.40]
+    ];
+    
+    // Add path line
+    L.polyline(routeCoords, { color: '#e0e0e0', weight: 6 }).addTo(trackMap); // Background line
+    L.polyline([], { color: '#019E81', weight: 6 }).addTo(trackMap); // Active progress line placeholder if needed
+
+    trackMap.fitBounds(L.polyline(routeCoords).getBounds(), { padding: [50, 50] });
+
+    // Calculate distances for smooth animation
+    let totalDist = 0;
+    const segmentDists = [];
+    for(let i=0; i<routeCoords.length-1; i++) {
+        const p1 = L.latLng(routeCoords[i]);
+        const p2 = L.latLng(routeCoords[i+1]);
+        const d = p1.distanceTo(p2);
+        segmentDists.push(d);
+        totalDist += d;
+    }
+
+    let startTime = null;
+    const duration = 12000; // 12 seconds loop
+    
+    function animateTrackRider(timestamp) {
+        if(!document.getElementById('trackOrderScreen').classList.contains('active')) return;
+        
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = (elapsed % duration) / duration;
+        
+        const currentDist = progress * totalDist;
+        
+        // Find segment
+        let distSum = 0;
+        let currentPos = L.latLng(routeCoords[0]);
+        
+        for(let i=0; i<segmentDists.length; i++) {
+            if(currentDist <= distSum + segmentDists[i]) {
+                // We are in this segment
+                const segmentProgress = (currentDist - distSum) / segmentDists[i];
+                const p1 = routeCoords[i];
+                const p2 = routeCoords[i+1];
+                const lat = p1[0] + (p2[0] - p1[0]) * segmentProgress;
+                const lng = p1[1] + (p2[1] - p1[1]) * segmentProgress;
+                currentPos = [lat, lng];
+                break;
+            }
+            distSum += segmentDists[i];
+        }
+        
+        trackRiderMarker.setLatLng(currentPos);
+        
+        trackRouteAnimationFrame = requestAnimationFrame(animateTrackRider);
+    }
+    trackRouteAnimationFrame = requestAnimationFrame(animateTrackRider);
+}
+
+/* Chat Screen Logic */
+const chatScreen = document.getElementById('chatScreen');
+const chatBackBtn = document.getElementById('chatBackBtn');
+const chatInput = document.getElementById('chatInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+const chatMessages = document.getElementById('chatMessages');
+const trackMsgBtn = document.getElementById('trackMsgBtn');
+
+function openChat() {
+    chatScreen.classList.add('active');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    // Add initial greeting if empty
+    if(chatMessages.querySelectorAll('.message-bubble').length === 0) {
+        addMessage('received', 'Hi, I am on my way with your order!');
+    }
+}
+
+if(trackMsgBtn) trackMsgBtn.addEventListener('click', openChat);
+if(chatBackBtn) chatBackBtn.addEventListener('click', () => chatScreen.classList.remove('active'));
+document.getElementById('trackBackBtn').addEventListener('click', () => {
+    if(trackRouteAnimationFrame) cancelAnimationFrame(trackRouteAnimationFrame);
+});
+
+function sendMessage() {
+    const text = chatInput.value.trim();
+    if(!text) return;
+    
+    addMessage('sent', text);
+    chatInput.value = '';
+    
+    // Simulate Rider Reply
+    setTimeout(() => {
+        const replies = ["Okay, noted!", "I'll be there in 5 mins.", "Thanks!", "Could you confirm the building number?"];
+        const randomReply = replies[Math.floor(Math.random() * replies.length)];
+        addMessage('received', randomReply);
+    }, 1500 + Math.random() * 2000);
+}
+
+function addMessage(type, text) {
+    const div = document.createElement('div');
+    div.className = `message-bubble ${type}`;
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    div.innerHTML = `${text}<div class="message-time">${time}</div>`;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+if(chatSendBtn) chatSendBtn.addEventListener('click', sendMessage);
+if(chatInput) chatInput.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') sendMessage();
+});
+
 /* Profile Screen Logic */
 const profileScreen = document.getElementById('profileScreen');
 const profileBackBtn = document.getElementById('profileBackBtn');
 
 function closeProfile() {
-    document.getElementById('sideMenuOverlay').classList.remove('active');
-    document.getElementById('profileScreen').classList.remove('active');
+    profileScreen.classList.remove('active');
 }
 
 function openProfile() {
     const nameDisplay = document.getElementById('profileNameDisplay');
     const phoneDisplay = document.getElementById('profilePhoneDisplay');
+    const walletStat = document.querySelector('#profileScreen .stat-item:nth-child(2) .stat-value');
+    const pointsStat = document.querySelector('#profileScreen .stat-item:nth-child(3) .stat-value');
     
     nameDisplay.textContent = recipientDetails.name || 'Guest User';
     phoneDisplay.textContent = userPhoneNumber || recipientDetails.phone || 'No phone set';
+    if(pointsStat) pointsStat.textContent = userPoints.toLocaleString();
+    if(walletStat) walletStat.textContent = `UGX ${userWalletBalance.toLocaleString()}`;
     
-    document.getElementById('sideMenuOverlay').classList.add('active');
     profileScreen.classList.add('active');
 }
 
@@ -4209,8 +4844,394 @@ function openAdmin() {
 
 function openShopPortal() {
     document.getElementById('shopPortalScreen').classList.add('active');
+    renderVendorOrders('new');
+    updateVendorTabsCounts();
     setTimeout(initMerchantCharts, 300); // Delay to ensure canvas is visible
 }
+
+/* Vendor Order Management Logic */
+let vendorOrders = [
+    { id: '#9901', time: 'Just now', items: ['2x Cheese Burger', '1x Cola'], total: '30.00', status: 'new' },
+    { id: '#9902', time: '5 mins ago', items: ['1x Family Pizza'], total: '45.00', status: 'new' },
+    { id: '#9899', time: '15 mins ago', items: ['3x Spicy Wings'], total: '25.00', status: 'processing' }
+];
+
+window.switchVendorTab = function(tabName) {
+    document.querySelectorAll('.vendor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.vendor-tab[data-tab="${tabName}"]`).classList.add('active');
+    renderVendorOrders(tabName);
+}
+
+function renderVendorOrders(tab) {
+    const container = document.getElementById('vendorOrdersContainer');
+    if(!container) return;
+    container.innerHTML = '';
+    
+    const filtered = vendorOrders.filter(o => o.status === tab);
+    
+    if(filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px 10px; color:#999; font-style:italic;">No orders in ${tab}</div>`;
+        return;
+    }
+
+    filtered.forEach(order => {
+        const div = document.createElement('div');
+        div.className = 'vendor-order-card';
+        
+        let buttonsHtml = '';
+        if(tab === 'new') {
+            buttonsHtml = `
+                <div class="vendor-btn-row">
+                    <button class="vendor-btn" style="background:#fee; color:#ff4757;" onclick="updateVendorOrderStatus('${order.id}', 'rejected')">Reject</button>
+                    <button class="vendor-btn" style="background:#019E81; color:#fff;" onclick="updateVendorOrderStatus('${order.id}', 'processing')">Accept</button>
+                </div>
+            `;
+        } else if(tab === 'processing') {
+            buttonsHtml = `
+                <button class="vendor-btn" style="width:100%; background:#FFBF42; color:#333;" onclick="updateVendorOrderStatus('${order.id}', 'ready')">Mark Ready</button>
+            `;
+        } else if(tab === 'ready') {
+            buttonsHtml = `<div style="text-align:center; color:#019E81; font-weight:bold; padding:10px; background:#e0f2f1; border-radius:8px;">Waiting for Rider</div>`;
+        }
+
+        div.innerHTML = `
+            <div class="vendor-order-header">
+                <span class="vendor-order-id">${order.id}</span>
+                <span class="vendor-order-time">${order.time}</span>
+            </div>
+            <div class="vendor-order-items">
+                ${order.items.map(i => `<div>• ${i}</div>`).join('')}
+                <div style="margin-top:10px; font-weight:800; color:#333; padding-top:8px; border-top:1px solid #f5f5f5;">Total: UGX ${order.total}</div>
+            </div>
+            ${buttonsHtml}
+        `;
+        container.appendChild(div);
+    });
+}
+
+window.updateVendorOrderStatus = function(id, status) {
+    if(status === 'rejected') {
+        if(confirm('Reject this order?')) {
+            vendorOrders = vendorOrders.filter(o => o.id !== id);
+            showToast(`Order ${id} rejected`);
+        } else return;
+    } else {
+        const order = vendorOrders.find(o => o.id === id);
+        if(order) {
+            order.status = status;
+            showToast(`Order ${id} moved to ${status}`);
+        }
+    }
+    
+    // Refresh current tab and counts
+    const activeTab = document.querySelector('.vendor-tab.active');
+    if(activeTab) renderVendorOrders(activeTab.dataset.tab);
+    updateVendorTabsCounts();
+}
+
+function updateVendorTabsCounts() {
+    const counts = { new: 0, processing: 0, ready: 0 };
+    vendorOrders.forEach(o => { if(counts[o.status] !== undefined) counts[o.status]++; });
+    
+    const tabs = document.querySelectorAll('.vendor-tab');
+    if(tabs.length) {
+        tabs[0].textContent = `New (${counts.new})`;
+        tabs[1].textContent = `Processing (${counts.processing})`;
+        tabs[2].textContent = `Ready (${counts.ready})`;
+    }
+}
+
+/* Help & Support Logic */
+const helpBackBtn = document.getElementById('helpBackBtn');
+const profileHelpBtn = document.getElementById('profileHelpBtn');
+
+if(profileHelpBtn) {
+    profileHelpBtn.addEventListener('click', () => {
+        document.getElementById('helpSupportScreen').classList.add('active');
+    });
+}
+if(helpBackBtn) {
+    helpBackBtn.addEventListener('click', () => {
+        document.getElementById('helpSupportScreen').classList.remove('active');
+    });
+}
+document.querySelectorAll('.faq-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});
+
+/* Wallet Screen Logic */
+const walletScreen = document.getElementById('walletScreen');
+const walletBackBtn = document.getElementById('walletBackBtn');
+const profileWalletStat = document.getElementById('profileWalletStat');
+
+function renderWallet() {
+    const content = document.getElementById('walletContent');
+    content.innerHTML = '';
+
+    // Wallet Card
+    const card = document.createElement('div');
+    card.className = 'wallet-card';
+    card.innerHTML = `
+        <div class="wallet-balance-label">Total Balance</div>
+        <div class="wallet-balance-amount">UGX ${userWalletBalance.toLocaleString()}</div>
+        <div class="wallet-btn-row">
+            <div class="wallet-action-btn" onclick="showToast('Top Up feature coming soon')"><span>➕</span> Top Up</div>
+            <div class="wallet-action-btn" onclick="showToast('Withdraw feature coming soon')"><span>↘️</span> Withdraw</div>
+        </div>
+    `;
+    content.appendChild(card);
+
+    // Transactions
+    const title = document.createElement('div');
+    title.className = 'transaction-section-title';
+    title.innerHTML = '<span>Recent Transactions</span><span style="font-size:0.8em; color:#019E81; cursor:pointer;">See All</span>';
+    content.appendChild(title);
+
+    const list = document.createElement('div');
+    list.className = 'transaction-list';
+    
+    walletTransactions.forEach(t => {
+        const item = document.createElement('div');
+        item.className = 'transaction-item';
+        const isCredit = t.type === 'credit';
+        item.innerHTML = `
+            <div class="t-icon ${t.type}">${isCredit ? '↙️' : '↗️'}</div>
+            <div class="t-info">
+                <div class="t-title">${t.title}</div>
+                <div class="t-date">${t.date}</div>
+            </div>
+            <div class="t-amount ${t.type}">${isCredit ? '+' : ''}${t.amount.toLocaleString()}</div>
+        `;
+        list.appendChild(item);
+    });
+    content.appendChild(list);
+}
+
+if(profileWalletStat) {
+    // The Stat Item is just a div in the profile, let's attach listener to the container if possible
+    // The user asked to link it. In HTML I added ID 'profileWalletStat' to the Points stat by mistake in previous steps?
+    // No, I added it to the Points stat in the diff, wait.
+    // Correction: In the HTML diff above, I added the ID to the 3rd item (Points). I should add logic for the 2nd item (Wallet).
+    // Let's attach to the Wallet stat specifically using nth-child selector since I didn't add ID to it in the HTML diff properly for Wallet specifically, I added to Points.
+    // Wait, looking at HTML diff: <div class="stat-item" id="profileWalletStat" ...> is around Points. 
+    // I should fix this logic to target Wallet.
+    const walletItem = document.querySelector('#profileScreen .stat-item:nth-child(2)');
+    if(walletItem) {
+        walletItem.style.cursor = 'pointer';
+        walletItem.addEventListener('click', () => {
+            renderWallet();
+            walletScreen.classList.add('active');
+        });
+    }
+}
+if(walletBackBtn) walletBackBtn.addEventListener('click', () => walletScreen.classList.remove('active'));
+
+/* Payment Methods & Terms Screens Logic */
+/* Referral Screen Logic */
+const referralScreen = document.getElementById('referralScreen');
+const referralBackBtn = document.getElementById('referralBackBtn');
+const profileReferralBtn = document.getElementById('profileReferralBtn');
+
+window.copyReferralCode = function() {
+    const code = document.getElementById('referralCodeBox').innerText.split('\n')[0];
+    navigator.clipboard.writeText(code).then(() => {
+        showToast('Referral code copied!');
+    }).catch(() => {
+        showToast('Code copied to clipboard!'); // Fallback feedback
+    });
+}
+
+window.shareReferral = function() {
+    showToast('Sharing link...');
+    // Implement native share if supported, else just toast
+    if (navigator.share) {
+        navigator.share({ title: 'Kirya App', text: 'Use my code KIRYA-GIFT-2024 to get UGX 5,000 off!', url: window.location.href });
+    }
+}
+
+const paymentMethodsScreen = document.getElementById('paymentMethodsScreen');
+const termsScreen = document.getElementById('termsScreen');
+const profilePaymentBtn = document.getElementById('profilePaymentBtn');
+const profileTermsBtn = document.getElementById('profileTermsBtn');
+const pmBackBtn = document.getElementById('pmBackBtn');
+const termsBackBtn = document.getElementById('termsBackBtn');
+
+if(profilePaymentBtn) {
+    profilePaymentBtn.addEventListener('click', () => {
+        const list = document.getElementById('pmList');
+        list.innerHTML = `
+            <div class="pm-card">
+                <div class="pm-info"><div class="pm-icon">💵</div><div><div class="pm-text">Cash on Delivery</div><div class="pm-sub">Default</div></div></div>
+            </div>
+            <div class="pm-card">
+                <div class="pm-info"><div class="pm-icon" style="color:#ffcb00;">●</div><div><div class="pm-text">MTN Mobile Money</div><div class="pm-sub">Linked: +971...</div></div></div>
+                <div class="pm-delete">Remove</div>
+            </div>
+        `;
+        paymentMethodsScreen.classList.add('active');
+    });
+}
+if(profileTermsBtn) {
+    profileTermsBtn.addEventListener('click', () => termsScreen.classList.add('active'));
+}
+if(profileReferralBtn) profileReferralBtn.addEventListener('click', () => referralScreen.classList.add('active'));
+if(referralBackBtn) referralBackBtn.addEventListener('click', () => referralScreen.classList.remove('active'));
+if(pmBackBtn) pmBackBtn.addEventListener('click', () => paymentMethodsScreen.classList.remove('active'));
+if(termsBackBtn) termsBackBtn.addEventListener('click', () => termsScreen.classList.remove('active'));
+
+/* Notification Data & Logic */
+const notifications = [
+    { type: 'order', title: 'Order Delivered', body: 'Your order #8820 has been delivered successfully. Enjoy your meal!', time: '2 hours ago', unread: true },
+    { type: 'promo', title: '50% Off Pizza', body: 'Get 50% off on all pizza orders this weekend! Use code PIZZA50.', time: '5 hours ago', unread: true },
+    { type: 'order', title: 'Order on the way', body: 'Rider John has picked up your order #8820.', time: '2 hours 15 mins ago', unread: false },
+    { type: 'promo', title: 'Free Delivery', body: 'Free delivery on all orders above UGX 20,000.', time: '1 day ago', unread: false }
+];
+
+function renderNotifications() {
+    const list = document.getElementById('notificationList');
+    if(!list) return;
+    list.innerHTML = '';
+    
+    notifications.forEach(n => {
+        const item = document.createElement('div');
+        item.className = `notification-item ${n.unread ? 'unread' : ''}`;
+        const iconSymbol = n.type === 'order' ? '🛍️' : '🏷️';
+        item.innerHTML = `
+            <div class="notif-icon ${n.type}">${iconSymbol}</div>
+            <div class="notif-content">
+                <div class="notif-title">${n.title}</div>
+                <div class="notif-body">${n.body}</div>
+                <div class="notif-time">${n.time}</div>
+            </div>
+        `;
+        list.appendChild(item);
+    });
+}
+
+const notifScreen = document.getElementById('notificationsScreen');
+const notifBackBtn = document.getElementById('notifBackBtn');
+const profileNotifBtn = document.getElementById('profileNotifBtn');
+
+if(profileNotifBtn) profileNotifBtn.addEventListener('click', () => {
+    renderNotifications();
+    notifScreen.classList.add('active');
+});
+if(notifBackBtn) notifBackBtn.addEventListener('click', () => notifScreen.classList.remove('active'));
+
+/* Settings Screen Logic */
+const settingsScreen = document.getElementById('settingsScreen');
+const settingsBackBtn = document.getElementById('settingsBackBtn');
+const profileSettingsBtn = document.getElementById('profileSettingsBtn');
+
+if(profileSettingsBtn) profileSettingsBtn.addEventListener('click', () => settingsScreen.classList.add('active'));
+if(settingsBackBtn) settingsBackBtn.addEventListener('click', () => settingsScreen.classList.remove('active'));
+
+document.getElementById('settingPushToggle')?.addEventListener('change', (e) => {
+    showToast(e.target.checked ? 'Push Notifications Enabled' : 'Push Notifications Disabled');
+});
+document.getElementById('settingLocToggle')?.addEventListener('change', (e) => {
+    showToast(e.target.checked ? 'Location Services Enabled' : 'Location Services Disabled');
+});
+
+/* Rewards Screen Logic */
+const rewardsScreen = document.getElementById('rewardsScreen');
+const rewardsBackBtn = document.getElementById('rewardsBackBtn');
+const profileRewardsBtn = document.getElementById('profileRewardsBtn');
+
+function openRewardsScreen() {
+    const screen = document.getElementById('rewardsScreen');
+    const content = document.getElementById('rewardsContent');
+    content.innerHTML = ''; // Clear previous content
+
+    // 1. Balance Card
+    const balanceCard = document.createElement('div');
+    balanceCard.className = 'rewards-balance-card';
+    balanceCard.innerHTML = `
+        <div class="rewards-points-label">Your Points Balance</div>
+        <div class="rewards-points-value">${userPoints.toLocaleString()} ⭐</div>
+    `;
+    content.appendChild(balanceCard);
+
+    // 2. Available Coupons
+    const couponsTitle = document.createElement('div');
+    couponsTitle.className = 'rewards-section-title';
+    couponsTitle.textContent = 'Redeem Your Points';
+    content.appendChild(couponsTitle);
+
+    availableCoupons.forEach(coupon => {
+        const card = document.createElement('div');
+        card.className = 'coupon-card';
+        const canAfford = userPoints >= coupon.cost;
+        card.innerHTML = `
+            <div class="coupon-icon">${coupon.icon}</div>
+            <div class="coupon-info">
+                <div class="coupon-title">${coupon.title}</div>
+                <div class="coupon-desc">${coupon.desc}</div>
+                <div class="coupon-cost">${coupon.cost.toLocaleString()} Points</div>
+            </div>
+            <button class="redeem-btn" data-cost="${coupon.cost}" ${!canAfford ? 'disabled' : ''}>Redeem</button>
+        `;
+        content.appendChild(card);
+    });
+
+    // 3. Points History
+    const historyTitle = document.createElement('div');
+    historyTitle.className = 'rewards-section-title';
+    historyTitle.style.marginTop = '20px';
+    historyTitle.textContent = 'Points History';
+    content.appendChild(historyTitle);
+
+    const historyContainer = document.createElement('div');
+    historyContainer.style.cssText = 'background:#fff; border-radius:16px; margin:0 20px; box-shadow:0 4px 15px rgba(0,0,0,0.06); border:1px solid #f0f0f0;';
+
+    pointsHistory.forEach(item => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.innerHTML = `
+            <div class="history-info">
+                <div class="history-title">${item.title}</div>
+                <div class="history-date">${item.date}</div>
+            </div>
+            <div class="history-points ${item.type}">
+                ${item.type === 'earned' ? '+' : ''}${item.points}
+            </div>
+        `;
+        historyContainer.appendChild(historyItem);
+    });
+    content.appendChild(historyContainer);
+
+    screen.classList.add('active');
+}
+
+if(profileRewardsBtn) {
+    profileRewardsBtn.addEventListener('click', openRewardsScreen);
+}
+if(rewardsBackBtn) {
+    rewardsBackBtn.addEventListener('click', () => rewardsScreen.classList.remove('active'));
+}
+
+document.getElementById('rewardsContent').addEventListener('click', e => {
+    if (e.target.classList.contains('redeem-btn')) {
+        const cost = parseInt(e.target.dataset.cost, 10);
+        if (userPoints >= cost) {
+            userPoints -= cost;
+            const couponTitle = e.target.closest('.coupon-card').querySelector('.coupon-title').textContent;
+            showToast(`"${couponTitle}" redeemed!`);
+            
+            pointsHistory.unshift({
+                title: `Redeemed: ${couponTitle}`,
+                date: 'Just now',
+                points: -cost,
+                type: 'spent'
+            });
+
+            // Refresh the screen to update points and button states
+            openRewardsScreen();
+        }
+    }
+});
 
 function setupGlobalNavigation() {
     document.querySelectorAll('.nav-item').forEach(item => {
@@ -4244,10 +5265,15 @@ const profileEditPhoneBtn = document.getElementById('profileEditPhoneBtn');
 if(profileEditPhoneBtn) {
     profileEditPhoneBtn.addEventListener('click', () => {
         const userPhoneScreen = document.getElementById('userPhoneScreen');
-        if(userPhoneScreen) {
-             // Reuse the existing phone screen logic to populate fields
-             document.getElementById('checkoutUserPhoneSection').click();
+        const phoneParts = userPhoneNumber.split(' ');
+        if (phoneParts.length > 1) {
+            document.getElementById('userPhonePrefix').value = phoneParts[0];
+            document.getElementById('userPhoneNumberInput').value = phoneParts.slice(1).join(' ');
+        } else {
+            document.getElementById('userPhoneNumberInput').value = userPhoneNumber;
+            document.getElementById('userPhonePrefix').value = '+971';
         }
+        userPhoneScreen.classList.add('active');
     });
 }
 
