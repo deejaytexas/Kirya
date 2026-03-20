@@ -392,7 +392,7 @@ nav {
 #categoryScreen .res-card:active { transform: translateY(0) scale(0.98); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 #categoryScreen .res-image { position: relative; width: 100%; height: 167px; border-radius: 20px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 3em; color: #ccc; overflow: hidden; }
 /* Heart Button */
-.heart-btn { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; color: #888; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(4px); z-index: 5; padding-top: 2px; }
+.heart-btn { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; background: rgba(255, 255, 255, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1em; color: #888; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.12); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(4px); z-index: 5; padding: 0; }
 .heart-btn:hover { transform: scale(1.1); color: #ff4757; background: #fff; box-shadow: 0 6px 15px rgba(255, 71, 87, 0.25); }
 .heart-btn.liked { color: #ff4757; background: #fff; box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2); }
 .heart-btn:active { transform: scale(0.95); }
@@ -906,6 +906,46 @@ input:checked + .slider:before { transform: translateX(22px); }
 .menu-mgmt-toggle.active { background: #019E81; }
 .menu-mgmt-toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 .menu-mgmt-toggle.active::after { transform: translateX(24px); }
+
+#merchantEditItemScreen label { display: block; font-weight: bold; color: #333; margin-bottom: 8px; margin-top: 20px; font-size: 0.9em; }
+#merchantEditItemScreen input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; margin-bottom: 10px; }
+#merchantEditItemScreen .edit-footer button { flex: 1; color: white; border: none; padding: 16px; border-radius: 12px; font-size: 1.1em; font-weight: bold; cursor: pointer; }
+
+/* Rider Screen Specifics */
+#riderScreen { background: #fff; }
+#riderScreen .rider-map-container { position: absolute; top: 60px; left: 0; width: 100%; height: calc(100% - 60px); z-index: 1; }
+#riderScreen .rider-overlay-ui { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; }
+#riderScreen .rider-header-controls { pointer-events: auto; padding: 15px; display: flex; justify-content: space-between; align-items: flex-start; background: linear-gradient(to bottom, rgba(255,255,255,0.9), transparent); height: 80px; }
+#riderScreen .rider-status-badge { padding: 8px 16px; border-radius: 20px; font-weight: 800; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 8px; font-size: 0.9em; transition: all 0.3s; cursor: pointer; }
+#riderScreen .rider-status-badge.online { color: #019E81; border: 2px solid #019E81; }
+#riderScreen .rider-status-badge.offline { color: #ff4757; border: 2px solid #ff4757; }
+#riderScreen .rider-bottom-panel { pointer-events: auto; background: #fff; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); padding: 20px; transition: transform 0.3s; transform: translateY(0); padding-bottom: 30px; }
+#riderScreen .rider-bottom-panel.hidden { transform: translateY(100%); }
+
+/* Incoming Order Modal */
+#riderOrderModal { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; z-index: 6005; border-top-left-radius: 25px; border-top-right-radius: 25px; padding: 25px 20px; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); transform: translateY(110%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; gap: 15px; }
+#riderOrderModal.active { transform: translateY(0); }
+#riderOrderModal .timer-bar { height: 4px; background: #eee; border-radius: 2px; overflow: hidden; margin-bottom: 5px; }
+#riderOrderModal .timer-fill { height: 100%; background: #019E81; width: 100%; transition: width 1s linear; }
+#riderOrderModal .order-price { font-size: 2em; font-weight: 900; color: #333; text-align: center; }
+#riderOrderModal .order-meta { display: flex; justify-content: space-around; margin: 5px 0; color: #666; font-weight: 600; font-size: 0.95em; }
+#riderOrderModal .rest-info { display: flex; align-items: center; gap: 10px; background: #f9f9f9; padding: 12px; border-radius: 12px; }
+#riderOrderModal .btn-row { display: flex; gap: 15px; margin-top: 5px; }
+#riderOrderModal .btn-accept { flex: 1; background: #019E81; color: #fff; font-weight: 800; padding: 15px; border-radius: 12px; border: none; font-size: 1.1em; cursor: pointer; box-shadow: 0 4px 15px rgba(1, 158, 129, 0.3); }
+#riderOrderModal .btn-decline { flex: 1; background: #fff; color: #ff4757; font-weight: 800; padding: 15px; border-radius: 12px; border: 2px solid #eee; font-size: 1.1em; cursor: pointer; }
+
+/* Delivery Steps UI */
+.step-card { padding: 10px 15px 15px 15px; border-left: 3px solid #ddd; margin-left: 10px; position: relative; }
+.step-card.active { border-left-color: #019E81; }
+.step-card::before { content: ''; position: absolute; left: -9px; top: 15px; width: 15px; height: 15px; border-radius: 50%; background: #ddd; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.step-card.active::before { background: #019E81; }
+
+/* Swipe Button */
+.swipe-container { position: relative; width: 100%; height: 55px; background: #f0f0f0; border-radius: 30px; overflow: hidden; margin-top: 15px; user-select: none; }
+.swipe-text { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #999; z-index: 1; letter-spacing: 1px; font-size: 0.9em; pointer-events: none; }
+.swipe-knob { position: absolute; left: 4px; top: 4px; width: 47px; height: 47px; background: #019E81; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2em; cursor: pointer; z-index: 2; transition: transform 0.1s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); touch-action: none; }
+.swipe-container.completed .swipe-text { color: #fff; z-index: 3; }
+.swipe-container.completed { background: #019E81; transition: background 0.3s; }
 
 @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
 @keyframes slideUpFadeIn {
@@ -1737,24 +1777,91 @@ input:checked + .slider:before { transform: translateX(22px); }
 </div>
 
 <div id="riderScreen" class="generic-screen">
-  <div class="generic-header">
-    <div class="generic-back-btn" onclick="document.getElementById('riderScreen').classList.remove('active')">⬅️</div>
-    <div class="generic-title">Rider Dashboard</div>
+  <div id="riderMap" class="rider-map-container"></div>
+  
+  <div class="rider-overlay-ui">
+    <div class="rider-header-controls">
+        <div class="generic-back-btn" id="riderBackBtn" style="background:#fff; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 5px rgba(0,0,0,0.1);">⬅️</div>
+        <div id="riderStatusToggle" class="rider-status-badge offline">
+            <span class="status-dot" style="width:10px; height:10px; background:#ff4757; border-radius:50%;"></span>
+            <span class="status-text">GO ONLINE</span>
+        </div>
+    </div>
+
+    <!-- Bottom Panel -->
+    <div id="riderBottomPanel" class="rider-bottom-panel">
+        <!-- State: Offline/Online Idle -->
+        <div id="riderDashboardState">
+            <h3 style="margin-bottom:15px; font-weight:800; font-size:1.3em; color:#333;">Today's Performance</h3>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div style="background:#f9f9f9; padding:15px; border-radius:12px; text-align:center;">
+                    <div style="font-size:0.9em; color:#666;">Earnings</div>
+                    <div style="font-size:1.4em; font-weight:900; color:#333; margin-top:5px;">UGX <span id="riderEarningsToday">0.00</span></div>
+                </div>
+                <div style="background:#f9f9f9; padding:15px; border-radius:12px; text-align:center;">
+                    <div style="font-size:0.9em; color:#666;">Trips</div>
+                    <div style="font-size:1.4em; font-weight:900; color:#333; margin-top:5px;" id="riderTripsToday">0</div>
+                </div>
+            </div>
+            <div style="margin-top:20px; font-size:0.9em; color:#888; text-align:center; padding: 10px; background: #f0f0f0; border-radius: 8px;" id="riderIdleMsg">
+                Go Online to start receiving orders.
+            </div>
+        </div>
+
+        <!-- State: Active Delivery -->
+        <div id="riderDeliveryState" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="font-weight:800; color:#333;">Current Delivery</h3>
+                <span style="background:#e0f2f1; color:#019E81; padding:4px 10px; border-radius:10px; font-size:0.85em; font-weight:bold;">#8821</span>
+            </div>
+            
+            <div class="step-card active" id="riderStepPickup">
+                <div style="font-weight:bold; font-size:0.8em; color:#666;">PICKUP</div>
+                <div style="font-size:1.05em; font-weight:800; margin-top:2px; color:#333;">Burger King, Mall Branch</div>
+                <div style="font-size:0.85em; color:#888; margin-top:2px;">Order ready for pickup</div>
+            </div>
+            
+            <div class="step-card" id="riderStepDropoff">
+                <div style="font-weight:bold; font-size:0.8em; color:#666;">DROPOFF</div>
+                <div style="font-size:1.05em; font-weight:800; margin-top:2px; color:#333;">Flat 402, Al Majaz 2</div>
+                <div style="font-size:0.85em; color:#888; margin-top:2px;">Cash to collect: UGX 15,000</div>
+            </div>
+
+            <div class="swipe-container" id="riderSwipeBtn">
+                <div class="swipe-text" id="riderSwipeText">SWIPE TO PICK UP</div>
+                <div class="swipe-knob" id="riderSwipeKnob">➜</div>
+            </div>
+        </div>
+    </div>
   </div>
-  <div class="generic-content">
-    <div class="dashboard-card">
-      <div id="riderStatusDisplay" style="font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">Status: 🔴 Offline</div>
-      <button id="riderStatusBtn" style="width:100%; padding:10px; background:#019E81; color:white; border:none; border-radius:8px; font-weight:bold;">Go Online</button>
+
+  <!-- Incoming Order Modal -->
+  <div id="riderOrderModal">
+    <div class="timer-bar"><div class="timer-fill" id="riderTimerFill"></div></div>
+    <div style="text-align:center; font-weight:bold; color:#019E81; font-size: 0.9em;">NEW DELIVERY REQUEST</div>
+    <div class="order-price">UGX 4,500</div>
+    <div class="order-meta">
+        <span>🕒 15 min</span>
+        <span>📏 2.5 km</span>
+        <span>📦 2 items</span>
     </div>
-    <div class="dashboard-card">
-      <h3>Live Orders</h3>
-      <div id="riderLiveOrdersList" style="margin-top:10px;">
-        <p style="color:#666;">Go online to start receiving orders.</p>
-      </div>
+    <div class="rest-info">
+        <div style="font-size:2em;">🍔</div>
+        <div>
+            <div style="font-weight:bold; color:#333;">Burger King</div>
+            <div style="font-size:0.85em; color:#666;">Mall Branch • 1.2km away</div>
+        </div>
     </div>
-    <div class="dashboard-card">
-      <h3>Earnings</h3>
-      <div style="font-size:2em; font-weight:800; color:#333;">UGX 0.00</div>
+    <div class="rest-info">
+        <div style="font-size:2em;">🏠</div>
+        <div>
+            <div style="font-weight:bold; color:#333;">Customer</div>
+            <div style="font-size:0.85em; color:#666;">Flat 402, Al Majaz 2</div>
+        </div>
+    </div>
+    <div class="btn-row">
+        <button class="btn-decline" id="riderDeclineBtn">Decline</button>
+        <button class="btn-accept" id="riderAcceptBtn">Accept Order</button>
     </div>
   </div>
 </div>
@@ -1792,6 +1899,23 @@ input:checked + .slider:before { transform: translateX(22px); }
       <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 10px;">Store Status: 🟢 Open</div>
       <button style="width:100%; padding:10px; background:#ff4757; color:white; border:none; border-radius:8px; font-weight:bold;">Close Store</button>
     </div>
+    <div class="dashboard-card">
+        <h3 style="margin-bottom: 20px; font-weight: 800;">Analytics</h3>
+        <div style="margin-bottom: 30px;">
+            <h4 style="font-size: 1em; color: #555; margin-bottom: 10px;">Daily Sales (UGX)</h4>
+            <canvas id="dailySalesChart"></canvas>
+        </div>
+        <div>
+            <h4 style="font-size: 1em; color: #555; margin-bottom: 10px;">Top Selling Items</h4>
+            <div style="max-width: 250px; margin: auto;">
+                <canvas id="topItemsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-card" id="merchantOrdersBtn" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+      <div style="font-weight:bold; font-size:1.1em;">📜 Past Orders</div>
+      <span style="font-size:1.2em;">></span>
+    </div>
     <div class="dashboard-card" id="merchantManageMenuBtn" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
       <div style="font-weight:bold; font-size:1.1em;">🍔 Manage Menu</div>
       <span style="font-size:1.2em;">></span>
@@ -1814,19 +1938,51 @@ input:checked + .slider:before { transform: translateX(22px); }
   </div>
 </div>
 
+<div id="merchantEditItemScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="editItemBackBtn">⬅️</div>
+    <div class="generic-title" id="editItemTitle">Edit Item</div>
+  </div>
+  <div class="generic-content">
+    <div class="dashboard-card">
+        <label for="editItemName">Item Name</label>
+        <input type="text" id="editItemName" placeholder="e.g., Classic Burger">
+        <label for="editItemPrice">Price (UGX)</label>
+        <input type="number" id="editItemPrice" placeholder="e.g., 25.00">
+        <label for="editItemImg">Image (Emoji)</label>
+        <input type="text" id="editItemImg" placeholder="e.g., 🍔">
+        <input type="hidden" id="editItemId">
+    </div>
+  </div>
+  <div class="edit-footer" style="padding:20px; border-top: 1px solid #eee; background: #fff; display:flex; gap:15px;"><button id="deleteItemBtn" style="background:#ff4757;">Delete</button><button id="saveItemBtn" style="background:#019E81;">Save Changes</button></div>
+</div>
+
+<div id="merchantOrdersScreen" class="generic-screen">
+  <div class="generic-header">
+    <div class="generic-back-btn" id="merchantOrdersBackBtn">⬅️</div>
+    <div class="generic-title">Order History</div>
+  </div>
+  <div class="generic-content" id="merchantOrdersList"></div>
+</div>
+
 <div id="viewCartBtn">
   <div style="position: relative;">🛒<span id="cartItemCount" style="position: absolute; top: -10px; right: -10px; background: #ff4757; color: white; border-radius: 50%; padding: 4px 8px; font-size: 0.5em; min-width: 20px; text-align: center;">0</span></div>
 </div>
 
 <div id="toast"></div>
 
+<audio id="orderNotificationSound" src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAAZAAAAn4AA1Z3j9gAADUAAAAAn4AB1Z3j9gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tAwc/83RgtwAAAAAAD/9dwYwQkAAAQAAAACAAADSAAAA0gAAA1AAAASgAAAEgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFgAAAFg" ></audio>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 let map, marker;
 let cart = [];
 let suggestedScrollInterval;
 let favorites = new Set();
 let isCheckoutAccordionOpen = false; let allergyNotes = ''; let recipientDetails = { name: '', phone: '' }; let userPhoneNumber = ''; let selectedPaymentMethod = { value: 'cod', icon: '💵', text: 'Cash on Delivery' }; let tipPercentage = 0;
+let riderMarker, riderRoutePolyline, riderProgressPolyline, routeAnimationFrame;
+let dailySalesChartInstance, topItemsChartInstance;
 
 function hideMap(){ const m=document.getElementById('map'); if(m) m.style.display='none'; }
 function showMap(){ const m=document.getElementById('map'); if(m) m.style.display='block'; }
@@ -4053,6 +4209,7 @@ function openAdmin() {
 
 function openShopPortal() {
     document.getElementById('shopPortalScreen').classList.add('active');
+    setTimeout(initMerchantCharts, 300); // Delay to ensure canvas is visible
 }
 
 function setupGlobalNavigation() {
@@ -4096,64 +4253,387 @@ if(profileEditPhoneBtn) {
 
 /* Rider Dashboard Logic */
 let isRiderOnline = false;
+let riderMap;
+let riderOrderTimer;
+let riderCurrentStep = 0; // 0: Idle, 1: Pickup, 2: Dropoff
+
+function initRiderMap() {
+    if(riderMap) return;
+    
+    // Define Layers
+    const streetLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' });
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri' });
+
+    riderMap = L.map('riderMap', { zoomControl: false, layers: [streetLayer] }).setView([24.4539, 54.3773], 14);
+
+    const baseMaps = {
+        "Street View": streetLayer,
+        "Satellite": satelliteLayer
+    };
+    L.control.layers(baseMaps, null, { position: 'bottomright' }).addTo(riderMap);
+}
 
 function toggleRiderStatus() {
     isRiderOnline = !isRiderOnline;
-    const statusDiv = document.getElementById('riderStatusDisplay');
-    const btn = document.getElementById('riderStatusBtn');
-    const ordersList = document.getElementById('riderLiveOrdersList');
+    const btn = document.getElementById('riderStatusToggle');
+    const dot = btn.querySelector('.status-dot');
+    const text = btn.querySelector('.status-text');
+    const msg = document.getElementById('riderIdleMsg');
     
     if(isRiderOnline) {
-        statusDiv.innerHTML = 'Status: 🟢 Online';
-        btn.textContent = 'Go Offline';
-        btn.style.background = '#ff4757';
-        ordersList.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">Searching for nearby orders...<br>🔍</div>';
+        btn.classList.remove('offline');
+        btn.classList.add('online');
+        dot.style.background = '#fff';
+        text.textContent = 'ONLINE';
+        text.style.color = '#fff';
+        btn.style.background = '#019E81';
+        btn.style.color = '#fff';
+        btn.style.border = 'none';
+        
+        msg.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; gap:10px;"><span>🔍</span> Finding orders nearby...</div>';
+        msg.style.background = '#e0f2f1';
+        msg.style.color = '#019E81';
+        msg.style.fontWeight = 'bold';
         
         // Simulate an incoming order
         setTimeout(() => {
-            if(isRiderOnline) addDummyRiderOrder();
+            if(isRiderOnline && riderCurrentStep === 0) triggerRiderOrder();
         }, 2500);
     } else {
-        statusDiv.innerHTML = 'Status: 🔴 Offline';
-        btn.textContent = 'Go Online';
-        btn.style.background = '#019E81';
-        ordersList.innerHTML = '<p style="color:#666;">Go online to start receiving orders.</p>';
+        btn.classList.remove('online');
+        btn.classList.add('offline');
+        dot.style.background = '#ff4757';
+        text.textContent = 'GO ONLINE';
+        text.style.color = '#ff4757';
+        btn.style.background = '#fff';
+        btn.style.border = '2px solid #ff4757';
+
+        msg.textContent = 'Go Online to start receiving orders.';
+        msg.style.background = '#f0f0f0';
+        msg.style.color = '#888';
+        msg.style.fontWeight = 'normal';
     }
 }
 
-function addDummyRiderOrder() {
-    const list = document.getElementById('riderLiveOrdersList');
-    if(!list) return;
-    list.innerHTML = `
-        <div class="rider-order-card">
-            <div class="rider-order-header">
-                <span>New Order #8821</span>
-                <span style="color:#019E81;">UGX 4,500</span>
-            </div>
-            <div class="rider-order-details">
-                <div><strong>Pickup:</strong> Burger King, Mall Branch</div>
-                <div><strong>Dropoff:</strong> Flat 402, Al Majaz 2</div>
-                <div style="margin-top:4px; font-size:0.85em; color:#888;">2 items • 2.5 km • Cash on Delivery</div>
-            </div>
-            <div class="rider-actions">
-                <button class="rider-btn decline" onclick="this.closest('.rider-order-card').remove(); showToast('Order Declined');">Decline</button>
-                <button class="rider-btn accept" onclick="alert('Order Accepted! Navigate to pickup.'); this.closest('.rider-order-card').remove();">Accept</button>
-            </div>
-        </div>
-    `;
-    // Play sound or vibrate here in real app
+function triggerRiderOrder() {
+    const modal = document.getElementById('riderOrderModal');
+    const timerFill = document.getElementById('riderTimerFill');
+    modal.classList.add('active');
+    
+    // Play notification sound
+    const notificationSound = document.getElementById('orderNotificationSound');
+    if (notificationSound) {
+        // We don't need to wait for the promise to resolve, but we catch errors to prevent console logs
+        // on browsers that block autoplay until user interaction.
+        notificationSound.play().catch(error => console.log("Audio play failed (user interaction might be required)."));
+    }
+
+    // Timer Logic
+    timerFill.style.width = '100%';
+    setTimeout(() => { timerFill.style.width = '0%'; }, 100);
+    
+    riderOrderTimer = setTimeout(() => {
+        modal.classList.remove('active');
+    }, 15000); // 15 seconds to accept
 }
 
-const riderStatusBtn = document.getElementById('riderStatusBtn');
-if(riderStatusBtn) riderStatusBtn.addEventListener('click', toggleRiderStatus);
+document.getElementById('riderDeclineBtn').addEventListener('click', () => {
+    clearTimeout(riderOrderTimer);
+    document.getElementById('riderOrderModal').classList.remove('active');
+});
+
+document.getElementById('riderAcceptBtn').addEventListener('click', () => {
+    clearTimeout(riderOrderTimer);
+    document.getElementById('riderOrderModal').classList.remove('active');
+    startRiderDelivery();
+});
+
+function getBearing(start, end) {
+    const startLat = start.lat * Math.PI / 180;
+    const startLng = start.lng * Math.PI / 180;
+    const endLat = end.lat * Math.PI / 180;
+    const endLng = end.lng * Math.PI / 180;
+    const y = Math.sin(endLng - startLng) * Math.cos(endLat);
+    const x = Math.cos(startLat) * Math.sin(endLat) - Math.sin(startLat) * Math.cos(endLat) * Math.cos(endLng - startLng);
+    const brng = Math.atan2(y, x);
+    return (brng * 180 / Math.PI + 360) % 360;
+}
+
+function interpolatePosition(start, end, factor) {
+    const lat = start.lat + (end.lat - start.lat) * factor;
+    const lng = start.lng + (end.lng - start.lng) * factor;
+    return L.latLng(lat, lng);
+}
+
+function startRouteSimulation() {
+    if (!riderMap) return;
+    clearRouteSimulation(); // Clear any previous routes
+
+    // Sample route from Restaurant to Customer
+    const routeCoords = [
+        [24.46, 54.38], [24.462, 54.385], [24.465, 54.387], [24.468, 54.386],
+        [24.47, 54.39], [24.472, 54.395], [24.47, 54.40], [24.468, 54.405],
+        [24.465, 54.408]
+    ];
+
+    // Full route path (dashed grey)
+    riderRoutePolyline = L.polyline(routeCoords, { color: '#888', weight: 5, opacity: 0.7, dashArray: '10, 10' }).addTo(riderMap);
+
+    // Rider's progress path (solid green)
+    riderProgressPolyline = L.polyline([], { color: '#019E81', weight: 6, opacity: 0.9 }).addTo(riderMap);
+
+    // Rider's marker
+    const riderIcon = L.divIcon({ 
+        html: `<div id="riderBikeIcon" style="
+            font-size: 20px; 
+            transition: transform 0.2s linear; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            width: 30px; 
+            height: 30px; 
+            background: #019E81;
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        ">▲</div>`, 
+        className: '', 
+        iconSize: [30, 30], 
+        iconAnchor: [15, 15] 
+    });
+    riderMarker = L.marker(routeCoords[0], { icon: riderIcon }).addTo(riderMap);
+
+    riderMap.fitBounds(riderRoutePolyline.getBounds(), { padding: [50, 50] });
+
+    // Smooth Animation Logic
+    let currentSegment = 0;
+    let startTime = null;
+    const speed = 0.0001; // Degrees per millisecond (approximate speed control)
+
+    function animate(timestamp) {
+        if (!startTime) startTime = timestamp;
+        
+        if (currentSegment >= routeCoords.length - 1) return; // End of route
+
+        const startPoint = L.latLng(routeCoords[currentSegment]);
+        const endPoint = L.latLng(routeCoords[currentSegment + 1]);
+        const dist = riderMap.distance(startPoint, endPoint); // Meters
+        const duration = dist * 20; // 20ms per meter (adjust for speed)
+        
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const newPos = interpolatePosition(startPoint, endPoint, progress);
+        riderMarker.setLatLng(newPos);
+
+        // Update Rotation
+        const bearing = getBearing(startPoint, endPoint);
+        const bikeEl = document.getElementById('riderBikeIcon');
+        if(bikeEl) {
+            // The '▲' icon points up (north) by default, so we can use the bearing directly.
+            bikeEl.style.transform = `rotate(${bearing}deg)`; 
+        }
+
+        // Update Trail
+        const currentPath = routeCoords.slice(0, currentSegment + 1).map(c => L.latLng(c));
+        currentPath.push(newPos);
+        riderProgressPolyline.setLatLngs(currentPath);
+
+        if (progress < 1) {
+            routeAnimationFrame = requestAnimationFrame(animate);
+        } else {
+            currentSegment++;
+            startTime = null;
+            routeAnimationFrame = requestAnimationFrame(animate);
+        }
+    }
+    routeAnimationFrame = requestAnimationFrame(animate);
+}
+
+function startRiderDelivery() {
+    riderCurrentStep = 1; // Pickup phase
+    document.getElementById('riderDashboardState').style.display = 'none';
+    document.getElementById('riderDeliveryState').style.display = 'block';
+    document.getElementById('riderStatusToggle').style.display = 'none'; // Hide toggle during delivery
+    
+    // Reset Swipe Button
+    resetSwipeButton('SWIPE TO PICK UP');
+    startRouteSimulation();
+}
+
+function clearRouteSimulation() {
+    if(routeAnimationFrame) cancelAnimationFrame(routeAnimationFrame);
+    if (riderMarker && riderMap) riderMap.removeLayer(riderMarker);
+    if (riderRoutePolyline && riderMap) riderMap.removeLayer(riderRoutePolyline);
+    if (riderProgressPolyline && riderMap) riderMap.removeLayer(riderProgressPolyline);
+    riderMarker = riderRoutePolyline = riderProgressPolyline = null;
+}
+
+function resetSwipeButton(text) {
+    const container = document.getElementById('riderSwipeBtn');
+    const knob = document.getElementById('riderSwipeKnob');
+    const textEl = document.getElementById('riderSwipeText');
+    
+    container.classList.remove('completed');
+    knob.style.transform = 'translateX(0)';
+    textEl.textContent = text;
+    textEl.style.opacity = '1';
+    
+    // Basic drag logic (simplified for click/drag simulation)
+    let isDragging = false;
+    let startX = 0;
+    
+    const onStart = (e) => {
+        isDragging = true;
+        startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    };
+    
+    const onMove = (e) => {
+        if(!isDragging) return;
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        let delta = clientX - startX;
+        const maxDrag = container.clientWidth - knob.clientWidth - 8;
+        if(delta < 0) delta = 0;
+        if(delta > maxDrag) delta = maxDrag;
+        knob.style.transform = `translateX(${delta}px)`;
+        textEl.style.opacity = 1 - (delta / maxDrag);
+        
+        if(delta >= maxDrag - 5) {
+            isDragging = false;
+            completeSwipe();
+        }
+    };
+    
+    const onEnd = () => {
+        if(!isDragging) return;
+        isDragging = false;
+        knob.style.transform = 'translateX(0)';
+        textEl.style.opacity = '1';
+    };
+    
+    knob.onmousedown = onStart;
+    knob.ontouchstart = onStart;
+    window.onmousemove = onMove;
+    window.ontouchmove = onMove;
+    window.onmouseup = onEnd;
+    window.ontouchend = onEnd;
+}
+
+function completeSwipe() {
+    const container = document.getElementById('riderSwipeBtn');
+    const knob = document.getElementById('riderSwipeKnob');
+    container.classList.add('completed');
+    knob.style.transform = `translateX(${container.clientWidth - knob.clientWidth - 8}px)`;
+    
+    setTimeout(() => {
+        if(riderCurrentStep === 1) {
+            // Transition to Dropoff
+            riderCurrentStep = 2;
+            document.getElementById('riderStepPickup').classList.remove('active');
+            document.getElementById('riderStepPickup').style.borderLeftColor = '#ddd';
+            document.getElementById('riderStepPickup').style.opacity = '0.5';
+            document.getElementById('riderStepDropoff').classList.add('active');
+            resetSwipeButton('SWIPE TO COMPLETE');
+            showToast('Picked up order! Heading to customer.');
+        } else if(riderCurrentStep === 2) {
+            // Complete Order
+            showToast('Order Delivered! + UGX 4,500');
+            document.getElementById('riderEarningsToday').textContent = '4,500.00';
+            document.getElementById('riderTripsToday').textContent = '1';
+            clearRouteSimulation();
+            
+            // Reset UI
+            setTimeout(() => {
+                document.getElementById('riderDeliveryState').style.display = 'none';
+                document.getElementById('riderDashboardState').style.display = 'block';
+                document.getElementById('riderStatusToggle').style.display = 'flex';
+                riderCurrentStep = 0;
+            }, 1000);
+        }
+    }, 500);
+}
+
+document.getElementById('riderStatusToggle').addEventListener('click', toggleRiderStatus);
+document.getElementById('riderBackBtn').addEventListener('click', () => {
+    document.getElementById('riderScreen').classList.remove('active');
+    clearRouteSimulation();
+});
+
+// Initialize map when rider screen opens
+document.querySelector('.nav-item:nth-child(5)').addEventListener('click', () => {
+    setTimeout(initRiderMap, 300);
+});
+
+function initMerchantCharts() {
+    // Prevent re-initialization
+    if (dailySalesChartInstance) dailySalesChartInstance.destroy();
+    if (topItemsChartInstance) topItemsChartInstance.destroy();
+
+    const salesCtx = document.getElementById('dailySalesChart')?.getContext('2d');
+    const itemsCtx = document.getElementById('topItemsChart')?.getContext('2d');
+
+    if (!salesCtx || !itemsCtx) return;
+
+    // Daily Sales Chart (Line)
+    dailySalesChartInstance = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Sales',
+                data: [120000, 190000, 150000, 210000, 180000, 250000, 230000],
+                backgroundColor: 'rgba(1, 158, 129, 0.1)',
+                borderColor: '#019E81',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return 'UGX ' + value / 1000 + 'k';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    // Top Selling Items Chart (Doughnut)
+    topItemsChartInstance = new Chart(itemsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Burgers', 'Wings', 'Fries', 'Drinks'],
+            datasets: [{
+                label: 'Top Items',
+                data: [300, 150, 100, 200],
+                backgroundColor: ['#FFBF42', '#ff4757', '#2ed573', '#1e90ff'],
+                hoverOffset: 4
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+}
 
 /* Merchant Menu Logic */
 const merchantManageMenuBtn = document.getElementById('merchantManageMenuBtn');
 const merchantMenuScreen = document.getElementById('merchantMenuScreen');
 const merchantMenuBackBtn = document.getElementById('merchantMenuBackBtn');
 const merchantAddMenuBtn = document.getElementById('merchantAddMenuBtn');
+const merchantEditItemScreen = document.getElementById('merchantEditItemScreen');
 
-const merchantMenuItems = [
+let merchantMenuItems = [
     { id: 1, name: "Double Cheese Burger", price: 25.00, img: "🍔", active: true },
     { id: 2, name: "Spicy Chicken Wings", price: 30.00, img: "🍗", active: true },
     { id: 3, name: "Coca Cola", price: 5.00, img: "🥤", active: true },
@@ -4167,6 +4647,7 @@ function renderMerchantMenuItems() {
     
     merchantMenuItems.forEach(item => {
         const div = document.createElement('div');
+        div.style.cursor = 'pointer';
         div.className = 'menu-mgmt-item';
         div.innerHTML = `
             <div class="menu-mgmt-info">
@@ -4176,10 +4657,58 @@ function renderMerchantMenuItems() {
                     <div class="menu-mgmt-price">UGX ${item.price.toFixed(2)}</div>
                 </div>
             </div>
-            <div class="menu-mgmt-toggle ${item.active ? 'active' : ''}" onclick="this.classList.toggle('active'); showToast('${item.name} status updated');"></div>
+            <div class="menu-mgmt-toggle ${item.active ? 'active' : ''}"></div>
         `;
+        
+        // Event listener for the toggle switch
+        div.querySelector('.menu-mgmt-toggle').addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent the main item click event
+            const toggle = e.currentTarget;
+            toggle.classList.toggle('active');
+            const isActive = toggle.classList.contains('active');
+            
+            // Update the data model
+            const dataItem = merchantMenuItems.find(i => i.id === item.id);
+            if (dataItem) dataItem.active = isActive;
+            
+            showToast(`${item.name} status updated`);
+        });
+        
+        // Event listener for the whole item to open the edit screen
+        div.addEventListener('click', () => {
+            openEditItemScreen(item.id);
+        });
+
         list.appendChild(div);
     });
+}
+
+function openEditItemScreen(itemId) {
+    const titleEl = document.getElementById('editItemTitle');
+    const nameInput = document.getElementById('editItemName');
+    const priceInput = document.getElementById('editItemPrice');
+    const imgInput = document.getElementById('editItemImg');
+    const idInput = document.getElementById('editItemId');
+    const deleteBtn = document.getElementById('deleteItemBtn');
+
+    if (itemId === null) { // Add mode
+        titleEl.textContent = 'Add New Item';
+        nameInput.value = '';
+        priceInput.value = '';
+        imgInput.value = '';
+        idInput.value = '';
+        deleteBtn.style.display = 'none';
+    } else { // Edit mode
+        const item = merchantMenuItems.find(i => i.id === itemId);
+        if (!item) return;
+        titleEl.textContent = 'Edit Item';
+        nameInput.value = item.name;
+        priceInput.value = item.price;
+        imgInput.value = item.img;
+        idInput.value = item.id;
+        deleteBtn.style.display = 'block';
+    }
+    merchantEditItemScreen.classList.add('active');
 }
 
 if(merchantManageMenuBtn) merchantManageMenuBtn.addEventListener('click', () => {
@@ -4187,7 +4716,87 @@ if(merchantManageMenuBtn) merchantManageMenuBtn.addEventListener('click', () => 
     renderMerchantMenuItems();
 });
 if(merchantMenuBackBtn) merchantMenuBackBtn.addEventListener('click', () => merchantMenuScreen.classList.remove('active'));
-if(merchantAddMenuBtn) merchantAddMenuBtn.addEventListener('click', () => showToast('Add item feature coming soon!'));
+if(merchantAddMenuBtn) merchantAddMenuBtn.addEventListener('click', () => openEditItemScreen(null));
+
+// Listeners for the Edit Item Screen
+document.getElementById('editItemBackBtn').addEventListener('click', () => merchantEditItemScreen.classList.remove('active'));
+
+document.getElementById('saveItemBtn').addEventListener('click', () => {
+    const id = document.getElementById('editItemId').value;
+    const name = document.getElementById('editItemName').value;
+    const price = parseFloat(document.getElementById('editItemPrice').value);
+    const img = document.getElementById('editItemImg').value;
+
+    if (!name || isNaN(price)) { showToast('Please enter a valid name and price.'); return; }
+
+    if (id) { // Update existing
+        const item = merchantMenuItems.find(i => i.id == id);
+        if (item) { Object.assign(item, { name, price, img }); }
+    } else { // Add new
+        const newId = Math.max(0, ...merchantMenuItems.map(i => i.id)) + 1;
+        merchantMenuItems.push({ id: newId, name, price, img, active: true });
+    }
+    renderMerchantMenuItems();
+    merchantEditItemScreen.classList.remove('active');
+    showToast('Menu updated successfully!');
+});
+
+document.getElementById('deleteItemBtn').addEventListener('click', () => {
+    const id = document.getElementById('editItemId').value;
+    if (id && confirm('Are you sure you want to delete this item?')) {
+        merchantMenuItems = merchantMenuItems.filter(i => i.id != id);
+        renderMerchantMenuItems();
+        merchantEditItemScreen.classList.remove('active');
+        showToast('Item deleted.');
+    }
+});
+
+/* Merchant Past Orders Logic */
+const merchantOrdersBtn = document.getElementById('merchantOrdersBtn');
+const merchantOrdersScreen = document.getElementById('merchantOrdersScreen');
+const merchantOrdersBackBtn = document.getElementById('merchantOrdersBackBtn');
+const merchantOrdersList = document.getElementById('merchantOrdersList');
+
+const dummyPastOrders = [
+    { id: '#8820', date: 'Today, 10:30 AM', items: '2x Cheese Burger, 1x Cola', total: 'UGX 55.00', status: 'Delivered', statusColor: '#019E81' },
+    { id: '#8819', date: 'Yesterday, 8:15 PM', items: '1x Family Pizza Feast', total: 'UGX 85.00', status: 'Delivered', statusColor: '#019E81' },
+    { id: '#8818', date: 'Yesterday, 7:00 PM', items: '3x Spicy Wings (6pcs)', total: 'UGX 90.00', status: 'Cancelled', statusColor: '#ff4757' },
+    { id: '#8817', date: '22 Oct, 1:00 PM', items: '1x Zinger Wrap', total: 'UGX 22.00', status: 'Delivered', statusColor: '#019E81' },
+    { id: '#8816', date: '21 Oct, 9:45 PM', items: '2x Milkshakes', total: 'UGX 36.00', status: 'Delivered', statusColor: '#019E81' }
+];
+
+function renderMerchantOrders() {
+    merchantOrdersList.innerHTML = '';
+    dummyPastOrders.forEach(order => {
+        const card = document.createElement('div');
+        card.className = 'dashboard-card';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        card.style.gap = '8px';
+        card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight:800; color:#333;">${order.id}</span>
+                <span style="font-size:0.85em; color:#666;">${order.date}</span>
+            </div>
+            <div style="font-size:0.95em; color:#555; line-height:1.4;">${order.items}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+                <span style="font-weight:bold; color:#333;">${order.total}</span>
+                <span style="background:${order.statusColor}20; color:${order.statusColor}; padding:4px 8px; border-radius:6px; font-size:0.85em; font-weight:700;">${order.status}</span>
+            </div>
+        `;
+        merchantOrdersList.appendChild(card);
+    });
+}
+
+if(merchantOrdersBtn) {
+    merchantOrdersBtn.addEventListener('click', () => {
+        renderMerchantOrders();
+        merchantOrdersScreen.classList.add('active');
+    });
+}
+if(merchantOrdersBackBtn) {
+    merchantOrdersBackBtn.addEventListener('click', () => merchantOrdersScreen.classList.remove('active'));
+}
 
 /* Profile Picture Upload Logic */
 const profilePic = document.getElementById('profilePic');
