@@ -1,0 +1,140 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- HELPER FUNCTIONS ---
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/admin_accounts/$(request.auth.uid));
+    }
+
+    function isApproved() {
+      // Check if the user document in 'users' collection is approved
+      // Note: This logic assumes most entities start in 'users' or have an 'isApproved' field
+      let userDoc = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return isAdmin() || (userDoc != null && userDoc.data.isApproved == true);
+    }
+
+    // --- COLLECTION RULES ---
+
+    // Admin Accounts: Only accessible by authenticated admins
+    match /admin_accounts/{adminId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Users (Customers)
+    match /users/{userId} {
+      // Allow creation during signup, allow users to read/edit their own profiles
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow read, update: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Riders
+    match /riders/{riderId} {
+      // Riders can read/update their own profile/status/location
+      allow read: if isAuthenticated() && (request.auth.uid == riderId || isAdmin());
+      allow update: if isAuthenticated() && (request.auth.uid == riderId || isAdmin());
+      // Admin handles registration and removal
+      allow create, delete: if isAdmin();
+    }
+
+    // Restaurants (Vendors)
+    match /restaurants/{vendorId} {
+      // Public can read restaurant info to browse
+      allow read: if true;
+      // Vendors can update their own profile and menu
+      allow update: if isAuthenticated() && (request.auth.uid == vendorId || isAdmin());
+      allow create, delete: if isAdmin();
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      // Approved users can create orders
+      allow create: if isAuthenticated();
+
+      // Read access: Owner, assigned Vendor, assigned Rider, or Admin
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.vendorId == request.auth.uid ||
+        resource.data.riderId == request.auth.uid ||
+        isAdmin()
+      );
+
+      // Update access:
+      allow update: if isAuthenticated() && (
+        isAdmin() ||
+        // Customer: Can update rating or cancel if still pending
+        (resource.data.userId == request.auth.uid && 
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rating', 'ratingComment', 'status', 'statusText', 'statusColor']) &&
+          (resource.data.status == 'pending' || request.resource.data.status == resource.data.status)) ||
+        // Vendor: Can update status (Accept, Prepare, Ready)
+        (resource.data.vendorId == request.auth.uid && 
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'statusText', 'statusColor'])) ||
+        // Rider: Can update status (Pickup, Delivered)
+        (resource.data.riderId == request.auth.uid && 
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'statusText', 'statusColor']))
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    // Chats & Messages
+    match /chats/{chatId} {
+      // Only parties involved in the related Order (chatId should match orderId) can access
+      function isChatParticipant() {
+        let order = get(/databases/$(database)/documents/orders/$(chatId)).data;
+        return order.userId == request.auth.uid || 
+               order.vendorId == request.auth.uid || 
+               order.riderId == request.auth.uid;
+      }
+
+      allow read, write: if isAdmin() || isChatParticipant();
+
+      match /messages/{messageId} {
+        allow read, write: if isAdmin() || isChatParticipant();
+      }
+    }
+
+    // Promotions: Public read, Admin write
+    match /promotions/{promoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Analytics Summary: Admin only
+    match /analytics/{doc} {
+      allow read, write: if isAdmin();
+    }
+
+    // Payments: Users can see their own payments, Admin sees all
+    match /payments/{paymentId} {
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Support Tickets
+    match /support/{ticketId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow update, delete: if isAdmin();
+    }
+
+    // Reviews
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    // Activity Logs
+    match /logs/{logId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

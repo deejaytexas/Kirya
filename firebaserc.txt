@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "kirya-e2248"
+  }
+}
